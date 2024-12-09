@@ -33,7 +33,7 @@
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.7\textwidth]{Photos/1-operations.png}
+    \includegraphics[width=1\textwidth]{Photos/1-operations.png}
     \caption{تمام عملگرهای زبان C++ به همراه تقدم و وابستگی}
     \label{fig:example}
 \end{figure}
@@ -493,9 +493,438 @@ int main() {
     animal->speak();  // Resolved at runtime to Cat::speak
 
     return 0;
+}	
+\end{lstlisting}
+\end{LTR}
+
+
+\section*{مقایسه انقیاد ایستا و پویا}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{ویژگی} & \textbf{انقیاد ایستا} & \textbf{انقیاد پویا} \\
+        \hline
+        زمان حل اتصال & زمان کامپایل & زمان اجرا \\
+        \hline
+        عملکرد & بالا (بدون سربار در زمان اجرا) & کمی کندتر (سربار جدول مجازی و RTTI) \\
+        \hline
+        تشخیص خطا & در زمان کامپایل (ایمن‌تر) & در زمان اجرا (کمتر ایمن) \\
+        \hline
+        انعطاف‌پذیری & محدود (نوع‌ها در زمان کامپایل ثابت هستند) & بالا (پشتیبانی از چندریختی در زمان اجرا) \\
+        \hline
+        قابلیت گسترش & نیاز به بازکامپایل برای تغییرات & راحت برای گسترش (مثلاً اضافه کردن کلاس‌های جدید) \\
+        \hline
+        سهولت در دیباگ & آسان‌تر (رفتار قابل پیش‌بینی است) & دشوارتر (رفتار وابسته به زمان اجرا است) \\
+        \hline
+        استفاده از حافظه & کم (نیاز به فراداده اضافی نیست) & بیشتر (نیاز به جدول مجازی و RTTI) \\
+        \hline
+        موارد استفاده & کدهای کارآمد و قابل پیش‌بینی (مثل الگوریتم‌ها) & طراحی انعطاف‌پذیر و قابل گسترش (مثل فریم‌ورک‌ها) \\
+        \hline
+    \end{tabular}
+    \caption{مقایسه انقیاد ایستا و پویا}
+    \label{tab:static_dynamic_binding}
+\end{table}
+
+\subsection*{انقیاد مقدار یا حافظه}
+انقیاد مقدار به معنی این است که نوع یک متغیر در چه زمانی و چگونه به حافظه مقید می‌‌شود. 
+زبان C++ از انواع زیر پشتیبانی می‌کند:
+
+
+\subsubsection*{انقیاد در زمان کامپایل}
+\begin{itemize}
+    \item آدرس حافظه در زمان کامپایل تعیین می‌شود.
+    \item این نوع انقیاد در زبان C++ مرسوم‌‌تر است و برای متغیر‌های محلی و سراسری و ایستا استفاده می‌شود.
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+int x = 10;
+static int y = 0;
+\end{lstlisting}
+\end{LTR}
+\end{itemize}
+
+
+\subsubsection*{انقیاد در زمان اجرا}
+\begin{itemize}
+    \item آدرس حافظه در زمان اجرا مشخص می‌شود.
+    \item برنامه‌نویس مسئول آزاد کردن حافظه است.
+    \item این نوع انقیاد معمولاً در تخصیص پویا (Dynamic Allocation) با استفاده از دستوراتی مانند new انجام می‌شود.
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+int* ptr = new int(10);
+\end{lstlisting}
+\end{LTR}
+\end{itemize}
+
+
+\subsubsection*{انقیاد موقت}
+\begin{itemize}
+    \item حافظه به صورت موقت رزرو می‌شود.
+    \item این نوع انقیاد زمانی رخ می‌دهد که یک مقدار موقت (temporary) به یک مرجع متصل شود. این اتصال تا زمانی که مرجع در محدوده است، معتبر باقی می‌ماند.
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+const int& ref = 42;
+\end{lstlisting}
+\end{LTR}
+\end{itemize}
+
+
+\subsubsection*{انقیاد پویا با اشاره‌گرهای هوشمند}
+\begin{itemize}
+    \item آزادسازی حافظه به صورت خودکار توسط اشاره‌گر هوشمند انجام می‌شود.
+    \item در C++ مدرن (11 به بعد)، از اشاره‌گرهای هوشمند برای مدیریت انقیاد حافظه به صورت خودکار استفاده می‌شود.
+\end{itemize}
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+std::unique_ptr<int> ptr = std::make_unique<int>(10);
+\end{lstlisting}
+\end{LTR}
+
+
+\section*{تعریف متغیر}
+در زبان C++ تعریف متغیر صریح مرسوم است اما ابزاری برای تعریف متغیر ضمنی نیز وجود دارد.
+
+\subsection*{تعریف متغیر صریح}
+نوع متغیر به‌طور واضح و صریح در هنگام تعریف مشخص می‌شود.
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+int age = 25;          // 'age' is explicitly defined as an integer.
+double pi = 3.14;      // 'pi' is explicitly defined as a double.
+string name = "John";  // 'name' is explicitly defined as a string.
+\end{lstlisting}
+\end{LTR}
+
+\subsection*{تعریف متغیر ضمنی}
+نوع متغیر برابر با auto قرار می‌گیرد و نوع به‌طور خودکار توسط کامپایلر با توجه به مقدار زمینه تعیین می‌شود.
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+auto age = 25;         // The type of 'age' is inferred as int.
+auto pi = 3.14;        // The type of 'pi' is inferred as double.
+auto name = "John";    // The type of 'name' is inferred as const char*.
+\end{lstlisting}
+\end{LTR}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{ویژگی} & \textbf{تعریف صریح} & \textbf{تعریف ضمنی} \\
+        \hline
+        وضوح & 
+        نوع متغیر به‌طور واضح و مستقیم مشخص می‌شود. & 
+        نوع متغیر توسط کامپایلر استنباط می‌شود و ممکن است بلافاصله واضح نباشد. \\
+        \hline
+        انعطاف‌پذیری & 
+        نیاز به دانستن نوع متغیر قبل از تعریف دارد. & 
+        می‌تواند براساس مقدار داده شده، نوع را تطبیق دهد. \\
+        \hline
+        نحو (Syntax) & 
+        روش سنتی و نسبتاً طولانی. & 
+        کوتاه‌تر و مدرن‌تر با استفاده از \texttt{auto}. \\
+        \hline
+        مورد استفاده & 
+        مناسب برای مواردی که وضوح و کنترل اهمیت دارند. & 
+        مناسب برای کاهش کد تکراری، مخصوصاً در انواع پیچیده. \\
+        \hline
+    \end{tabular}
+    \caption{مقایسه تعریف صریح و تعریف ضمنی متغیرها در زبان C++}
+    \label{tab:explicit_implicit}
+\end{table}
+
+
+\section*{متغیرهای ایستا}
+
+\subsection*{متغیرهای ایستا در توابع}
+\begin{itemize}
+    \item مقدار آن بین فراخوانی‌های مختلف تابع حفظ می‌شود.
+    \item فقط یک بار مقداردهی اولیه می‌شود.
+    \item مقدار آن پس از خروج از تابع باقی می‌ماند.
+    \item دامنه (Scope) متغیر همچنان محدود به تابع است، اما طول عمر (Lifetime) آن برابر با طول عمر برنامه خواهد بود.
+    \item در قسمت دیتا سگمنت ذخیره می‌شود.
+\end{itemize}
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+void countCalls() {
+    static int count = 0; // متغیر استاتیک
+    count++;
+    cout << "This function has been called " << count << " times." << endl;
+}
+
+int main() {
+    countCalls();
+    countCalls();
+    countCalls();
+    return 0;
 }
 \end{lstlisting}
 \end{LTR}
+
+خروجی:
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+This function has been called 1 times.
+This function has been called 2 times.
+This function has been called 3 times.
+\end{lstlisting}
+\end{LTR}
+
+
+\subsection*{متغیرهای ایستا در کلاس‌ها}
+\begin{itemize}
+    \item در داخل یک کلاس، متغیرهای استاتیک به همه اشیاء (Objects) آن کلاس مشترک هستند. این متغیرها بخشی از فضای ذخیره‌سازی کلاس هستند، نه اشیاء جداگانه.
+    \item مستقل از اشیاء کلاس هستند.
+    \item فقط یک نسخه از آنها در حافظه وجود دارد که توسط تمام اشیاء به اشتراک گذاشته می‌شود.
+    \item برای دسترسی به آنها می‌توان از نام کلاس استفاده کرد.
+    \item در قسمت دیتا سگمنت ذخیره می‌شود.
+\end{itemize}
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+class Counter {
+private:
+    static int count; // متغیر استاتیک
+public:
+    Counter() {
+        count++;
+    }
+    static void showCount() { // متد استاتیک
+        cout << "Count: " << count << endl;
+    }
+};
+
+int Counter::count = 0; // مقداردهی اولیه متغیر استاتیک
+
+int main() {
+    Counter c1, c2, c3;
+    Counter::showCount(); // دسترسی به متغیر استاتیک از طریق کلاس
+    return 0;
+}
+\end{lstlisting}
+\end{LTR}
+
+خروجی:
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+Count: 3
+\end{lstlisting}
+\end{LTR}
+
+\subsubsection*{مزایا}
+\begin{itemize}
+    \item حفظ مقدار متغیر در توابع بدون نیاز به استفاده از متغیرهای سراسری.
+    \item صرفه‌جویی در حافظه برای متغیرهای مشترک در بین اشیاء کلاس.
+    \item امکان پیاده‌سازی شمارنده‌ها، حافظه پنهان (Cache) و بسیاری از موارد دیگر.
+\end{itemize}
+
+
+\section*{پویا در پشته}
+
+\subsection*{متغیر‌های محلی}
+هنگام اجرای تابع حافظه تخصیص داده می‌شود و در پایان تابع آزاد می‌‌شوند.
+
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+void myFunction() {
+    int a = 10;  // Stored on the stack
+}
+\end{lstlisting}
+\end{LTR}
+
+
+\subsection*{پارامتر‌های توابع}
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+void printNumber(int num) {
+    // num is stored on the stack
+}
+\end{lstlisting}
+\end{LTR}
+
+\subsubsection*{آرایه‌‌های محلی غیر پویا}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+void myFunction() {
+    int arr[5] = {1, 2, 3, 4, 5}; // روی پشته ذخیره می‌شود
+}
+\end{lstlisting}
+\end{LTR}
+
+
+\section*{متغیرهای پویا در هیپ به طور صریح}
+
+زبان C++ تعریف این متغیرها را ممکن ساخته است و برای این کار از دو عملگر new (برای تخصیص حافظه) و عملگر delete (برای آزاد کردن فضای تخصیص داده‌ شده) استفاده می‌کند.
+
+\begin{itemize}
+    \item حافظه‌ای که با new تخصیص داده شده باید حتماً با delete آزاد شود.
+    \item آزاد نکردن حافظه منجر به نشت حافظه (memory leak) می‌شود.
+    \item استفاده از delete برای حافظه‌ای که تخصیص نیافته یا قبلاً آزاد شده است، باعث رفتار غیرقابل پیش‌بینی خواهد شد.
+\end{itemize}
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+int* ptr = new int;
+int* arr = new int[5];
+Data* data = new Data(); // instance of class Data
+\end{lstlisting}
+\end{LTR}
+
+
+\section*{متغیرهای پویا در هیپ به طور ضمنی}
+
+زبان C++ امکان استفاده از این نوع متغیرها را نیز فراهم کرده است و از طریق اشاره‌گر‌های هوشمند و یا کتاب‌خانه‌های استاندارد و … از این روش استفاده می‌کند. همچنین در این روش متغیر‌ها در بخش هیپ ذخیره می‌شوند اما ابزار‌های آماده حافظه را به‌‌صورت خودکار مدیریت می‌‌‌کنند.
+
+
+\subsection*{اشاره‌گرهای هوشمند}
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+#include <memory> // For smart pointers
+
+int main() {
+    // Define a shared_ptr to manage a dynamic integer
+    std::shared_ptr<int> ptr = std::make_shared<int>(42);
+
+    std::cout << "Value: " << *ptr << std::endl;
+
+    // Memory is automatically freed when it goes out of scope
+
+    return 0;
+}
+\end{lstlisting}
+\end{LTR}
+
+\subsubsection*{کانتینرهای STL}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+#include <vector>
+
+int main() {
+    // Define a vector of integers
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+
+    // Add an element to the vector
+    numbers.push_back(6);
+
+    // Print the values of the vector
+    for (int num : numbers) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    // No need to free memory; it is managed automatically
+
+    return 0;
+}
+\end{lstlisting}
+\end{LTR}
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{4cm}|p{6cm}|p{6cm}|}
+        \hline
+        \textbf{نوع متغیر} & \textbf{مزایا} & \textbf{معایب} \\
+        \hline
+        ایستا &
+        \begin{itemize}
+            \item تخصیص حافظه ثابت در طول عمر برنامه.
+            \item حفظ مقدار بین اجرای توابع.
+            \item بدون سربار حافظه در زمان اجرا.
+        \end{itemize} &
+        \begin{itemize}
+            \item حافظه در طول عمر برنامه اشغال می‌شود، حتی اگر به ندرت استفاده شود.
+            \item ممکن است باعث افزایش غیرضروری حافظه شود.
+        \end{itemize} \\
+        \hline
+        پویا در پشته &
+        \begin{itemize}
+            \item مناسب برای مقادیر ثابت یا مقادیری که به ندرت تغییر می‌کنند.
+            \item تخصیص و آزادسازی خودکار (بر اساس محدوده متغیر).
+            \item تخصیص و آزادسازی سریع (روی پشته).
+            \item امنیت بالا.
+        \end{itemize} &
+        \begin{itemize}
+            \item نمی‌توانند خارج از محدوده تابع باقی بمانند.
+        \end{itemize} \\
+        \hline
+        پویا در هیپ به طور صریح &
+        \begin{itemize}
+            \item انعطاف‌پذیری: اندازه حافظه در زمان اجرا تعیین می‌شود.
+            \item مناسب برای داده‌های بزرگ و پویا.
+            \item کنترل دستی بر طول عمر حافظه فراهم می‌کند.
+        \end{itemize} &
+        \begin{itemize}
+            \item نیازمند تخصیص دستی (\texttt{new}) و آزادسازی دستی (\texttt{delete}).
+            \item احتمال نشت حافظه در صورت آزاد نکردن صحیح.
+            \item خطر رفتار غیرقابل پیش‌بینی در صورت آزادسازی دوباره یا دسترسی پس از آزادسازی.
+        \end{itemize} \\
+        \hline
+        پویا در هیپ به طور ضمنی &
+        \begin{itemize}
+            \item مدیریت خودکار حافظه (مانند کانتینرهای STL یا اشاره‌گرهای هوشمند).
+            \item کاهش خطر نشت حافظه و رفتار غیرقابل پیش‌بینی.
+            \item ساده کردن برنامه‌نویسی برای مفاهیم سطح بالا.
+        \end{itemize} &
+        \begin{itemize}
+            \item کمی سربار عملکرد به دلیل مدیریت خودکار حافظه.
+            \item کنترل کمتری بر تخصیص و آزادسازی حافظه.
+            \item ممکن است در برنامه‌های حساس به عملکرد که هر تخصیص اهمیت دارد، بهینه نباشد.
+        \end{itemize} \\
+        \hline
+    \end{tabular}
+    \caption{مقایسه روش‌های تخصیص حافظه}
+    \label{tab:memory_allocation}
+\end{table}
+
+\subsection*{مقایسه سرعت انواع متغیرها}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{4cm}|p{3cm}|p{7cm}|}
+        \hline
+        \textbf{نوع متغیر} & \textbf{سرعت} & \textbf{دلیل} \\
+        \hline
+        ایستا &
+        بدون هزینه در زمان اجرا &
+        این متغیرها در زمان کامپایل و در یک منطقه ثابت حافظه تخصیص داده می‌شوند. نیازی به جستجو یا نگهداری در زمان اجرا نیست. \\
+        \hline
+        پویا در پشته &
+        سریع‌ترین &
+        تخصیص در استک یک فرآیند ساده است که فقط اشاره‌گر حافظه را افزایش یا کاهش می‌دهد. نیازی به نگهداری پیچیده نیست. \\
+        \hline
+        پویا در هیپ به طور صریح &
+        کندترین &
+        هیپ یک فضای حافظه بزرگ و نامرتب است که نیاز به نگهداری پیچیده‌ای دارد. سیستم‌عامل یا زمان اجرا باید یک بلوک آزاد مناسب برای تخصیص پیدا کند. سربار شامل جستجوی حافظه، به‌روزرسانی ساختارهای داده داخلی و تضمین ایمنی رشته‌ها است. \\
+        \hline
+        پویا در هیپ به طور ضمنی &
+        متوسط &
+        حافظه هنوز روی هیپ تخصیص داده می‌شود، اما زمان اجرا از تکنیک‌هایی مانند اشاره‌گرهای ساده یا مجموعه‌های حافظه استفاده می‌کند. این فرآیند از تخصیص صریح کمی سریع‌تر است چون برنامه به طور مستقیم با توابع تخصیص سطح پایین درگیر نمی‌شود. فرآیند جمع‌آوری زباله (garbage collection) سربار اضافی در آینده ایجاد می‌کند. \\
+        \hline
+    \end{tabular}
+    \caption{مقایسه سرعت و دلایل تخصیص حافظه}
+    \label{tab:memory_speed}
+\end{table}
+
 
 \end{document}
 
