@@ -1,9 +1,11 @@
 \documentclass{article}
 \usepackage{graphicx} % برای اضافه کردن عکس
+\usepackage{amsmath}
 \usepackage{listings} % Load the listings package
 \usepackage{xcolor}   % Optional: For custom colors
 \usepackage{xepersian} % Persian support
 \settextfont{XB Niloofar} % Change to a Persian font installed on your system
+\setlatintextfont{Courier New} % برای نمایش کدهای انگلیسی
 
 \lstset{
     language=C++,                      % Set language to C++
@@ -11,12 +13,14 @@
     keywordstyle=\bfseries\color{blue}, % Keywords in bold blue
     stringstyle=\color{red},           % Strings in red
     commentstyle=\itshape\color{green!60!black}, % Comments in green italics
-    numbers=left,                      % Line numbers on the left
+    numbers=right,                     % Line numbers on the right
     numberstyle=\tiny,                 % Line number font size
     stepnumber=1,                      % Show line numbers every line
     frame=single,                      % Add a frame around code
     tabsize=4,                         % Set tab size
-    showstringspaces=false             % Do not show spaces in strings
+    showstringspaces=false,            % Do not show spaces in strings
+    xleftmargin=10pt,                  % Adjust left margin for better alignment
+    xrightmargin=10pt                  % Adjust right margin for better alignment
 }
 
 \begin{document}
@@ -27,13 +31,471 @@
 
 تقدم عملگرها مشخص می‌کند که در یک عبارت که شامل چندین عملگر است، کدام عملگر ابتدا اجرا شود و وابستگی عملگرها مشخص می‌کند که اگر چندین عملگر با تقدم یکسان در یک عبارت وجود داشته باشند، کدام یک ابتدا ارزیابی شوند.
 
-
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.7\textwidth]{1-operations.png}
+    \includegraphics[width=0.7\textwidth]{Photos/1-operations.png}
     \caption{تمام عملگرهای زبان C++ به همراه تقدم و وابستگی}
     \label{fig:example}
 \end{figure}
 
+تقدم عملگر‌ها با بارگذاری بیش از حد عملگر‌ها (operator overloading) تغییری نمی‌کند و ثابت خواهد ماند.
+برای نمونه در مثال زیر نحوه ارزیابی مشخص شده است.
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+cout << a ? b : c;
+\end{lstlisting}
+\end{LTR}
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+(cout << a) ? b : c;
+\end{lstlisting}
+\end{LTR}
+
+\section*{گرامر بدون ابهام رعایت تقدم عملگر‌ها}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{عملگرها} & \textbf{تقدم} \\
+        \hline
+        \texttt{\&\&}, \texttt{||} & 5 \\
+        \hline
+        \texttt{\&}, \texttt{|} & 4 \\
+        \hline
+        \texttt{+}, \texttt{-} & 3 \\
+        \hline
+        \texttt{*}, \texttt{/} & 2 \\
+        \hline
+        \texttt{a++}, \texttt{a--} & 1 \\
+        \hline
+    \end{tabular}
+    \caption{تقدم عملگرها در زبان C++}
+    \label{tab:operator_precedence}
+\end{table}
+
+\begin{align*}
+\langle \text{id} \rangle &\to A \mid B \mid C \mid D \mid \dots \\
+\langle \text{assign} \rangle &\to \langle \text{id} \rangle = \langle \text{logical-or} \rangle \\
+\langle \text{logical-or} \rangle &\to \langle \text{logical-or} \rangle \, || \, \langle \text{logical-and} \rangle \mid \langle \text{logical-or} \rangle \\
+\langle \text{logical-and} \rangle &\to \langle \text{logical-and} \rangle \, && \, \langle \text{bitwise-or} \rangle \mid \langle \text{bitwise-or} \rangle \\
+\langle \text{bitwise-or} \rangle &\to \langle \text{bitwise-or} \rangle \, | \, \langle \text{bitwise-and} \rangle \mid \langle \text{bitwise-and} \rangle \\
+\langle \text{bitwise-and} \rangle &\to \langle \text{bitwise-and} \rangle \, \& \, \langle \text{additive} \rangle \mid \langle \text{additive} \rangle \\
+\langle \text{additive} \rangle &\to \langle \text{additive} \rangle \, (+, -) \, \langle \text{multiplicative} \rangle \mid \langle \text{multiplicative} \rangle \\
+\langle \text{multiplicative} \rangle &\to \langle \text{multiplicative} \rangle \, (*, /) \, \langle \text{factor} \rangle \mid \langle \text{factor} \rangle \\
+\langle \text{factor} \rangle &\to (\langle \text{logical-or} \rangle) \mid \langle \text{id} \rangle \mid \langle \text{id} \rangle++ \mid \langle \text{id} \rangle--
+\end{align*}
+
+\section*{معناشناسی عملیاتی بعضی از ساختارها}
+
+\subsection*{تخصیص مقدار به متغیر}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+x = 5;
+
+MOV R1, #5      ; Load the constant 5 into register R1
+MOV [x], R1     ; Store the value of R1 into memory at
+				 the address of x
+\end{lstlisting}
+\end{LTR}
+
+\subsection*{جمع دو مقدار}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+z = x + y;
+
+MOV R1, [x]     ; Load the value of x into register R1
+MOV R2, [y]     ; Load the value of y into register R2
+ADD R3, R1, R2  ; Add the values in R1 and R2, store 
+					the result in R3
+MOV [z], R3     ; Store the result in memory location z
+\end{lstlisting}
+\end{LTR}
+
+\subsection*{شرط ساده (if-else)}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+if (x > 0) {
+    y = 1;
+} else {
+    y = -1;
+}
+
+MOV R1, [x]      ; Load x into R1
+CMP R1, #0       ; Compare R1 with 0
+JLE ELSE_LABEL   ; Jump to ELSE_LABEL if R1 <= 0
+MOV [y], #1      ; If x > 0, assign 1 to y
+JMP END_LABEL    ; Skip the else branch
+ELSE_LABEL:
+MOV [y], #-1     ; If x <= 0, assign -1 to y
+END_LABEL:
+\end{lstlisting}
+\end{LTR}
+
+
+\subsection*{حلقه (while)}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+while (x > 0) {
+    x = x - 1;
+}
+
+
+LOOP_LABEL:
+MOV R1, [x]      ; Load x into R1
+CMP R1, #0       ; Compare R1 with 0
+JLE END_LABEL    ; Exit the loop if R1 <= 0
+SUB R1, R1, #1   ; Decrement R1 by 1
+MOV [x], R1      ; Update x in memory
+JMP LOOP_LABEL   ; Repeat the loop
+END_LABEL:
+\end{lstlisting}
+\end{LTR}
+
+
+\subsection*{حلقه (for)}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+for (int i = 0; i < 5; i++) {
+    sum = sum + i;
+}
+
+
+; Initialize the loop counter i = 0
+MOV R1, #0        ; Load 0 into R1 (i = 0)
+MOV [i], R1       ; Store the value of i in memory
+
+; Initialize sum = 0
+MOV R2, #0        ; Load 0 into R2 (sum = 0)
+MOV [sum], R2     ; Store the value of sum in memory
+
+FOR_LOOP_START:
+; Compare i with the upper limit (5)
+MOV R1, [i]       ; Load the current value of i into R1
+CMP R1, #5        ; Compare i with 5
+JGE FOR_LOOP_END  ; If i >= 5, jump to end of the loop
+
+; Add i to sum
+MOV R2, [sum]     ; Load the current value of sum into R2
+ADD R2, R2, R1    ; Compute sum + i
+MOV [sum], R2     ; Store the updated sum back into memory
+
+; Increment i by 1
+MOV R1, [i]       ; Load the current value of i into R1
+ADD R1, R1, #1    ; Increment i by 1
+MOV [i], R1       ; Store the updated value of i in memory
+
+; Jump back to the start of the loop
+JMP FOR_LOOP_START
+
+FOR_LOOP_END:
+; End of the loop
+\end{lstlisting}
+\end{LTR}
+
+
+\subsection*{تعریف و فراخوانی تابع}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+int add(int a, int b) {
+    return a + b;
+}
+
+int result = add(3, 4);
+
+
+; Define the function
+ADD_FUNC:
+PUSH R1          ; Save registers
+PUSH R2
+ADD R3, R1, R2   ; Compute a + b, store result in R3
+POP R2           ; Restore registers
+POP R1
+RET              ; Return from the function
+
+; Call the function
+MOV R1, #3       ; Pass 3 as the first argument (in R1)
+MOV R2, #4       ; Pass 4 as the second argument (in R2)
+CALL ADD_FUNC    ; Call the add function
+MOV [result], R3 ; Store the result in memory
+\end{lstlisting}
+\end{LTR}
+
+
+\subsection*{استراکت}
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    Point p;
+    p.x = 5;
+    p.y = 10;
+    return 0;
+}
+
+
+main:
+    pushq   %rbp                # Save base pointer
+    movq    %rsp, %rbp          # Set stack frame
+    subq    $16, %rsp           # Allocate 16 bytes on 
+    								the stack for 'p'
+
+    movl    $5, -8(%rbp)        # Set p.x = 5
+    movl    $10, -4(%rbp)       # Set p.y = 10
+
+    movl    $0, %eax            # Return 0
+    leave                       # Restore base pointer
+    ret                         # Return
+\end{lstlisting}
+\end{LTR}
+
+
+\section*{انقیاد}
+
+\subsection*{انقیاد نوع}
+انقیاد نوع به معنی این است که نوع یک متغیر در چه زمانی و چگونه تعیین می‌‌شود. زبان C++ یک زبان انقیاد نوع ایستا است اما در سناریو‌هایی مانند پلی مورفیسم از انقیاد نوع پویا نیز پشتیبانی می‌کند.
+
+\subsubsection*{انقیاد نوع ایستا در C++}
+\begin{itemize}
+    \item نوع متغیر در زمان کامپایل مشخص می‌شود.
+    \item خطاهای مرتبط با نوع در زمان کامپایل بررسی می‌شود.
+    \item به دلیل تعیین خطاها و تشخیص نوع‌ها در زمان کامپایل زمان اجرا پایین است.
+\end{itemize}
+
+زبان C++ روش‌های مختلفی برای استفاده از این نوع تعریف کرده است:
+\begin{itemize}
+    \item تعریف متغیر‌ها در برنامه
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+    int num = 10;        // `num` is bound to type 
+    							`// int` at compile-time.
+    double pi = 3.14;    // `pi` is bound to type 
+    							`// double` at compile-time.
+    char ch = 'A';       // `ch` is bound to type `
+    							 // char` at compile-time.
+	\end{lstlisting}
+	\end{LTR}
+
+
+    \item تعریف توابع عادی در برنامه
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+void print(int value) {
+    std::cout << "Integer: " << value << std::endl;
+}
+
+void print(double value) {
+    std::cout << "Double: " << value << std::endl;
+}
+
+void print(const char* value) {
+    std::cout << "String: " << value << std::endl;
+}
+
+int main() {
+    print(10);               // Resolves to print(int)
+    print(3.14);             // Resolves to print(double)
+    print("Hello World");    // Resolves to print(const char*)
+    return 0;
+}
+	\end{lstlisting}
+	\end{LTR}
+
+ 
+    \item بارگذاری عملگرها
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+class Complex {
+public:
+    double real, imag;
+
+    Complex(double r, double i) : real(r), imag(i) {}
+
+    Complex operator+(const Complex& c) {
+        return Complex(real + c.real, imag + c.imag);
+    }
+};
+
+int main() {
+    Complex c1(1.0, 2.0), c2(3.0, 4.0);
+    Complex c3 = c1 + c2;    // Operator `+` resolved at compile-time
+
+    std::cout << "Real: " << c3.real << ", Imaginary: " << c3.imag << std::endl;
+    return 0;
+}
+
+	\end{lstlisting}
+	\end{LTR}
+
+
+    \item قالب‌های توابع (Function Templates)
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+template <typename T>
+T add(T a, T b) {
+    return a + b;
+}
+
+int main() {
+    std::cout << add(3, 4) << std::endl;         // Instantiates add<int>
+    std::cout << add(3.14, 1.86) << std::endl;  // Instantiates add<double>
+    return 0;
+}
+	\end{lstlisting}
+	\end{LTR}
+
+
+    \item توابع خطی (inline)
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+inline int square(int x) {
+    return x * x;
+}
+
+int main() {
+    std::cout << square(5) << std::endl;   // `square(5)` is replaced with `5 * 5` at compile-time
+    return 0;
+}
+	\end{lstlisting}
+	\end{LTR}
+
+
+    \item عبارات ثابت
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+constexpr int square(int x) {
+    return x * x;
+}
+
+int main() {
+    constexpr int result = square(5);  // Computed at compile-time
+    std::cout << result << std::endl;
+    return 0;
+}
+	\end{lstlisting}
+	\end{LTR}
+
+
+
+    \item توابع کلاس‌ها
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+class Base {
+public:
+    void display() {
+        std::cout << "Base class display" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void display() {
+        std::cout << "Derived class display" << std::endl;
+    }
+};
+
+int main() {
+    Base obj;
+    obj.display();   // Resolves to Base::display() at compile-time
+    return 0;
+}
+	\end{lstlisting}
+	\end{LTR}
+
+    \item عبارت‌های لامبدا
+    \begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}
+int main() {
+    auto add = [](int a, int b) { return a + b; };  // Resolved at compile-time
+    std::cout << add(3, 4) << std::endl;
+    return 0;
+}
+	\end{lstlisting}
+	\end{LTR}
+
+\end{itemize}
+
+
+\subsubsection*{انقیاد نوع پویا در C++}
+\begin{itemize}
+    \item نوع متغیر در زمان اجرا مشخص می‌شود.
+    \item خطاهای مرتبط با نوع در زمان اجرا بررسی می‌شود.
+    \item به دلیل تعیین خطاها و تشخیص نوع‌ها در زمان اجرا زمان اجرا بالا است.
+\end{itemize}
+
+زبان C++ به دلیل زمان اجرای پایین این نوع انقیاد روش‌ محدودی را برای استفاده از این نوع تعریف کرده است و آن هم استفاده از توابع مجازی است.
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+class Base {
+public:
+    virtual void display() {  // Virtual function enables dynamic binding
+        std::cout << "Base class display" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void display() override {  // Overrides the base class method
+        std::cout << "Derived class display" << std::endl;
+    }
+};
+
+int main() {
+    Base* basePtr;
+    Derived derivedObj;
+    basePtr = &derivedObj;
+
+    basePtr->display();  // Resolved at runtime to Derived::display
+    return 0;
+}
+\end{lstlisting}
+\end{LTR}
+
+
+\begin{LTR} % Left-to-right environment for code
+\begin{lstlisting}
+class Animal {
+public:
+    virtual void speak() = 0;  // Pure virtual function
+};
+
+class Dog : public Animal {
+public:
+    void speak() override {
+        std::cout << "Woof!" << std::endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    void speak() override {
+        std::cout << "Meow!" << std::endl;
+    }
+};
+
+int main() {
+    Animal* animal;
+
+    Dog dog;
+    Cat cat;
+
+    animal = &dog;
+    animal->speak();  // Resolved at runtime to Dog::speak
+
+    animal = &cat;
+    animal->speak();  // Resolved at runtime to Cat::speak
+
+    return 0;
+}
+\end{lstlisting}
+\end{LTR}
 
 \end{document}
+
