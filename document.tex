@@ -1,0 +1,710 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage{hyperref}
+\usepackage[top=3cm,right=3cm,bottom=3cm,left=2.5cm]{geometry}
+\usepackage{caption}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{float}
+
+\usepackage{listings} % Load the listings package
+\usepackage{xcolor}   % Optional: For custom colors
+
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xepersian}
+\settextfont{XB Zar}
+\linespread{1.2}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+
+
+\pagestyle{fancy}
+% Set up fancyhdr to place page number at the top left
+\pagestyle{fancy}
+\fancyhf{} % Clear all header/footer fields
+\fancyhead[L]{\thepage} % Page number on the top left
+
+% Define custom style for chapter page (no header or footer)
+\fancypagestyle{plain}{
+	\fancyhf{} % Clear headers and footers
+	\renewcommand{\headrulewidth}{0pt} % Remove header rule
+}
+
+
+% Changing TOC addressing format (from period separation to dash seperation)
+\renewcommand{\thesection}{\thechapter-\arabic{section}-}
+\renewcommand{\thesubsection}{\thechapter-\arabic{section}-\arabic{subsection}-}
+\renewcommand{\thesubsubsection}{\thechapter-\arabic{section}-\arabic{subsection}-\arabic{subsubsection}-}
+
+\renewcommand{\thetable}{(\thechapter-\arabic{table})}
+
+% Redefine how captions are written 
+\renewcommand{\thefigure}{(\thechapter-\arabic{figure})}
+
+% Set caption font size to 11pt
+\captionsetup{font=small, labelsep=space} % 'small' is equivalent to 11pt in most classes
+
+% Make sure Persian and Latin text have their respective font sizes
+\settextfont{XB Zar} % Persian font
+\setlatintextfont{Times New Roman} % Latin font
+
+% Automatically switch between Persian and Latin fonts based on character type
+\XeTeXinterchartokenstate=1
+\newXeTeXintercharclass\persianchars
+\newXeTeXintercharclass\latinchars
+
+% Automatically switch fonts when switching between Persian and Latin characters
+\XeTeXinterchartoks \latinchars \persianchars = {\begingroup\persianfont\endgroup}
+\XeTeXinterchartoks \persianchars \latinchars = {\begingroup\latinfont\endgroup}
+
+
+\setlatintextfont{Courier New} % برای نمایش کدهای انگلیسی
+\lstset{
+	language=C++,                      % Set language to C++
+	basicstyle=\ttfamily\small,        % Use monospaced font
+	keywordstyle=\bfseries\color{blue}, % Keywords in bold blue
+	stringstyle=\color{red},           % Strings in red
+	commentstyle=\itshape\color{green!60!black}, % Comments in green italics
+	numbers=right,                     % Line numbers on the right
+	numberstyle=\tiny,                 % Line number font size
+	stepnumber=1,                      % Show line numbers every line
+	frame=single,                      % Add a frame around code
+	tabsize=4,                         % Set tab size
+	showstringspaces=false,            % Do not show spaces in strings
+	xleftmargin=10pt,                  % Adjust left margin for better alignment
+	xrightmargin=10pt                  % Adjust right margin for better alignment
+}
+
+\title{گزارش کارآموزی}
+\author{عسل خائف}
+
+\begin{document}
+	%\maketitle
+	\begin{titlepage}
+		\centering
+		% University logo
+		\includegraphics[width=0.4\textwidth]{img/university-logo.png}
+		
+		% University and Faculty name
+		{\Large دانشگاه اصفهان}\par
+		{\Large دانشکده مهندسی کامپیوتر}\par\vspace{2cm}
+		
+		% Report title
+		\textbf
+		{\Huge گزارش فاز اول پروژه زبان‌های برنامه نویسی}\par\vspace{1.5cm}
+		{\Huge زبان برنامه نویسی \lr{C++}}\par\vspace{1.5cm}
+		
+		% Intern details
+		\large
+		\textbf{تهیه کنندگان:}\par{متین اعظمی}\par{پوریا طلائی}\par{عسل خائف}\par\vspace{1cm}  
+
+		\textbf{استاد درس:}\par{آقای دکتر آرش شفیعی}\par\vspace{3cm}
+		
+		\par{نیم‌سال اول ۴۰۳ - ۴۰۴}\par\vspace{0.5cm}
+				
+		
+	\end{titlepage}
+	\tableofcontents
+	\listoftables
+	\listoffigures
+	
+\chapter{مقدمه}
+\section{تاریخچه زبان C++}
+\begin{itemize}
+	\item
+آغاز و ابداع زبان \lr{C++}: 
+زبان \lr{C++} توسط بیارنه استراستروپ  (\lr{Bjarne Stroustrup}) در اوایل دهه 1980 در \lr{Bell Labs} شرکت\lr{ (AT-T)} توسعه داده شد.
+ این زبان در ابتدا به‌عنوان یک نسخه ارتقاء یافته از زبان \lr{C}  طراحی شد که ویژگی‌های شی‌گرا به آن افزوده می‌شد.
+ به‌ویژه هدف آن این بود که برنامه‌نویسان قادر به نوشتن برنامه‌های پیچیده‌تر با ویژگی‌های شی‌گرا باشند، در حالی که هنوز از کارایی بالا و قابلیت‌های زبان \lr{C} بهره‌مند باشند.
+	
+	\item
+هدف اولیه: \lr{C++}  ابتدا به‌منظور ایجاد یک زبان برنامه‌نویسی با پشتیبانی از برنامه‌نویسی شی‌گرا (\lr{OOP}) در کنار قابلیت‌های سطح پایین زبان \lr{C} طراحی شد. ویژگی‌های \lr{OOP} مانند ارث‌بری (\lr{inheritance})، چندریختی (\lr{polymorphism})  و کپسوله‌سازی (\lr{encapsulation}) به این زبان اضافه شدند تا برنامه‌نویسان قادر باشند کدهای پیچیده‌تر و قابل نگهداری‌تری بنویسند.
+	
+	\item
+نام‌گذاری \lr{C++}: نام \lr{C++} به دلیل افزوده شدن ویژگی‌های جدید به زبان \lr{C} انتخاب شد. علامت ++ به‌طور نمادین به افزایش یا ارتقای زبان \lr{C} اشاره دارد.
+	
+\end{itemize}
+
+\section{کاربردهای زبان C++}
+\begin{itemize}
+		\item
+سیستم‌های نرم‌افزاری پیچیده: \lr{C++} از ابتدا برای نوشتن سیستم‌های پیچیده و نرم‌افزارهای کاربردی طراحی شد که نیاز به سرعت بالا و دسترسی مستقیم به سخت‌افزار دارند. از این رو در سیستم‌عامل‌ها مانند (ویندوز و لینوکس) ، نرم‌افزارهای سیستمی و نرم‌افزارهای \lr{Embedded} به‌طور گسترده‌ای استفاده می‌شود.
+	\item
+توسعه بازی‌ها: \lr{C++} زبان اصلی برای توسعه بازی‌های کامپیوتری و گرافیکی است. موتورهای بازی‌سازی بزرگی مانند \lr{Unreal Engine }از C++ استفاده می‌کنند. این زبان به دلیل کارایی بالا و پشتیبانی از برنامه‌نویسی شی‌گرا برای توسعه بازی‌های پیچیده بسیار مناسب است.
+	\item
+برنامه‌نویسی علمی و مهندسی: \lr{C++} در زمینه‌هایی مانند شبیه‌سازی‌های علمی، پردازش تصویر، پردازش داده‌های بزرگ و مدل‌سازی فیزیکی استفاده می‌شود. به‌ویژه در حوزه‌های مهندسی و علوم کامپیوتر به دلیل قدرت پردازشی بالا و مدیریت دقیق حافظه کاربرد زیادی دارد.
+	\item
+نرم‌افزارهای مالی: به دلیل سرعت و کارایی بالای \lr{C++}، این زبان در توسعه نرم‌افزارهای مالی، تحلیل داده‌های بورس و مدیریت تراکنش‌های بانکی نیز کاربرد دارد.
+\end{itemize}
+\section{هدف اصلی از طراحی C++}
+\begin{itemize}
+	\item
+رفع مشکلات زبان C : \lr{C}++ به‌عنوان یک ارتقاء بر زبان \lr{C} طراحی شد. یکی از مشکلات زبان C عدم پشتیبانی از ویژگی‌های شی‌گرا بود که در برنامه‌های پیچیده کارایی و نگهداری کد را دشوار می‌کرد. \lr{C++} این قابلیت‌ها را به زبان اضافه کرد، در حالی که همچنان از ساختارهای سطح پایین و کارایی بالای \lr{C} بهره می‌برد.
+\item
+افزایش قدرت و انعطاف‌پذیری: \lr{C++} از همان ابتدا قصد داشت تا قدرت و انعطاف‌پذیری بیشتری را به برنامه‌نویسان بدهد. به‌ویژه با استفاده از ویژگی‌های شی‌گرا، کدهای پیچیده‌تر و انعطاف‌پذیرتری می‌توان نوشت.
+\item
+پشتیبانی از برنامه‌نویسی شی‌گرا: یکی از اصلی‌ترین اهداف \lr{C++} این بود که ویژگی‌های شی‌گرا را به زبان \lr{C} اضافه کند، به‌طوری که برنامه‌نویسان بتوانند از ارث‌بری، چندریختی و کپسوله‌سازی برای نوشتن نرم‌افزارهای مقیاس‌پذیرتر و قابل نگهداری‌تر استفاده کنند.
+\end{itemize}
+\section{ مشکلات اولیه زبان C++}
+\begin{itemize}
+	\item
+پیچیدگی: یکی از مشکلات ابتدایی \lr{C++ } پیچیدگی یادگیری آن بود. بسیاری از برنامه‌نویسان جدید با مفاهیم پیچیده‌ای مانند اشاره‌گرها، مدیریت حافظه دستی و ویژگی‌های شی‌گرا مواجه می‌شدند.
+\item 
+مدیریت حافظه: اگرچه \lr{ C++} به برنامه‌نویسان کنترل دقیقی بر حافظه می‌دهد، اما این امر باعث می‌شود که مدیریت حافظه به‌صورت دستی بسیار دشوار و مستعد خطا باشد. برای مثال، دسترسی به حافظه اشتباه یا فراموش کردن آزادسازی حافظه می‌تواند باعث ایجاد اشکالاتی مانند "\lr{Memory Leaks}" و "\lr{Segmentation Faults}" شود.
+\item 
+عدم تطابق با زبان‌های سطح بالا: در ابتدا، بسیاری از برنامه‌نویسان سعی می‌کردند تا \lr{C++} را مانند زبان‌های سطح بالاتر استفاده کنند، اما این امر به‌خاطر پیچیدگی‌های خاص \lr{C++ }و نیاز به توجه بیشتر به جزئیات سخت‌افزاری ممکن نبود.
+\end{itemize}
+
+
+
+برای ارزیابی زبان C++ در مقایسه با زبان‌های دیگر و به‌ویژه زبان‌هایی که ویژگی‌های مشابه دارند، باید معیارهای مختلفی از جمله خوانایی، قابلیت اطمینان، کارایی، هزینه یادگیری و بهره‌وری، و قابلیت جابجایی را در نظر بگیریم. در اینجا یک تحلیل جامع از C++ در مقایسه با زبان‌های مشابه (مانند C , Java، Python) ارائه می‌شود:
+
+\section{ویژگی‌های خاص C++ که آن را از زبان‌های مشابه متمایز می‌کند}
+\begin{itemize}
+\item 
+کنترل دقیق بر حافظه: یکی از بزرگترین ویژگی‌های تمایز \lr{C++} نسبت به زبان‌های مشابه، قابلیت کنترل دقیق بر حافظه است. در زبان‌هایی مانند \lr{C}  و \lr{C++}، برنامه‌نویس باید به‌صورت دستی حافظه را تخصیص دهد و آن را آزاد کند. این ویژگی به زبان‌های سطح پایین‌تر این امکان را می‌دهد که از عملکرد بسیار بالا و بهینه استفاده کنند، به‌ویژه در سیستم‌های \lr{embedded} و بازی‌ها. این ویژگی در زبان‌هایی مانند \lr{Java}  و \lr{Python}  وجود ندارد، زیرا این زبان‌ها از جمع‌آوری زباله (\lr{garbage collection}) برای مدیریت حافظه استفاده می‌کنند.
+\item 
+شی‌گرایی و چندریختی : C++ از اولین زبان‌هایی بود که پشتیبانی از ویژگی‌های شی‌گرایی را به زبان‌های سطح پایین اضافه کرد. این ویژگی در مقایسه با زبان‌هایی مثل C  که شی‌گرایی ندارند، یک مزیت بزرگ به‌شمار می‌آید. به علاوه،  \lr{C++} از چندریختی (\lr{polymorphism}) و وراثت (\lr{inheritance}) به‌خوبی پشتیبانی می‌کند که این امر نوشتن کدهای پیچیده و قابل نگهداری را ساده‌تر می‌کند.
+\item 
+توانایی ترکیب ویژگی‌های سطح پایین و بالا: \lr{C++ }یک زبان چندپارادایمی است که هم از برنامه‌نویسی شی‌گرا (\lr{OOP}) و هم از ویژگی‌های سطح پایین مانند دسترسی مستقیم به حافظه، کار با پورت‌ها و سخت‌افزار پشتیبانی می‌کند. این ویژگی باعث می‌شود که \lr{C++ }برای توسعه نرم‌افزارهای سیستم و برنامه‌های پیچیده با نیاز به کارایی بالا ایده‌آل باشد.
+\item 
+پشتیبانی از \lr{Template} و \lr{Generic Programming}: \lr{C++} دارای قابلیت‌های پیشرفته‌ای مانند \lr{Templates} است که امکان برنامه‌نویسی جنریک را فراهم می‌کند. این ویژگی به برنامه‌نویسان این امکان را می‌دهد که کدهای بازتر و انعطاف‌پذیرتری بنویسند که برای انواع مختلف داده‌ها کار کند.
+\end{itemize}
+
+\section{ارزیابی زبان C++ بر اساس معیارهای مختلف}
+\subsection{خوانایی (Readability)}
+\begin{itemize}
+	\item 
+ \lr{:C++}   به‌طور کلی، خوانایی C++ نسبت به زبان‌های سطح بالا مانند \lr{Python}  یا  \lr{Java} پایین‌تر است. دلیل این امر استفاده از ویژگی‌های پیچیده‌ای مانند اشاره‌گرها (\lr{pointers}) ، چندپارادایم بودن زبان، و نیاز به مدیریت حافظه دستی است. این ویژگی‌ها ممکن است باعث پیچیدگی در فهم کد و اشکال‌زدایی آن شوند.
+\item 
+\lr{:Java/Python} این زبان‌ها به‌خاطر سادگی و ساختار واضح‌تر خود، خوانایی بیشتری دارند. در \lr{Python} به‌ویژه با وجود سینتکس ساده‌تر و نداشتن ویژگی‌هایی مانند اشاره‌گر، کدها بسیار قابل فهم‌تر هستند.
+\end{itemize}
+\subsection{قابلیت اطمینان (Reliability) }
+\begin{itemize}
+	\item
+\lr{:C++} یکی از نقاط ضعف \lr{C++ }در مقایسه با زبان‌هایی مانند Java ،خطراتی مانند \lr{Memory Leaks }و \lr{Segmentation \lr{Faults} }است. زیرا \lr{C++ }به‌طور دستی حافظه را مدیریت می‌کند و این می‌تواند منجر به مشکلاتی در صورت خطای برنامه‌نویس شود. با این حال، این ویژگی برای سیستم‌های پیچیده و بازی‌ها که نیاز به کارایی بالا دارند، بسیار مفید است.
+\item
+\lr{Java}: \lr{Java}  با استفاده از \lr{garbage collection} و مدیریت خودکار حافظه، قابلیت اطمینان بیشتری دارد و کمتر مستعد مشکلات ناشی از مدیریت حافظه است.
+\item
+\lr{Python}: \lr{Python} نیز مانند \lr{Java} از \lr{garbage collection} استفاده می‌کند و به همین دلیل بیشتر از \lr{C++ }قابلیت اطمینان دارد، به‌ویژه در پروژه‌های بزرگتر که مدیریت حافظه مشکل‌ساز می‌شود.
+\end{itemize}
+\subsection{کارایی (Performance) }
+\begin{itemize}
+	\item
+\lr{:C++}  \lr{C++}یکی از سریع‌ترین زبان‌های برنامه‌نویسی است. به‌خاطر آنکه برنامه‌نویسان کنترل دقیقی بر حافظه دارند، می‌توانند به بهینه‌ترین شکل ممکن از منابع استفاده کنند. این زبان برای برنامه‌هایی که به کارایی بالا نیاز دارند) مثل بازی‌ها، سیستم‌عامل‌ها و برنامه‌های(real-time  بسیار مناسب است.
+\item
+\lr{:Java/Python } مقابل، زبان‌های سطح بالاتر مانند \lr{Java}  و \lr{Python}  معمولاً از سرعت پایین‌تری برخوردارند، زیرا خودکار حافظه را مدیریت می‌کنند و به همین دلیل نیاز به منابع بیشتری دارند. \lr{Python} به‌ویژه به‌خاطر مفسر بودنش کندتر از \lr{C++} است.
+\end{itemize}
+\subsection{هزینه یادگیری و برنامه‌نویسی \lr{(Learning Curve and Development Costs) }}
+\begin{itemize}
+	\item
+\lr{ :C++ }یادگیری \lr{C++ }می‌تواند چالش‌برانگیز باشد، به‌ویژه برای مبتدیان. مفاهیم پیچیده‌ای مانند اشاره‌گرها، مدیریت حافظه دستی، و ویژگی‌های شی‌گرایی نیازمند زمان و تلاش برای یادگیری و درک عمیق هستند. این زبان برای برنامه‌نویسان مبتدی و تازه‌کار ممکن است دشوار باشد.
+\item
+\lr{:Java/Python } در مقایسه،\lr{Python}‌خاطر سینتکس ساده‌اش بسیار سریع‌تر یاد گرفته می‌شود و برای برنامه‌نویسان مبتدی مناسب         است. \lr{Java} نیز اگرچه کمی پیچیده‌تر از \lr{Python} است، اما از \lr{C++} ساده‌تر است و برای یادگیری و توسعه سریع‌تر از C++ است.
+\end{itemize}
+\subsection{ هزینه اجرایی \lr{(Execution Cost and Efficiency)} }
+\begin{itemize}
+	\item
+:C++ یکی از نقاط قوت C++ این است که برنامه‌های نوشته شده با آن معمولاً از کمترین منابع سخت‌افزاری استفاده می‌کنند و سریع‌ترین عملکرد را دارند.
+\item
+:Java/Python  در حالی که  \lr{Java} و \lr{Python}به دلیل نیاز به ماشین مجازی یا مفسر و مدیریت حافظه خودکار، از نظر کارایی نسبت به C++ کندتر عمل می‌کنند
+.
+\end{itemize}
+\subsection{ قابلیت جابجایی  (Portability)}
+\begin{itemize}
+	\item
+\lr{:C++}  \lr{C++}برنامه‌ها را به کد ماشین تبدیل می‌کند، به همین دلیل ممکن است برای پلتفرم‌های مختلف نیاز به کامپایل مجدد داشته باشد.
+	\item
+\lr{:Java }یکی از مزایای اصلی \lr{Java} این است که برنامه‌های نوشته شده با آن از ویژگی \lr{"write once, run anywhere"} برخوردار هستند.
+ زیرا کد جاوا به بایت‌کد تبدیل شده و در \lr{Java Virtual Machine (JVM)}  اجرا می‌شود که این امکان را می‌دهد تا بدون تغییر کد بر روی هر پلتفرم قابل اجرا باشد.
+ 	\item
+\lr{:Python} \lr{Python}  نیز به‌خاطر پشتیبانی از پلتفرم‌های مختلف، از جمله ویندوز، لینوکس، و مک، دارای قابلیت جابجایی خوبی است.
+\end{itemize}
+\subsection{نتیجه‌گیری}
+\lr{C++ }از نظر کارایی و کنترل دقیق بر منابع بسیار قدرتمند است و در برنامه‌هایی که نیاز به بهینه‌سازی‌های پیچیده دارند، ایده‌آل است.
+برای برنامه‌هایی که نیاز به سادگی و سرعت توسعه دارند، زبان‌هایی مانند  \lr{Python} یا \lr{Java}  ممکن است گزینه‌های بهتری باشند.
+اگر به دنبال توسعه سیستم‌های پیچیده و مقیاس‌پذیر با قابلیت‌های پیشرفته مانند \lr{OOP} و کنترل دقیق هستید،\lr{ C++ }انتخاب بسیار مناسبی است.
+\section{پیاده‌سازی زبان C++: کامپایلر یا مفسر؟}
+\begin{itemize}
+	 	\item
+	زبان \lr{C++ } به‌طور کامل به کد ماشین ترجمه می‌شود، که پس از آن مستقیماً توسط سیستم‌عامل و سخت‌افزار اجرا می‌شود. به این معنی که C++  یک زبان کامپایل‌شده است، نه یک زبان مفسر.
+	 	\item
+	در این فرآیند، ابتدا کد منبع \lr{C++} توسط کامپایلر ترجمه می‌شود به کدهای ماشین یا بایت‌کدهایی که مستقیماً قابل اجرا روی سیستم هدف باشند. این کامپایلرها مسئول تبدیل کدهای نوشته‌شده در \lr{C++ }به فرم قابل اجرا هستند.
+\end{itemize}
+\section{ کامپایلرهای رایج برای زبان C++}
+در حال حاضر چندین کامپایلر برای زبان C++ وجود دارد که هر یک ویژگی‌های خاص خود را دارند. برخی از محبوب‌ترین کامپایلرها عبارتند از:
+
+\subsection{\lr{GCC (GNU Compiler Collection)}}
+\textbf{توسعه‌دهنده:} \lr{GNU (Free Software Foundation).}
+
+\textbf{مزایا:}
+\begin{itemize}
+	\item \textbf{منبع باز:} GCC یک کامپایلر منبع‌باز است و در بیشتر سیستم‌های عامل لینوکس و یونیکس استفاده می‌شود.
+	\item \textbf{پشتیبانی از استانداردهای جدید \lr{:C++}} GCC به‌طور مداوم با ویژگی‌های جدید C++ همگام است و از اکثر استانداردهای جدید \( C++ \) از جمله \( C++11 \)، \( C++14 \)، \( C++17 \)، و \( C++20 \) پشتیبانی می‌کند.
+	\item \textbf{قابلیت‌های بهینه‌سازی:} \lr{GCC} یکی از کامپایلرهای معروف برای بهینه‌سازی کد است که سرعت اجرای برنامه‌ها را بهبود می‌بخشد.
+	\item \textbf{پشتیبانی از پلتفرم‌های مختلف:} \lr{GCC} قابلیت کار بر روی سیستم‌های مختلف مانند لینوکس، مک، ویندوز از طریق \lr{Cygwin} و \lr{MinGW} را دارد.
+\end{itemize}
+
+\textbf{معایب:}
+\begin{itemize}
+	\item در مقایسه با کامپایلرهای تجاری، ممکن است بعضی از ویژگی‌ها یا بهینه‌سازی‌ها در \lr{GCC} کمتر دقیق یا بهینه باشند.
+\end{itemize}
+
+\subsection{Clang}
+\textbf{توسعه‌دهنده:} \lr{Apple Inc}. با مشارکت پروژه‌های متن‌باز.
+
+\textbf{مزایا:}
+\begin{itemize}
+	\item \textbf{سرعت کامپایل بالا:} \lr{Clang} به‌عنوان یک کامپایلر سریع شناخته می‌شود که سرعت کامپایل بالاتری نسبت به برخی از دیگر کامپایلرها دارد.
+	\item \textbf{پیغام‌های خطای دقیق و مفصل:} یکی از ویژگی‌های برجسته \lr{Clang} پیغام‌های خطای بسیار واضح و دقیق آن است که برای برنامه‌نویسان مبتدی و حرفه‌ای مفید است.
+	\item \textbf{پشتیبانی از استانداردهای جدید:} \lr{Clang} همچنین از استانداردهای جدید C++ پشتیبانی می‌کند.
+	\item \textbf{پشتیبانی از پلتفرم‌های مختلف:} مانند \lr{GCC}، \lr{Clang }نیز قابلیت اجرا بر روی پلتفرم‌های مختلف را دارد.
+	\item \textbf{یکپارچگی با ابزارهای \lr{:Apple}} به‌ویژه در محیط‌های \lr{macOS} و \lr{iOS}، \lr{Clang} کامپایلر پیش‌فرض است.
+\end{itemize}
+
+\textbf{معایب:}
+\begin{itemize}
+	\item برخی از ویژگی‌های خاص بهینه‌سازی \lr{Clang} ممکن است نسبت به \lr{GCC} کمتر پخته باشد.
+\end{itemize}
+
+\subsection{\lr{Microsoft Visual C++ (MSVC)}}
+\textbf{توسعه‌دهنده:} \lr{Microsoft}.
+
+\textbf{مزایا:}
+\begin{itemize}
+	\item \textbf{یکپارچگی با ویژوال استودیو:} \lr{MSVC} به‌طور کامل با محیط توسعه‌ی \lr{Visual Studio} که یکی از محبوب‌ترین \lr{IDE} ها است، یکپارچه شده است. این یکپارچگی به برنامه‌نویسان C++ این امکان را می‌دهد که به راحتی برنامه‌های C++ را در ویندوز توسعه دهند.
+	\item \textbf{ابزارهای پشتیبانی قوی:} \lr{MSVC} ابزارهای زیادی برای اشکال‌زدایی و بهینه‌سازی کدها ارائه می‌دهد که برای توسعه نرم‌افزارهای ویندوزی بسیار مفید است.
+	\item \textbf{بهینه‌سازی برای ویندوز:} \lr{MSVC} برای بهینه‌سازی کدهایی که روی پلتفرم ویندوز اجرا می‌شوند، بسیار مناسب است.
+\end{itemize}
+
+\textbf{معایب:}
+\begin{itemize}
+	\item MSVC معمولاً در مقایسه با \lr{GCC} یا \lr{Clang} پشتیبانی کمتری از استانداردهای جدید C++ خصوصاً \( C++20 \) دارد.
+	\item \textbf{محدودیت‌های پلتفرمی:} \lr{MSVC} عمدتاً برای ویندوز است و برای سیستم‌های عامل دیگر (لینوکس و مک) مناسب نیست.
+\end{itemize}
+
+\subsection{\lr{Intel C++ Compiler (ICC)}}
+\textbf{توسعه‌دهنده:} \lr{Intel}.
+
+\textbf{مزایا:}
+\begin{itemize}
+	\item \textbf{بهینه‌سازی‌های سطح پایین برای سخت‌افزارهای \lr{:Intel}} \lr{ICC} برای برنامه‌هایی که روی پردازنده‌های \lr{Intel} اجرا می‌شوند، بهینه‌سازی‌های خاصی دارد که عملکرد برنامه‌ها را در سخت‌افزار Intel بهبود می‌بخشد.
+	\item \textbf{دقت بالای بهینه‌سازی:} این کامپایلر به‌طور خاص در بهینه‌سازی کدهای محاسباتی و علمی که نیاز به عملکرد بالایی دارند، شناخته شده است.
+\end{itemize}
+
+\textbf{معایب:}
+\begin{itemize}
+	\item \textbf{غیررایگان:} برخلاف \lr{GCC} و \lr{Clang}، \lr{ICC} یک کامپایلر تجاری است و برای استفاده از برخی ویژگی‌های پیشرفته‌تر، باید هزینه پرداخت کنید.
+\end{itemize}
+
+\section{مقایسه مزایای کامپایلرهای C++}
+عکس از حدول
+\chapter{نحو و معناشناسی}
+\section{کلمات کلیدی}
+در ادامه فهرستی از ۴۸ کلمه کلیدی در زبان C++، توضیح مختصر و کاربرد آن‌ها همراه با مثال ارائه می‌شود:
+
+\begin{enumerate}
+	\item \textbf{int}
+	\begin{itemize}
+		\item \textbf{توضیح:} نوع داده عدد صحیح.
+		\item \textbf{کاربرد:} تعریف متغیرهایی که اعداد صحیح را ذخیره می‌کنند.
+	\end{itemize}
+	\item \textbf{float}
+	\begin{itemize}
+		\item \textbf{توضیح:} نوع داده اعشاری با دقت کم.
+		\item \textbf{کاربرد:} ذخیره اعداد اعشاری کوچک.
+	\end{itemize}
+	\item \textbf{double}
+	\begin{itemize}
+		\item \textbf{توضیح:} نوع داده اعشاری با دقت بالا.
+		\item \textbf{کاربرد:} ذخیره اعداد اعشاری بزرگ‌تر.
+	\end{itemize}
+	\item \textbf{char}
+	\begin{itemize}
+		\item \textbf{توضیح:} نوع داده کاراکتر.
+		\item \textbf{کاربرد:} ذخیره یک کاراکتر.
+	\end{itemize}
+	\item \textbf{bool}
+	\begin{itemize}
+		\item \textbf{توضیح:} نوع داده بولین (true/false).
+		\item \textbf{کاربرد:} ذخیره مقادیر منطقی.
+	\end{itemize}
+	\item \textbf{void}
+	\begin{itemize}
+		\item \textbf{توضیح:} مشخص‌کننده بازگشت نداشتن توابع.
+		\item \textbf{کاربرد:} تعریف توابعی که مقداری برنمی‌گردانند.
+	\end{itemize}
+	\item \textbf{if}
+	\begin{itemize}
+		\item \textbf{توضیح:} شرطی.
+		\item \textbf{کاربرد:} اجرای دستورات در صورت برقرار بودن شرط.
+	\end{itemize}
+	\item \textbf{else}
+	\begin{itemize}
+		\item \textbf{توضیح:} شرط جایگزین.
+		\item \textbf{کاربرد:} اجرای دستورات در صورت برقرار نبودن شرط.
+	\end{itemize}
+	\item \textbf{switch}
+	\begin{itemize}
+		\item \textbf{توضیح:} انتخاب چندگانه.
+		\item \textbf{کاربرد:} بررسی مقادیر مختلف یک متغیر.
+	\end{itemize}
+	\item \textbf{for}
+	\begin{itemize}
+		\item \textbf{توضیح:} حلقه.
+		\item \textbf{کاربرد:} تکرار دستورات با تعداد مشخص.
+	\end{itemize}
+	\item \textbf{while}
+	\begin{itemize}
+		\item \textbf{توضیح:} حلقه.
+		\item \textbf{کاربرد:} تکرار دستورات تا زمانی که شرط برقرار باشد.
+	\end{itemize}
+	\item \textbf{do}
+	\begin{itemize}
+		\item \textbf{توضیح:} حلقه انجام بده سپس بررسی کن.
+		\item \textbf{کاربرد:} حداقل یک بار اجرای دستورات.
+	\end{itemize}
+	\item \textbf{return}
+	\begin{itemize}
+		\item \textbf{توضیح:} خروج از تابع و بازگرداندن مقدار.
+		\item \textbf{کاربرد:} بازگرداندن مقدار در توابع.
+	\end{itemize}
+	\item \textbf{break}
+	\begin{itemize}
+		\item \textbf{توضیح:} خروج از حلقه یا switch.
+		\item \textbf{کاربرد:} خاتمه اجرای حلقه یا بلوک.
+	\end{itemize}
+	\item \textbf{continue}
+	\begin{itemize}
+		\item \textbf{توضیح:} پرش به مرحله بعدی حلقه.
+		\item \textbf{کاربرد:} ادامه اجرای حلقه با شرایط خاص.
+	\end{itemize}
+	\item \textbf{class}
+	\begin{itemize}
+		\item \textbf{توضیح:} تعریف کلاس.
+		\item \textbf{کاربرد:} تعریف اشیاء با خصوصیات و متدها.
+	\end{itemize}
+	\item \textbf{public}
+	\begin{itemize}
+		\item \textbf{توضیح:} دسترسی عمومی.
+		\item \textbf{کاربرد:} دسترسی آزاد به اعضای کلاس.
+	\end{itemize}
+	\item \textbf{private}
+	\begin{itemize}
+		\item \textbf{توضیح:} دسترسی خصوصی.
+		\item \textbf{کاربرد:} محدود کردن دسترسی به اعضای کلاس.
+	\end{itemize}
+	\item \textbf{protected}
+	\begin{itemize}
+		\item \textbf{توضیح:} دسترسی محافظت‌شده.
+		\item \textbf{کاربرد:} دسترسی محدود به کلاس و فرزندان آن.
+	\end{itemize}
+	\item \textbf{struct}
+	\begin{itemize}
+		\item \textbf{توضیح:} تعریف ساختار.
+		\item \textbf{کاربرد:} ایجاد گروهی از متغیرها.
+	\end{itemize}
+	\item \textbf{const}
+	\begin{itemize}
+		\item \textbf{توضیح:} ثابت.
+		\item \textbf{کاربرد:} تعریف مقادیری که تغییر نمی‌کنند.
+	\end{itemize}
+	\item \textbf{namespace}
+	\begin{itemize}
+		\item \textbf{توضیح:} فضای نام.
+		\item \textbf{کاربرد:} جلوگیری از تداخل نام‌ها.
+	\end{itemize}
+	\LTR
+	\begin{lstlisting}[breaklines=true]
+	#include <iostream>
+	
+	// Defining a namespace called "Math"
+	namespace Math {
+		const double PI = 3.14159;
+		double area(double radius) {
+			return PI * radius * radius;
+		}
+	}
+	// Defining another namespace called "Geometry"
+	namespace Geometry {
+		const double PI = 3.14;  // Another value for PI, which could be used in geometry
+		
+		// Function to calculate the area of a square
+		double area(double side) {
+			return side * side;
+		}
+	}
+	
+	int main() {
+		double radius = 5.0;
+		double side = 4.0;
+		
+		// Using the area function in the Math namespace
+		std::cout << "Area of circle: " << Math::area(radius) << std::endl;
+		
+		// Using the area function in the Geometry namespace
+		std::cout << "Area of square: " << Geometry::area(side) << std::endl;
+		
+		return 0;
+	}
+		\end{lstlisting}
+	\RTL
+	\item \textbf{using}
+	\begin{itemize}
+		\item \textbf{توضیح:} استفاده از فضای نام.
+		\item \textbf{کاربرد:} کاهش تایپ در استفاده از فضای نام.
+	\end{itemize}
+	\item \textbf{try}
+	\begin{itemize}
+		\item \textbf{توضیح:} بلاک مدیریت خطا.
+		\item \textbf{کاربرد:} آزمایش بخش کد حساس.
+	\end{itemize}
+	\item \textbf{catch}
+	\begin{itemize}
+		\item \textbf{توضیح:} بلاک مدیریت خطا.
+		\item \textbf{کاربرد:} گرفتن خطاها.
+	\end{itemize}
+	\item \textbf{throw}
+	\begin{itemize}
+		\item \textbf{توضیح:} پرتاب خطا.
+		\item \textbf{کاربرد:} تولید خطا در زمان اجرا.
+	\end{itemize}
+	\item \textbf{enum}
+	\begin{itemize}
+		\item \textbf{توضیح:} نوع شمارشی.
+		\item \textbf{کاربرد:} تعریف مقادیر ثابت مرتبط.
+	\end{itemize}
+	\item \textbf{new}
+	\begin{itemize}
+		\item \textbf{توضیح:} تخصیص حافظه پویا.
+		\item \textbf{کاربرد:} ایجاد شی یا آرایه در زمان اجرا.
+	\end{itemize}
+	\item \textbf{delete}
+	\begin{itemize}
+		\item \textbf{توضیح:} آزادسازی حافظه پویا.
+		\item \textbf{کاربرد:} جلوگیری از نشت حافظه.
+	\end{itemize}
+	\item \textbf{this}
+	\begin{itemize}
+		\item \textbf{توضیح:} اشاره به شی فعلی.
+		\item \textbf{کاربرد:} استفاده در متدهای عضو کلاس.
+	\end{itemize}
+	\item \textbf{explicit}
+	\begin{itemize}
+		\item \textbf{توضیح:} جلوگیری از تبدیل ضمنی نوع.
+		\item \textbf{کاربرد:} در سازنده‌ها برای جلوگیری از تبدیل‌های ناخواسته.
+	\end{itemize}
+	\item \textbf{mutable}
+	\begin{itemize}
+		\item \textbf{توضیح:} اجازه تغییر به اعضای کلاس ثابت.
+		\item \textbf{کاربرد:} برای اعضای داده‌ای که در متدهای const تغییر می‌کنند.
+	\end{itemize}
+	\item \textbf{volatile}
+	\begin{itemize}
+		\item \textbf{توضیح:} نشان می‌دهد که متغیر ممکن است در هر لحظه تغییر کند.
+		\item \textbf{کاربرد:} در برنامه‌نویسی سطح پایین و دسترسی به سخت‌افزار.
+	\end{itemize}
+	\LTR
+	\begin{lstlisting}[breaklines=true]
+		#include <iostream>
+		#include <thread>
+		#include <atomic>
+		
+		volatile bool stopFlag = false;
+		
+		void threadFunction() {
+			while (!stopFlag) {
+				// Looping until stopFlag is true
+			}
+			std::cout << "Thread stopped.\n";
+		}
+		
+		int main() {
+			std::thread t(threadFunction);
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			stopFlag = true;
+			t.join();
+			return 0;
+		}
+	\end{lstlisting}
+	\RTL
+	\item \textbf{inline}
+	\begin{itemize}
+		\item \textbf{توضیح:} پیشنهاد اجرای توابع درون خطی به کامپایلر.
+		\item \textbf{کاربرد:} برای بهبود کارایی در توابع کوچک.
+	\end{itemize}
+	\LTR
+	\begin{lstlisting}[breaklines=true]
+		#include <iostream>
+		
+		inline int add(int a, int b) { // پیشنهاد بهینه‌سازی توسط inline
+			return a + b;
+		}
+		int main() {
+			std::cout << "Sum: " << add(3, 4) << '\n';
+			return 0;
+		}
+		
+	\end{lstlisting}
+	\RTL
+	\item \textbf{register}
+	\begin{itemize}
+		\item \textbf{توضیح:} پیشنهاد به کامپایلر برای ذخیره متغیر در رجیستر CPU.
+		\item \textbf{کاربرد:} به ندرت استفاده می‌شود؛ عمدتاً تاریخی است.
+	\end{itemize}
+	\item \textbf{friend}
+	\begin{itemize}
+		\item \textbf{توضیح:} اجازه دسترسی به اعضای خصوصی یا محافظت‌شده کلاس.
+		\item \textbf{کاربرد:} تعریف توابع یا کلاس‌های دوست.
+	\end{itemize}
+		\LTR
+	\begin{lstlisting}[breaklines=true]
+	#include <iostream>
+	
+	class MyClass {
+		private:
+		int secretValue = 42;
+		
+		friend void revealSecret(const MyClass& obj); // تعریف تابع دوست
+	};
+	
+	void revealSecret(const MyClass& obj) {
+		std::cout << "Secret value: " << obj.secretValue << '\n';
+	}
+	
+	int main() {
+		MyClass obj;
+		revealSecret(obj);
+		return 0;
+	}
+	
+		
+	\end{lstlisting}
+	\RTL
+	\item \textbf{constexpr}
+	\begin{itemize}
+		\item \textbf{توضیح:} تعریف مقادیری که باید در زمان کامپایل ارزیابی شوند.
+		\item \textbf{کاربرد:} برای بهینه‌سازی زمان کامپایل.
+	\end{itemize}
+		\LTR
+	\begin{lstlisting}[breaklines=true]
+		#include <iostream>
+		
+		constexpr int square(int x) { // محاسبه در زمان کامپایل
+			return x * x;
+		}
+		
+		int main() {
+			constexpr int value = square(5); // مقداردهی در زمان کامپایل
+			std::cout << "Square: " << value << '\n';
+			return 0;
+		}
+		
+	\end{lstlisting}
+	\RTL
+	\item \textbf{decltype}
+	\begin{itemize}
+		\item \textbf{توضیح:} تعیین نوع بازگشتی یک عبارت.
+		\item \textbf{کاربرد:} معمولاً در متدهای قالبی استفاده می‌شود.
+	\end{itemize}
+	\item \textbf{typename}
+	\begin{itemize}
+		\item \textbf{توضیح:} تعریف یا استفاده از نوع در کلاس‌های قالبی.
+		\item \textbf{کاربرد:} برای اشاره به یک نوع در قالب‌ها.
+	\end{itemize}
+	\item \textbf{static\_cast}
+	\begin{itemize}
+		\item \textbf{توضیح:} تبدیل ایمن نوع در زمان کامپایل.
+		\item \textbf{کاربرد:} جایگزین تبدیل‌های قدیمی C.
+	\end{itemize}
+	\item \textbf{dynamic\_cast}
+	\begin{itemize}
+		\item \textbf{توضیح:} تبدیل ایمن نوع در زمان اجرا.
+		\item \textbf{کاربرد:} در کلاس‌های چندریختی استفاده می‌شود.
+	\end{itemize}
+	\item \textbf{reinterpret\_cast}
+	\begin{itemize}
+		\item \textbf{توضیح:} تبدیل نوع بدون تغییر بایت‌های داده.
+		\item \textbf{کاربرد:} در تبدیل‌های سطح پایین.
+	\end{itemize}
+	\item \textbf{static}
+	\begin{itemize}
+		\item \textbf{توضیح:} تعریف اعضای کلاس یا متغیرهایی که دامنه‌شان محدود است.
+		\item \textbf{کاربرد:} ذخیره متغیرهایی که مقدارشان در تمام نمونه‌ها مشترک است.
+	\end{itemize}
+	\item \textbf{typeid}
+	\begin{itemize}
+		\item \textbf{توضیح:} گرفتن اطلاعات نوع در زمان اجرا.
+		\item \textbf{کاربرد:} برای بررسی نوع شیء.
+	\end{itemize}
+		\LTR
+	\begin{lstlisting}[breaklines=true]
+	#include <iostream>
+	#include <typeinfo>  // Header for using typeid
+	
+	class Base {
+		public:
+		virtual ~Base() {}  // Virtual function required for using typeid
+	};
+	
+	class Derived : public Base {
+	};
+	
+	int main() {
+		Base* basePtr = new Derived();  // Create an object of type Derived and reference it with a Base pointer
+		
+		// Using typeid to get the type of the object at runtime
+		std::cout << "Type of basePtr: " << typeid(*basePtr).name() << std::endl;
+		
+		// Without using a virtual pointer, the result will be the type Base
+		std::cout << "Type of basePtr (without virtual): " << typeid(basePtr).name() << std::endl;
+		
+		delete basePtr;  // Freeing the allocated memory
+		return 0;
+	}
+	
+\end{lstlisting}
+\RTL
+	\item \textbf{default}
+	\begin{itemize}
+		\item \textbf{توضیح:} مقدار پیش‌فرض برای سازنده یا متد.
+		\item \textbf{کاربرد:} استفاده در کلاس‌ها برای ساده‌سازی.
+	\end{itemize}
+	\item \textbf{override}
+	\begin{itemize}
+		\item \textbf{توضیح:} مشخص می‌کند که متد بازنویسی‌شده است.
+		\item \textbf{کاربرد:} در برنامه‌نویسی شیءگرا.
+	\end{itemize}
+	\item \textbf{final}
+	\begin{itemize}
+		\item \textbf{توضیح:} جلوگیری از بازنویسی کلاس یا متد.
+		\item \textbf{کاربرد:} امنیت در طراحی کلاس‌ها.
+	\end{itemize}
+	\item \textbf{alignas}
+	\begin{itemize}
+		\item \textbf{توضیح:} مشخص کردن تراز حافظه.
+		\item \textbf{کاربرد:} تنظیم حافظه برای بهینه‌سازی.
+	\end{itemize}
+		\LTR
+	\begin{lstlisting}[breaklines=true]
+	#include <iostream>
+	#include <alignas>
+	
+	struct alignas(16) MyStruct {
+		int a;
+		double b;
+	};
+	
+	int main() {
+		MyStruct s;
+		std::cout << "Address of s: " << &s << std::endl;
+		std::cout << "Alignment of MyStruct: " << alignof(MyStruct) << std::endl;
+		return 0;
+	}
+		\end{lstlisting}
+	\RTL
+\end{enumerate}
+\end{document}
+	
