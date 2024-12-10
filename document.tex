@@ -11,20 +11,16 @@
 \usepackage{xcolor}   % Optional: For custom colors
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta} % Use arrows.meta library
-
-
-
 \usepackage{fancyhdr}
-\usepackage{titlesec}
-\usepackage{tocloft} % For controlling the table of contents
+
+
 \usepackage{xepersian}
 \settextfont{XB Zar}
 \linespread{1.2}
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
 
-\setlength{\cftsecnumwidth}{3em}  % Adjust the width for section address numbers
-\setlength{\cftsubsecnumwidth}{4.5em}  % Adjust the width for subsectino address numbers
+
 
 \pagestyle{fancy}
 % Set up fancyhdr to place page number at the top left
@@ -83,10 +79,6 @@
 	xrightmargin=10pt                  % Adjust right margin for better alignment
 }
 
-
-
-% Set width of section numbers
-\setlength{\cftsecnumwidth}{2.5em} % Adjust this value as needed
 
 \title{گزارش کارآموزی}
 \author{عسل خائف}
@@ -734,33 +726,34 @@
 \subsection{گرامر زیرمجموعه زبان}
 
 \begin{align*}
-	\texttt{<program>} &\rightarrow \texttt{<struct><program>} \mid \texttt{<function><program>} \mid \texttt{<struct>} \mid \texttt{<function>} \\
-	\texttt{<statements>} &\rightarrow \texttt{<if-statement>} \mid \texttt{<assign>} \mid \texttt{<loop>} \\
-	\texttt{<id>} &\rightarrow \texttt{A} \mid \texttt{B} \mid \texttt{C} \mid \texttt{D} \mid \ldots \\
-	\texttt{<digit>} &\rightarrow 1 \mid 2 \mid 3 \mid 4 \mid 5 \mid 6 \mid 7 \mid 8 \mid 9 \\
-	\texttt{<number>} &\rightarrow \texttt{<digit><number>} \mid \texttt{<digit>} \\
-	\texttt{<type>} &\rightarrow \texttt{int} \mid \texttt{float} \\
-	\texttt{<assign>} &\rightarrow \texttt{<id> = <logical-or>} \\
-	\texttt{<logical-or>} &\rightarrow \texttt{<logical-or>} \mid \texttt{<logical-and>} \mid \texttt{<logical-or>} \\
-	\texttt{<logical-and>} &\rightarrow \texttt{<logical-and>} \mid \texttt{<bitwise-or>} \mid \texttt{<bitwise-or>} \\
-	\texttt{<bitwise-or>} &\rightarrow \texttt{<bitwise-or>} \mid \texttt{<bitwise-and>} \mid \texttt{<bitwise-and>} \\
-	\texttt{<bitwise-and>} &\rightarrow \texttt{<bitwise-and> \& <additive>} \mid \texttt{<additive>} \\
-	\texttt{<additive>} &\rightarrow \texttt{<additive> (+, -) <multiplicative>} \mid \texttt{<multiplicative>} \\
-	\texttt{<multiplicative>} &\rightarrow \texttt{<multiplicative> (*, /) <factor>} \mid \texttt{<factor>} \\
-	\texttt{<factor>} &\rightarrow \texttt{(<logical-or>)} \mid \texttt{<id>} \mid \texttt{<id>++} \mid \texttt{<id>--} \mid \texttt{<numbers>} \\
-	\texttt{<logic-expr>} &\rightarrow \texttt{<logical-or> (==, !=, <, >) <logical-or>} \\
-	\texttt{<if-statement>} &\rightarrow \texttt{<matched-if>} \mid \texttt{<unmatched-if>} \\
-	\texttt{<matched-if>} &\rightarrow \texttt{if (<logic-expr>) <matched-if> else <matched-if>} \mid \texttt{<statements>} \\
-	\texttt{<unmatched-if>} &\rightarrow \texttt{if (<logic-expr>) \{ <if-statement> \}} \mid \texttt{if (<logic-expr>) \{ <matched-if> \} else \{ <unmatched-if> \}} \mid \texttt{\{ <statements> \}} \\
-	\texttt{<loop>} &\rightarrow \texttt{<for>} \mid \texttt{<while>} \\
-	\texttt{<for>} &\rightarrow \texttt{for (<assign>; <logic-expr>; <assign>) \{ <statements> \}} \\
-	\texttt{<while>} &\rightarrow \texttt{while (<logic-expr>) \{ <statements> \}} \\
-	\texttt{<function>} &\rightarrow \texttt{<type> <id> (<parameters-list>) \{ <statements> \}} \\
-	\texttt{<parameters-list>} &\rightarrow \texttt{<type> <id>, <parameters-list>} \mid \texttt{<type> <id>} \\
-	\texttt{<struct>} &\rightarrow \texttt{struct <id> \{ <field-list> <function-list> \}} \\
-	\texttt{<field-list>} &\rightarrow \texttt{<type> <id>; <field-list>} \mid \texttt{<type> <id>; } \\
-	\texttt{<function-list>} &\rightarrow \texttt{<function> <function-list>} \mid \texttt{<function>} \\
+	\langle \text{program} \rangle &\to \langle \text{struct} \rangle \langle \text{program} \rangle \mid \langle \text{function} \rangle \langle \text{program} \rangle \mid \langle \text{struct} \rangle \mid \langle \text{function} \rangle \\
+	\langle \text{statements} \rangle &\to \langle \text{if-statement} \rangle \mid \langle \text{assign} \rangle \mid \langle \text{loop} \rangle \\
+	\langle \text{id} \rangle &\to A \mid B \mid C \mid D \mid \dots \\
+	\langle \text{digit} \rangle &\to 1 \mid 2 \mid 3 \mid 4 \mid 5 \mid 6 \mid 7 \mid 8 \mid 9 \\
+	\langle \text{number} \rangle &\to \langle \text{digit} \rangle \langle \text{number} \rangle \mid \langle \text{digit} \rangle \\
+	\langle \text{type} \rangle &\to \text{int} \mid \text{float} \\
+	\langle \text{assign} \rangle &\to \langle \text{id} \rangle = \langle \text{logical-or} \rangle \\
+	\langle \text{logical-or} \rangle &\to \langle \text{logical-or} \rangle \mid \langle \text{logical-and} \rangle \mid \langle \text{logical-or} \rangle \\
+	\langle \text{logical-and} \rangle &\to \langle \text{logical-and} \rangle \mid \langle \text{bitwise-or} \rangle \mid \langle \text{bitwise-or} \rangle \\
+	\langle \text{bitwise-or} \rangle &\to \langle \text{bitwise-or} \rangle \mid \langle \text{bitwise-and} \rangle \mid \langle \text{bitwise-and} \rangle \\
+	\langle \text{bitwise-and} \rangle &\to \langle \text{bitwise-and} \rangle \& \langle \text{additive} \rangle \mid \langle \text{additive} \rangle \\
+	\langle \text{additive} \rangle &\to \langle \text{additive} \rangle \, (+, -) \, \langle \text{multiplicative} \rangle \mid \langle \text{multiplicative} \rangle \\
+	\langle \text{multiplicative} \rangle &\to \langle \text{multiplicative} \rangle \, (*, /) \, \langle \text{factor} \rangle \mid \langle \text{factor} \rangle \\
+	\langle \text{factor} \rangle &\to (\langle \text{logical-or} \rangle) \mid \langle \text{id} \rangle \mid \langle \text{id} \rangle++ \mid \langle \text{id} \rangle-- \\
+	\langle \text{logic-expr} \rangle &\to \langle \text{logical-or} \rangle \, (==, \neq, <, >) \, \langle \text{logical-or} \rangle \\
+	\langle \text{if-statement} \rangle &\to \langle \text{matched-if} \rangle \mid \langle \text{unmatched-if} \rangle \\
+	\langle \text{matched-if} \rangle &\to \text{if} (\langle \text{logic-expr} \rangle) \langle \text{matched-if} \rangle \, \text{else} \, \langle \text{matched-if} \rangle \mid \langle \text{statements} \rangle \\
+	\langle \text{unmatched-if} \rangle &\to \text{if} (\langle \text{logic-expr} \rangle) \{ \langle \text{if-statement} \rangle \} \mid \text{if} (\langle \text{logic-expr} \rangle) \{ \langle \text{matched-if} \rangle \} \, \text{else} \{ \langle \text{unmatched-if} \rangle \} \mid \{ \langle \text{statements} \rangle \} \\
+	\langle \text{loop} \rangle &\to \langle \text{for} \rangle \mid \langle \text{while} \rangle \\
+	\langle \text{for} \rangle &\to \text{for} (\langle \text{assign} \rangle; \langle \text{logic-expr} \rangle; \langle \text{assign} \rangle) \{ \langle \text{statements} \rangle \} \\
+	\langle \text{while} \rangle &\to \text{while} (\langle \text{logic-expr} \rangle) \{ \langle \text{statements} \rangle \} \\
+	\langle \text{function} \rangle &\to \langle \text{type} \rangle \langle \text{id} \rangle (\langle \text{parameters-list} \rangle) \{ \langle \text{statements} \rangle \} \\
+	\langle \text{parameters-list} \rangle &\to \langle \text{type} \rangle \langle \text{id} \rangle, \langle \text{parameters-list} \rangle \mid \langle \text{type} \rangle \langle \text{id} \rangle \\
+	\langle \text{struct} \rangle &\to \text{struct} \langle \text{id} \rangle \{ \langle \text{field-list} \rangle \langle \text{function-list} \rangle \} \\
+	\langle \text{field-list} \rangle &\to \langle \text{type} \rangle \langle \text{id} \rangle; \langle \text{field-list} \rangle \mid \langle \text{type} \rangle \langle \text{id} \rangle; \\
+	\langle \text{function-list} \rangle &\to \langle \text{function} \rangle \langle \text{function-list} \rangle \mid \langle \text{function} \rangle
 \end{align*}
+\pagebreak
 \subsection{برنامه‌ای به زبان \lr{C++} و درخت تجزیه آن}
 \LTR
 \begin{lstlisting}[language=C++]
