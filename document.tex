@@ -13,15 +13,18 @@
 \usetikzlibrary{shapes.geometric, arrows.meta} % Use arrows.meta library
 
 
+
 \usepackage{fancyhdr}
 \usepackage{titlesec}
+\usepackage{tocloft} % For controlling the table of contents
 \usepackage{xepersian}
 \settextfont{XB Zar}
 \linespread{1.2}
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 
-
+\setlength{\cftsecnumwidth}{3em}  % Adjust the width for section address numbers
+\setlength{\cftsubsecnumwidth}{4.5em}  % Adjust the width for subsectino address numbers
 
 \pagestyle{fancy}
 % Set up fancyhdr to place page number at the top left
@@ -79,6 +82,11 @@
 	xleftmargin=10pt,                  % Adjust left margin for better alignment
 	xrightmargin=10pt                  % Adjust right margin for better alignment
 }
+
+
+
+% Set width of section numbers
+\setlength{\cftsecnumwidth}{2.5em} % Adjust this value as needed
 
 \title{گزارش کارآموزی}
 \author{عسل خائف}
@@ -786,56 +794,113 @@
 \end{lstlisting}
 \RTL
 
-
-\begin{tikzpicture}[
-	node distance=2cm,
-	every node/.style={draw, fill=blue!20, text centered, font=\small},
-	function/.style={draw, fill=orange!20, text centered, font=\small},
-	edge/.style={draw, thick, -Stealth}
-	]
-	
-	% Define nodes
-	\node (program) {<program>};
-	\node (struct) [below of=program] {<struct>};
-	\node (fieldList) [below of=struct] {<field-list>};
-	\node (functionList) [right of=fieldList] {<function-list>};
-	\node (type1) [below of=fieldList] {<type> int};
-	\node (id1) [right of=type1] {<id> x};
-	\node (type2) [below of=type1] {<type> int};
-	\node (id2) [right of=type2] {<id> y};
-	\node (function1) [below of=functionList] {<function>};
-	\node (type3) [below of=function1] {<type> void};
-	\node (id3) [right of=type3] {<id> move};
-	\node (parameters) [below of=id3] {(<parameters-list>)};
-	\node (param1) [below of=parameters] {<type> int};
-	\node (param2) [right of=param1] {<id> dx};
-	\node (param3) [below of=param1] {<type> int};
-	\node (param4) [right of=param3] {<id> dy};
-	\node (statements) [below of=param4] {<statements>};
-	\node (assign1) [below of=statements] {<assign>};
-	\node (assign2) [below of=assign1] {<assign>};
-	
-	% Draw edges
-	\path [edge] (program) -- (struct);
-	\path [edge] (struct) -- (fieldList);
-	\path [edge] (fieldList) -- (type1);
-	\path [edge] (fieldList) -- (id1);
-	\path [edge] (fieldList) -- (type2);
-	\path [edge] (fieldList) -- (id2);
-	\path [edge] (struct) -- (functionList);
-	\path [edge] (functionList) -- (function1);
-	\path [edge] (function1) -- (type3);
-	\path [edge] (function1) -- (id3);
-	\path [edge] (function1) -- (parameters);
-	\path [edge] (parameters) -- (param1);
-	\path [edge] (parameters) -- (param2);
-	\path [edge] (parameters) -- (param3);
-	\path [edge] (parameters) -- (param4);
-	\path [edge] (function1) -- (statements);
-	\path [edge] (statements) -- (assign1);
-	\path [edge] (statements) -- (assign2);
-	
-\end{tikzpicture}
+\LTR
+	\begin{verbatim}
+		<program>
+		├── <struct>
+		│   └── struct Point {
+			│       ├── <field-list>
+			│       │   ├── <type> int
+			│       │   └── <id> x;
+			│       │   ├── <type> int
+			│       │   └── <id> y;
+			│       └── <function-list>
+			│           └── <function>
+			│               ├── <type> void
+			│               ├── <id> move
+			│               ├── (<parameters-list>)
+			│               │   ├── <type> int
+			│               │   ├── <id> dx
+			│               │   ├── ,
+			│               │   ├── <type> int
+			│               │   └── <id> dy
+			│               └── <statements>
+			│                   ├── <assign>
+			│                   │   ├── <id> x
+			│                   │   ├── =
+			│                   │   ├── <additive>
+			│                   │   │   ├── <id> x
+			│                   │   │   ├── +
+			│                   │   │   └── <id> dx
+			│                   ├── <assign>
+			│                   │   ├── <id> y
+			│                   │   ├── =
+			│                   │   ├── <additive>
+			│                   │   │   ├── <id> y
+			│                   │   │   ├── +
+			│                   │   │   └── <id> dy
+			│
+			├── <function>
+			│   ├── <type> int
+			│   ├── <id> main
+			│   ├── (<parameters-list>)
+			│   └── <statements>
+			│       ├── <assign>
+			│       │   ├── <id> p
+			│       │   ├── =
+			│       │   └── <id> Point
+			│       ├── <assign>
+			│       │   ├── <id> p.x
+			│       │   ├── =
+			│       │   └── <number> 10
+			│       ├── <assign>
+			│       │   ├── <id> p.y
+			│       │   ├── =
+			│       │   └── <number> 20
+			│       ├── <if-statement>
+			│       │   ├── if
+			│       │   ├── (
+			│       │   ├── <logic-expr>
+			│       │   │   ├── <id> p.x
+			│       │   │   ├── >
+			│       │   │   └── <number> 0
+			│       │   ├── )
+			│       │   └── <matched-if>
+			│       │       ├── <statements>
+			│       │       │   └── <assign>
+			│       │       │       ├── <id> p.move
+			│       │       │       ├── (
+			│       │       │       ├── <number> 5
+			│       │       │       ├── ,
+			│       │       │       └── <number> 5
+			│       │       ├── <else>
+			│       │       │   ├── <assign>
+			│       │       │   │   ├── <id> p.move
+			│       │       │   │   ├── (
+			│       │       │   │   ├── <number> 6
+			│       │       │   │   ├── ,
+			│       │       │   │   └── <number> 6
+			│       │       └── }
+		│       ├── <for>
+		│       │   ├── for
+		│       │   ├── (
+		│       │   ├── <assign>
+		│       │   │   ├── <id> int i
+		│       │   │   ├── =
+		│       │   │   └── <number> 0
+		│       │   ├── ;
+		│       │   ├── <logic-expr>
+		│       │   │   ├── <id> i
+		│       │   │   ├── <
+		│       │   │   └── <number> 10
+		│       │   ├── ;
+		│       │   ├── <assign>
+		│       │   │   ├── <id> i
+		│       │   │   ├── =
+		│       │   │   └── <id> i
+		│       │   │   ├── +
+		│       │   │   └── <number> 1
+		│       │   └── )
+		│       │   └── <statements>
+		│       │       ├── <assign>
+		│       │       │   ├── <id> p.x
+		│       │       │   ├── =
+		│       │       │   ├── <id> p.x
+		│       │       │   ├── +
+		│       │       │   └── <number> 1
+		│       └── return 0
+	\end{verbatim}
+\RTL
 \section{تقدم عملگر‌ها}
 
 
