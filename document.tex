@@ -11,15 +11,17 @@
 \usepackage{xcolor}   % Optional: For custom colors
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta} % Use arrows.meta library
-
-
 \usepackage{fancyhdr}
-\usepackage{titlesec}
+\usepackage{pdfpages}
+
+\usepackage{hyperref}
+
+
 \usepackage{xepersian}
 \settextfont{XB Zar}
 \linespread{1.2}
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
 
 
 
@@ -80,6 +82,10 @@
 	xrightmargin=10pt                  % Adjust right margin for better alignment
 }
 
+
+
+
+
 \title{گزارش کارآموزی}
 \author{عسل خائف}
 
@@ -96,7 +102,7 @@
 		
 		% Report title
 		\textbf
-		{\Huge گزارش فاز اول پروژه زبان‌های برنامه نویسی}\par\vspace{1.5cm}
+		{\Huge گزارش پروژه زبان‌های برنامه نویسی}\par\vspace{1.5cm}
 		{\Huge زبان برنامه نویسی \lr{C++}}\par\vspace{1.5cm}
 		
 		% Intern details
@@ -111,7 +117,7 @@
 	\end{titlepage}
 	\tableofcontents
 	\listoftables
-	\listoffigures
+	
 	
 \chapter{مقدمه}
 \section{تاریخچه زبان C++}
@@ -726,33 +732,34 @@
 \subsection{گرامر زیرمجموعه زبان}
 
 \begin{align*}
-	\texttt{<program>} &\rightarrow \texttt{<struct><program>} \mid \texttt{<function><program>} \mid \texttt{<struct>} \mid \texttt{<function>} \\
-	\texttt{<statements>} &\rightarrow \texttt{<if-statement>} \mid \texttt{<assign>} \mid \texttt{<loop>} \\
-	\texttt{<id>} &\rightarrow \texttt{A} \mid \texttt{B} \mid \texttt{C} \mid \texttt{D} \mid \ldots \\
-	\texttt{<digit>} &\rightarrow 1 \mid 2 \mid 3 \mid 4 \mid 5 \mid 6 \mid 7 \mid 8 \mid 9 \\
-	\texttt{<number>} &\rightarrow \texttt{<digit><number>} \mid \texttt{<digit>} \\
-	\texttt{<type>} &\rightarrow \texttt{int} \mid \texttt{float} \\
-	\texttt{<assign>} &\rightarrow \texttt{<id> = <logical-or>} \\
-	\texttt{<logical-or>} &\rightarrow \texttt{<logical-or>} \mid \texttt{<logical-and>} \mid \texttt{<logical-or>} \\
-	\texttt{<logical-and>} &\rightarrow \texttt{<logical-and>} \mid \texttt{<bitwise-or>} \mid \texttt{<bitwise-or>} \\
-	\texttt{<bitwise-or>} &\rightarrow \texttt{<bitwise-or>} \mid \texttt{<bitwise-and>} \mid \texttt{<bitwise-and>} \\
-	\texttt{<bitwise-and>} &\rightarrow \texttt{<bitwise-and> \& <additive>} \mid \texttt{<additive>} \\
-	\texttt{<additive>} &\rightarrow \texttt{<additive> (+, -) <multiplicative>} \mid \texttt{<multiplicative>} \\
-	\texttt{<multiplicative>} &\rightarrow \texttt{<multiplicative> (*, /) <factor>} \mid \texttt{<factor>} \\
-	\texttt{<factor>} &\rightarrow \texttt{(<logical-or>)} \mid \texttt{<id>} \mid \texttt{<id>++} \mid \texttt{<id>--} \mid \texttt{<numbers>} \\
-	\texttt{<logic-expr>} &\rightarrow \texttt{<logical-or> (==, !=, <, >) <logical-or>} \\
-	\texttt{<if-statement>} &\rightarrow \texttt{<matched-if>} \mid \texttt{<unmatched-if>} \\
-	\texttt{<matched-if>} &\rightarrow \texttt{if (<logic-expr>) <matched-if> else <matched-if>} \mid \texttt{<statements>} \\
-	\texttt{<unmatched-if>} &\rightarrow \texttt{if (<logic-expr>) \{ <if-statement> \}} \mid \texttt{if (<logic-expr>) \{ <matched-if> \} else \{ <unmatched-if> \}} \mid \texttt{\{ <statements> \}} \\
-	\texttt{<loop>} &\rightarrow \texttt{<for>} \mid \texttt{<while>} \\
-	\texttt{<for>} &\rightarrow \texttt{for (<assign>; <logic-expr>; <assign>) \{ <statements> \}} \\
-	\texttt{<while>} &\rightarrow \texttt{while (<logic-expr>) \{ <statements> \}} \\
-	\texttt{<function>} &\rightarrow \texttt{<type> <id> (<parameters-list>) \{ <statements> \}} \\
-	\texttt{<parameters-list>} &\rightarrow \texttt{<type> <id>, <parameters-list>} \mid \texttt{<type> <id>} \\
-	\texttt{<struct>} &\rightarrow \texttt{struct <id> \{ <field-list> <function-list> \}} \\
-	\texttt{<field-list>} &\rightarrow \texttt{<type> <id>; <field-list>} \mid \texttt{<type> <id>; } \\
-	\texttt{<function-list>} &\rightarrow \texttt{<function> <function-list>} \mid \texttt{<function>} \\
+	\langle \text{program} \rangle &\to \langle \text{struct} \rangle \langle \text{program} \rangle \mid \langle \text{function} \rangle \langle \text{program} \rangle \mid \langle \text{struct} \rangle \mid \langle \text{function} \rangle \\
+	\langle \text{statements} \rangle &\to \langle \text{if-statement} \rangle \mid \langle \text{assign} \rangle \mid \langle \text{loop} \rangle \\
+	\langle \text{id} \rangle &\to A \mid B \mid C \mid D \mid \dots \\
+	\langle \text{digit} \rangle &\to 1 \mid 2 \mid 3 \mid 4 \mid 5 \mid 6 \mid 7 \mid 8 \mid 9 \\
+	\langle \text{number} \rangle &\to \langle \text{digit} \rangle \langle \text{number} \rangle \mid \langle \text{digit} \rangle \\
+	\langle \text{type} \rangle &\to \text{int} \mid \text{float} \\
+	\langle \text{assign} \rangle &\to \langle \text{id} \rangle = \langle \text{logical-or} \rangle \\
+	\langle \text{logical-or} \rangle &\to \langle \text{logical-or} \rangle \mid \langle \text{logical-and} \rangle \mid \langle \text{logical-or} \rangle \\
+	\langle \text{logical-and} \rangle &\to \langle \text{logical-and} \rangle \mid \langle \text{bitwise-or} \rangle \mid \langle \text{bitwise-or} \rangle \\
+	\langle \text{bitwise-or} \rangle &\to \langle \text{bitwise-or} \rangle \mid \langle \text{bitwise-and} \rangle \mid \langle \text{bitwise-and} \rangle \\
+	\langle \text{bitwise-and} \rangle &\to \langle \text{bitwise-and} \rangle \& \langle \text{additive} \rangle \mid \langle \text{additive} \rangle \\
+	\langle \text{additive} \rangle &\to \langle \text{additive} \rangle \, (+, -) \, \langle \text{multiplicative} \rangle \mid \langle \text{multiplicative} \rangle \\
+	\langle \text{multiplicative} \rangle &\to \langle \text{multiplicative} \rangle \, (*, /) \, \langle \text{factor} \rangle \mid \langle \text{factor} \rangle \\
+	\langle \text{factor} \rangle &\to (\langle \text{logical-or} \rangle) \mid \langle \text{id} \rangle \mid \langle \text{id} \rangle++ \mid \langle \text{id} \rangle-- \\
+	\langle \text{logic-expr} \rangle &\to \langle \text{logical-or} \rangle \, (==, \neq, <, >) \, \langle \text{logical-or} \rangle \\
+	\langle \text{if-statement} \rangle &\to \langle \text{matched-if} \rangle \mid \langle \text{unmatched-if} \rangle \\
+	\langle \text{matched-if} \rangle &\to \text{if} (\langle \text{logic-expr} \rangle) \langle \text{matched-if} \rangle \, \text{else} \, \langle \text{matched-if} \rangle \mid \langle \text{statements} \rangle \\
+	\langle \text{unmatched-if} \rangle &\to \text{if} (\langle \text{logic-expr} \rangle) \{ \langle \text{if-statement} \rangle \} \mid \text{if} (\langle \text{logic-expr} \rangle) \{ \langle \text{matched-if} \rangle \} \, \text{else} \{ \langle \text{unmatched-if} \rangle \} \mid \{ \langle \text{statements} \rangle \} \\
+	\langle \text{loop} \rangle &\to \langle \text{for} \rangle \mid \langle \text{while} \rangle \\
+	\langle \text{for} \rangle &\to \text{for} (\langle \text{assign} \rangle; \langle \text{logic-expr} \rangle; \langle \text{assign} \rangle) \{ \langle \text{statements} \rangle \} \\
+	\langle \text{while} \rangle &\to \text{while} (\langle \text{logic-expr} \rangle) \{ \langle \text{statements} \rangle \} \\
+	\langle \text{function} \rangle &\to \langle \text{type} \rangle \langle \text{id} \rangle (\langle \text{parameters-list} \rangle) \{ \langle \text{statements} \rangle \} \\
+	\langle \text{parameters-list} \rangle &\to \langle \text{type} \rangle \langle \text{id} \rangle, \langle \text{parameters-list} \rangle \mid \langle \text{type} \rangle \langle \text{id} \rangle \\
+	\langle \text{struct} \rangle &\to \text{struct} \langle \text{id} \rangle \{ \langle \text{field-list} \rangle \langle \text{function-list} \rangle \} \\
+	\langle \text{field-list} \rangle &\to \langle \text{type} \rangle \langle \text{id} \rangle; \langle \text{field-list} \rangle \mid \langle \text{type} \rangle \langle \text{id} \rangle; \\
+	\langle \text{function-list} \rangle &\to \langle \text{function} \rangle \langle \text{function-list} \rangle \mid \langle \text{function} \rangle
 \end{align*}
+\pagebreak
 \subsection{برنامه‌ای به زبان \lr{C++} و درخت تجزیه آن}
 \LTR
 \begin{lstlisting}[language=C++]
@@ -786,56 +793,113 @@
 \end{lstlisting}
 \RTL
 
-
-\begin{tikzpicture}[
-	node distance=2cm,
-	every node/.style={draw, fill=blue!20, text centered, font=\small},
-	function/.style={draw, fill=orange!20, text centered, font=\small},
-	edge/.style={draw, thick, -Stealth}
-	]
-	
-	% Define nodes
-	\node (program) {<program>};
-	\node (struct) [below of=program] {<struct>};
-	\node (fieldList) [below of=struct] {<field-list>};
-	\node (functionList) [right of=fieldList] {<function-list>};
-	\node (type1) [below of=fieldList] {<type> int};
-	\node (id1) [right of=type1] {<id> x};
-	\node (type2) [below of=type1] {<type> int};
-	\node (id2) [right of=type2] {<id> y};
-	\node (function1) [below of=functionList] {<function>};
-	\node (type3) [below of=function1] {<type> void};
-	\node (id3) [right of=type3] {<id> move};
-	\node (parameters) [below of=id3] {(<parameters-list>)};
-	\node (param1) [below of=parameters] {<type> int};
-	\node (param2) [right of=param1] {<id> dx};
-	\node (param3) [below of=param1] {<type> int};
-	\node (param4) [right of=param3] {<id> dy};
-	\node (statements) [below of=param4] {<statements>};
-	\node (assign1) [below of=statements] {<assign>};
-	\node (assign2) [below of=assign1] {<assign>};
-	
-	% Draw edges
-	\path [edge] (program) -- (struct);
-	\path [edge] (struct) -- (fieldList);
-	\path [edge] (fieldList) -- (type1);
-	\path [edge] (fieldList) -- (id1);
-	\path [edge] (fieldList) -- (type2);
-	\path [edge] (fieldList) -- (id2);
-	\path [edge] (struct) -- (functionList);
-	\path [edge] (functionList) -- (function1);
-	\path [edge] (function1) -- (type3);
-	\path [edge] (function1) -- (id3);
-	\path [edge] (function1) -- (parameters);
-	\path [edge] (parameters) -- (param1);
-	\path [edge] (parameters) -- (param2);
-	\path [edge] (parameters) -- (param3);
-	\path [edge] (parameters) -- (param4);
-	\path [edge] (function1) -- (statements);
-	\path [edge] (statements) -- (assign1);
-	\path [edge] (statements) -- (assign2);
-	
-\end{tikzpicture}
+\LTR
+	\begin{verbatim}
+		<program>
+		├── <struct>
+		│   └── struct Point {
+			│       ├── <field-list>
+			│       │   ├── <type> int
+			│       │   └── <id> x;
+			│       │   ├── <type> int
+			│       │   └── <id> y;
+			│       └── <function-list>
+			│           └── <function>
+			│               ├── <type> void
+			│               ├── <id> move
+			│               ├── (<parameters-list>)
+			│               │   ├── <type> int
+			│               │   ├── <id> dx
+			│               │   ├── ,
+			│               │   ├── <type> int
+			│               │   └── <id> dy
+			│               └── <statements>
+			│                   ├── <assign>
+			│                   │   ├── <id> x
+			│                   │   ├── =
+			│                   │   ├── <additive>
+			│                   │   │   ├── <id> x
+			│                   │   │   ├── +
+			│                   │   │   └── <id> dx
+			│                   ├── <assign>
+			│                   │   ├── <id> y
+			│                   │   ├── =
+			│                   │   ├── <additive>
+			│                   │   │   ├── <id> y
+			│                   │   │   ├── +
+			│                   │   │   └── <id> dy
+			│
+			├── <function>
+			│   ├── <type> int
+			│   ├── <id> main
+			│   ├── (<parameters-list>)
+			│   └── <statements>
+			│       ├── <assign>
+			│       │   ├── <id> p
+			│       │   ├── =
+			│       │   └── <id> Point
+			│       ├── <assign>
+			│       │   ├── <id> p.x
+			│       │   ├── =
+			│       │   └── <number> 10
+			│       ├── <assign>
+			│       │   ├── <id> p.y
+			│       │   ├── =
+			│       │   └── <number> 20
+			│       ├── <if-statement>
+			│       │   ├── if
+			│       │   ├── (
+			│       │   ├── <logic-expr>
+			│       │   │   ├── <id> p.x
+			│       │   │   ├── >
+			│       │   │   └── <number> 0
+			│       │   ├── )
+			│       │   └── <matched-if>
+			│       │       ├── <statements>
+			│       │       │   └── <assign>
+			│       │       │       ├── <id> p.move
+			│       │       │       ├── (
+			│       │       │       ├── <number> 5
+			│       │       │       ├── ,
+			│       │       │       └── <number> 5
+			│       │       ├── <else>
+			│       │       │   ├── <assign>
+			│       │       │   │   ├── <id> p.move
+			│       │       │   │   ├── (
+			│       │       │   │   ├── <number> 6
+			│       │       │   │   ├── ,
+			│       │       │   │   └── <number> 6
+			│       │       └── }
+		│       ├── <for>
+		│       │   ├── for
+		│       │   ├── (
+		│       │   ├── <assign>
+		│       │   │   ├── <id> int i
+		│       │   │   ├── =
+		│       │   │   └── <number> 0
+		│       │   ├── ;
+		│       │   ├── <logic-expr>
+		│       │   │   ├── <id> i
+		│       │   │   ├── <
+		│       │   │   └── <number> 10
+		│       │   ├── ;
+		│       │   ├── <assign>
+		│       │   │   ├── <id> i
+		│       │   │   ├── =
+		│       │   │   └── <id> i
+		│       │   │   ├── +
+		│       │   │   └── <number> 1
+		│       │   └── )
+		│       │   └── <statements>
+		│       │       ├── <assign>
+		│       │       │   ├── <id> p.x
+		│       │       │   ├── =
+		│       │       │   ├── <id> p.x
+		│       │       │   ├── +
+		│       │       │   └── <number> 1
+		│       └── return 0
+	\end{verbatim}
+\RTL
 \section{تقدم عملگر‌ها}
 
 
@@ -843,12 +907,9 @@
 وابسته است. هر دو این مفاهیم مرتبط با زمان کامپایل کد هستند.
 تقدم عملگرها مشخص می‌کند که در یک عبارت که شامل چندین عملگر است، کدام عملگر ابتدا اجرا شود و وابستگی عملگرها مشخص می‌کند که اگر چندین عملگر با تقدم یکسان در یک عبارت وجود داشته باشند، کدام یک ابتدا ارزیابی شوند.
 
-\begin{figure}[h!]
-	\centering
-	%\includegraphics[width=\textwidth]{img/1-operations.png}
-	\caption{تمام عملگرهای زبان \lr{C++} به همراه تقدم و وابستگی}
-	\label{fig:example}
-\end{figure}
+
+	\includepdf[pages=1, scale=0.8]{ops.pdf}
+	
 
 تقدم عملگر‌ها با بارگذاری بیش از حد عملگر‌ها (\lr{operator overloading}) تغییری نمی‌کند و ثابت خواهد ماند.
 برای نمونه در مثال زیر نحوه ارزیابی مشخص شده است.
@@ -2813,6 +2874,3168 @@ int main() {
 	\caption{مقایسه ویژگی‌های مدیریت حافظه در زبان‌های C++, Java و Python}
 	\label{tab:memory_management}
 \end{table}
+\chapter{برنامه نویسی تابعی}
+
+زبان ++C به طور پیش‌فرض زبان برنامه‌نویسی تابعی نیست، اما از نسخه‌های جدید (\texttt{C++11} به بعد) امکاناتی برای برنامه‌نویسی تابعی فراهم شده است. به‌ویژه، در \texttt{C++11} و بالاتر، امکاناتی مانند توابع لامبدا، ارسال توابع به توابع دیگر، بازگشت توابع از توابع، و عملیات‌هایی مانند \texttt{map}، \texttt{filter} و \texttt{reduce} از طریق استانداردهای کتابخانه‌های مختلف (مانند \texttt{std::function} و \texttt{algorithm}) فراهم شده‌اند.
+
+
+\section{توابع لامبدا}
+
+توابع لامبدا\LTRfootnote{Lambda Functions} در \texttt{C++11} معرفی شدند و به شما این امکان را می‌دهند که توابع را به صورت محلی (بدون نیاز به تعریف یک تابع جداگانه) در برنامه ایجاد کنید. این توابع معمولاً برای مواقعی که به یک تابع موقت نیاز دارید، بسیار مفید هستند.
+
+توابع لامبدا معمولاً شامل سه بخش اصلی هستند:
+\begin{itemize}
+	\item \textbf{Capture Clause (بخش کپچر):} مشخص می‌کند که متغیرهای خارجی چگونه در لامبدا استفاده می‌شوند.
+	\item \textbf{Parameter List (لیست پارامترها):} مشابه پارامترهای توابع عادی، برای دریافت مقادیر ورودی استفاده می‌شود.
+	\item \textbf{Function Body (بدنه تابع):} کدی که هنگام فراخوانی لامبدا اجرا می‌شود.
+\end{itemize}
+
+این ویژگی‌ها باعث می‌شوند توابع لامبدا ابزار قدرتمندی برای نوشتن کدهای مختصر و قابل‌خواندن باشند، به‌ویژه در ترکیب با الگوریتم‌های استاندارد مانند \texttt{std::for\_each} و \texttt{std::transform}.
+
+\subsection{مثال}
+
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <algorithm>
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			
+			// Using a lambda function to multiply each element by 2
+			for_each(vec.begin(), vec.end(), [](int &n) { n *= 2; });
+			
+			// Print the modified vector
+			for (int n : vec) {
+				cout << n << " ";  // Output: 2 4 6 8 10
+			}
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\section{ارسال تابع به تابع }
+
+در \texttt{C++} می‌توانید توابع را به عنوان آرگومان به توابع\LTRfootnote{Passing Functions as Arguments} دیگر ارسال کنید. این قابلیت امکان افزودن رفتارهای مختلف به توابع به صورت داینامیک را فراهم می‌کند. 
+
+این ویژگی در کنار توابع لامبدا بسیار قدرتمند می‌شود، زیرا می‌توانید لامبداها را به عنوان توابع موقت تعریف کرده و مستقیماً به توابع دیگر ارسال کنید. این روش معمولاً در عملیات استانداردی مانند \texttt{std::sort}، \texttt{std::for\_each} و سایر الگوریتم‌های کتابخانه استاندارد استفاده می‌شود.
+
+مزایای ارسال تابع به تابع عبارتند از:
+\begin{itemize}
+	\item انعطاف‌پذیری بیشتر در تعریف رفتارهای مختلف بدون نیاز به تعریف توابع جداگانه.
+	\item بهبود خوانایی و کوتاه‌تر شدن کد.
+	\item امکان استفاده از توابع ناشناس (لامبدا) برای تعریف رفتارهای موقت.
+\end{itemize}
+
+این تکنیک به طور گسترده در برنامه‌نویسی تابعی و شیوه‌های مدرن برنامه‌نویسی در \texttt{C++} استفاده می‌شود.
+
+
+\subsection{مثال}
+
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <algorithm>
+		#include <functional>
+		
+		using namespace std;
+		
+		// Function that applies a lambda to each element
+		void applyFunction(vector<int>& vec, const function<void(int&)>& func) {
+			for (int& n : vec) {
+				func(n);
+			}
+		}
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			
+			// Passing a lambda function to applyFunction
+			applyFunction(vec, [](int& n) { n *= 2; });
+			
+			// Print the modified vector
+			for (int n : vec) {
+				cout << n << " ";  // Output: 2 4 6 8 10
+			}
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\section{بازگشت تابع از تابع}
+
+در \texttt{C++} می‌توانید توابع را به عنوان مقادیر بازگشتی از توابع دیگر\LTRfootnote{Returning Functions from Functions} استفاده کنید. این قابلیت به شما امکان می‌دهد توابعی بسازید که به صورت پویا رفتار خاصی را تولید و بازگشت دهند. برای این کار می‌توانید از \texttt{std::function} یا اشاره‌گرهای تابع استفاده کنید.
+
+این روش در ترکیب با توابع لامبدا بسیار قدرتمند است، زیرا می‌توانید یک لامبدا را به عنوان نتیجه بازگردانده و در جای دیگری از برنامه استفاده کنید. این تکنیک معمولاً در طراحی‌های تابعی و برنامه‌نویسی مدرن \texttt{C++} برای ایجاد توابع تولیدکننده\LTRfootnote{factories} یا رفتارهای سفارشی استفاده می‌شود.
+
+مزایای بازگشت تابع از تابع عبارتند از:
+\begin{itemize}
+	\item امکان ایجاد رفتارهای پویا بر اساس ورودی‌ها.
+	\item کاهش پیچیدگی و تکرار کد.
+	\item استفاده آسان از توابع لامبدا برای تولید نتایج سفارشی.
+\end{itemize}
+
+این روش کاربردهای زیادی در برنامه‌نویسی تابعی، طراحی الگوریتم‌ها و تولید توابع خاص دارد.
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <functional>
+		using namespace std;
+		
+		// Function that returns another function as its result
+		// Lambda multiplies its input by the given multiplier
+		std::function<int(int)> createMultiplier(int multiplier) {
+			// Capture the multiplier and return a lambda function
+			return [multiplier](int x) { return x * multiplier; };
+		}
+		
+		int main() {
+			// Create a function that multiplies by 2
+			auto multiplyBy2 = createMultiplier(2);
+			
+			// Use the returned function to multiply 5 by 2
+			cout << multiplyBy2(5);  // Output: 10
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\section{توابع نگاشت}
+
+توابع نگاشت\LTRfootnote{Map} در \texttt{C++} به شما امکان می‌دهند که یک تابع مشخص را به هر عنصر از یک مجموعه اعمال کنید و مجموعه‌ای جدید با عناصر تغییر‌یافته تولید کنید. این مفهوم معمولاً با استفاده از الگوریتم \texttt{std::transform} پیاده‌سازی می‌شود که یکی از الگوریتم‌های کتابخانه استاندارد است.
+
+در این روش، می‌توانید از توابع لامبدا برای تعریف عملیات مورد نظر به صورت مستقیم و بدون نیاز به تعریف جداگانه یک تابع استفاده کنید. این باعث می‌شود کد شما مختصرتر و خواناتر شود.
+
+\subsection{ویژگی‌ها و مزایا}
+\begin{itemize}
+	\item اعمال یک عملیات به تمامی عناصر یک مجموعه به سادگی.
+	\item کاهش پیچیدگی کد و افزایش خوانایی با استفاده از لامبداها.
+	\item تولید مجموعه‌ای جدید بدون تغییر مستقیم مجموعه اصلی (در صورت استفاده از خروجی جداگانه).
+\end{itemize}
+
+\subsection{مثال}
+
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <algorithm>
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			
+			// Apply a lambda function
+			transform(vec.begin(), vec.end(), vec.begin(), [](int n) { return n * 2; });
+			
+			// Print the modified vector
+			for (int n : vec) {
+				cout << n << " ";  // Output: 2 4 6 8 10
+			}
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\section{توابع فیلتر}
+
+در \texttt{C++}، شما می‌توانید با استفاده از \texttt{std::copy\_if} مجموعه‌ای از عناصر را فیلتر کنید. این روش معمولاً برای انجام عملیات فیلترینگ استفاده می‌شود، به‌طوری که فقط عناصری که شرایط خاصی را برآورده می‌کنند به مجموعه‌ای جدید کپی می‌شوند.
+
+\subsection{ویژگی‌ها و مزایا}
+\begin{itemize}
+	\item فیلتر کردن مجموعه‌ها با استفاده از شرایط دلخواه.
+	\item استفاده از لامبدا برای تعریف شرایط به‌طور مستقیم و مختصر.
+	\item کاهش پیچیدگی و افزایش خوانایی کد.
+\end{itemize}
+
+\subsection{مثال}
+در کد زیر، از \texttt{std::copy\_if} و یک تابع لامبدا برای فیلتر کردن اعداد زوج از یک بردار استفاده شده است:
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <algorithm>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			vector<int> evenNumbers;
+			
+			// Filter even numbers using lambda function
+			copy_if(vec.begin(), vec.end(), 
+			back_inserter(evenNumbers),
+			[](int n) { return !(n % 2); });
+			
+			// Print the filtered even numbers
+			for (int n : evenNumbers) {
+				cout << n << " ";  // Output: 2 4
+			}
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\section{توابع کاهش}
+
+برای عملیات کاهش\LTRfootnote{Reduce} مانند جمع یا ضرب کردن عناصر یک مجموعه، می‌توانید از \texttt{std::accumulate} استفاده کنید. این الگوریتم از یک مقدار اولیه شروع کرده و به‌طور دنباله‌وار به تمام عناصر مجموعه اعمال می‌شود.
+
+\subsection{ویژگی‌ها و مزایا}
+\begin{itemize}
+	\item اعمال عملیات‌های تجمعی (مانند جمع، ضرب و غیره) بر روی مجموعه‌ها.
+	\item استفاده از مقدار اولیه و ترکیب آن با تمام عناصر مجموعه.
+	\item استفاده از لامبدا برای تعریف عملیات‌های خاص در هنگام تجمع.
+\end{itemize}
+
+\subsection{مثال}
+در کد زیر، از \texttt{std::accumulate} برای محاسبه مجموع عناصر یک بردار استفاده شده است:
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <numeric>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			
+			// Calculate the sum of all elements using accumulate
+			int sum = accumulate(vec.begin(), vec.end(), 0);
+			
+			// Print the sum
+			cout << "Sum: " << sum << endl;  // Output: Sum: 15
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\section{کارایی برنامه‌نوسی تابعی}
+
+
+در \texttt{C++} امکاناتی برای برنامه‌نویسی تابعی وجود دارد که به شما اجازه می‌دهد از توابع لامبدا، ارسال توابع به توابع دیگر، بازگشت توابع، و عملیات‌هایی مانند \texttt{map}، \texttt{filter} و \texttt{reduce} استفاده کنید. این امکانات به توسعه‌دهندگان این امکان را می‌دهند که برنامه‌نویسی تابعی را در زبان \texttt{C++} پیاده‌سازی کنند، هرچند که زبان \texttt{C++} به طور کلی شی‌گرا و الگوریتمی است.
+
+استفاده از توابع نگاشت (\texttt{map})، فیلتر (\texttt{filter}) و کاهش (\texttt{reduce}) به خودی خود باعث افزایش کارایی برنامه نمی‌شود، بلکه بستگی به نحوه پیاده‌سازی، محیط اجرا و نیازمندی‌های خاص پروژه دارد. این توابع عمدتاً برای بهبود خوانایی و مدیریت کد و همچنین افزایش امکان استفاده از برنامه‌نویسی تابعی طراحی شده‌اند. در اینجا به مقایسه کارایی آن‌ها با برنامه‌نویسی رویه‌ای (که معمولاً با حلقه‌های تکرار انجام می‌شود) پرداخته‌ایم.
+
+
+\subsection{کارایی توابع نگاشت}
+
+توابع نگاشت برای اعمال یک عملیات به همه عناصر یک مجموعه به کار می‌روند. این توابع می‌توانند در مقایسه با حلقه‌های تکرار در برخی موارد کارایی بهتری داشته باشند، به ویژه در زمانی که از توابع استاندارد C++ استفاده می‌کنید که بهینه‌سازی‌های داخلی دارند.
+
+\subsubsection{مثال برنامه‌نویسی رویه‌ای}
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <vector>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			
+			// Loop to multiply each element by 2
+			for (auto& n : vec) {
+				n *= 2;  // Multiply each element by 2
+			}
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{مثال استفاده از \texttt{std::transform}}
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <algorithm>
+		#include <vector>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			
+			// Use std::transform to apply a function to each element
+			transform(vec.begin(), vec.end(), vec.begin(), [](int n) { return n * 2; });
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{مقایسه کارایی}
+\begin{itemize}
+	\item اگر از توابع استاندارد C++ مثل \texttt{std::transform} استفاده کنید، به طور معمول این توابع به دلیل بهینه‌سازی‌های داخلی در برخی موارد ممکن است سریع‌تر از حلقه‌های تکرار باشند.
+	\item در برنامه‌نویسی رویه‌ای، کد بسیار مستقیم و قابل کنترل است، اما ممکن است بهینه‌سازی‌های داخلی کتابخانه‌ها و کامپایلرها در استفاده از توابع استاندارد بهتر عمل کند.
+\end{itemize}
+
+
+\subsection{کارایی توابع فیلتر}
+
+توابع فیلتر در \texttt{C++} معمولاً با استفاده از \texttt{std::copy\_if} پیاده‌سازی می‌شوند که به شما این امکان را می‌دهد که فقط عناصری را که با یک شرط مطابقت دارند کپی کنید.
+
+\subsubsection{مثال برنامه‌نویسی رویه‌ای}
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <vector>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			vector<int> result;
+			
+			// Loop to filter even numbers
+			for (auto& n : vec) {
+				if (n % 2 == 0) {  // Only even numbers
+					result.push_back(n);
+				}
+			}
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{مثال استفاده از \texttt{std::copy\_if} }
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <algorithm>
+		#include <vector>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			vector<int> result;
+			
+			// Use std::copy_if to filter even numbers
+			copy_if(vec.begin(), vec.end(), back_inserter(result), [](int n) { return n % 2 == 0; });
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{مقایسه کارایی}
+\begin{itemize}
+	\item در مورد فیلتر کردن، تفاوت زیادی بین برنامه‌نویسی رویه‌ای و استفاده از \texttt{std::copy\_if} نخواهید داشت. در واقع، در مواردی که حجم داده‌ها کوچک باشد، تفاوت‌های کارایی به حدی کم است که به نظر نمی‌رسد تفاوت قابل توجهی داشته باشد.
+	\item اما در مواردی که داده‌ها بسیار زیاد باشند، \texttt{std::copy\_if} ممکن است به دلیل بهینه‌سازی‌هایی که انجام می‌دهد کارایی بهتری داشته باشد.
+\end{itemize}
+
+\subsection{کارایی توابع کاهش}
+
+توابع کاهش معمولاً با استفاده از \texttt{std::accumulate} در \texttt{C++} پیاده‌سازی می‌شوند که برای کاهش یک مجموعه به یک مقدار واحد استفاده می‌شود، مانند جمع کردن یا ضرب کردن تمام عناصر.
+
+\subsubsection{مثال برنامه‌نویسی رویه‌ای}
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <vector>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			int sum = 0;
+			
+			// Loop to accumulate sum of all elements
+			for (auto& n : vec) {
+				sum += n;
+			}
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{مثال استفاده از \texttt{std::accumulate}}
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <numeric>
+		#include <vector>
+		
+		using namespace std;
+		
+		int main() {
+			vector<int> vec = {1, 2, 3, 4, 5};
+			
+			// Use std::accumulate to accumulate sum of all elements
+			int sum = accumulate(vec.begin(), vec.end(), 0);
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{مقایسه کارایی}
+\begin{itemize}
+	\item مشابه با نگاشت و فیلتر، در کاهش نیز ممکن است تفاوت کارایی زیادی وجود نداشته باشد.
+	\item \texttt{std::accumulate} معمولاً بهینه‌تر از یک حلقه تکرار ساده است، به‌ویژه اگر از قابلیت‌های کامپایلر برای بهینه‌سازی‌های داخلی استفاده کنید.
+\end{itemize}
+
+\subsection{نتیجه‌گیری}
+
+\begin{itemize}
+	\item \textbf{کارایی مشابه}: تفاوت کارایی بین استفاده از توابع استاندارد و برنامه‌نویسی رویه‌ای با حلقه‌های تکرار معمولاً کوچک است، مگر در عملیات‌های پیچیده.
+	\item \textbf{خوانایی و سهولت نگهداری}: توابع استاندارد \lr{C++} می‌توانند کد را خواناتر و ساده‌تر کنند، به ویژه در موارد پیچیده با توابع لامبدا.
+	\item \textbf{بهینه‌سازی‌های داخلی}: توابع استاندارد معمولاً بهینه‌سازی‌های داخلی دارند که می‌تواند عملکرد بهتری نسبت به حلقه‌های تکرار ساده ارائه دهد.
+	\item \textbf{برای داده‌های بزرگ}: توابع استاندارد \lr{C++} معمولاً در داده‌های بزرگتر و پیچیده‌تر عملکرد بهتری دارند.
+	\item \textbf{سهولت نگهداری}: استفاده از توابع استاندارد کمک به نگهداری ساده‌تر کد می‌کند.
+\end{itemize}
+\chapter{برنامه نویسی رویه‌ای}
+\lr{C++} یک زبان چند پارادایم است، به این معنی که از چندین شیوه برنامه‌نویسی، از جمله برنامه‌نویسی رویه‌ای\LTRfootnote{Procedural Programming} پشتیبانی می‌کند. در برنامه‌نویسی رویه‌ای، تمرکز اصلی بر روی انجام وظایف به صورت گام به گام و تعریف رویه‌ها\LTRfootnote{procedural} یا همان توابع\LTRfootnote{functions} است.
+
+\section{رویه یا تابع}
+
+در زبان برنامه‌نویسی \lr{C++}، رویه‌ها در قالب توابع تعریف می‌شوند. یک تابع مجموعه‌ای از دستورالعمل‌ها است که یک وظیفه خاص را انجام می‌دهد. هر تابع می‌تواند شامل موارد زیر باشد:
+
+\subsection{اجزای تابع}
+
+\begin{itemize}
+	\item \textbf{اعلان متغیرها}: تعریف متغیرها برای ذخیره‌سازی داده‌ها.
+	\item \textbf{انتساب مقادیر}: اختصاص دادن مقادیر به متغیرها.
+	\item \textbf{ساختارهای کنترلی}: استفاده از ساختارهایی مانند \texttt{if}، \texttt{else}، \texttt{for}، \texttt{while} و \texttt{switch} برای کنترل جریان اجرای برنامه.
+	\item \textbf{فراخوانی توابع دیگر}: استفاده از توابع دیگر برای انجام وظایف فرعی.
+\end{itemize}
+
+\subsection{تابع main()}
+
+تابع \texttt{main()} نقطه شروع اجرای هر برنامه \lr{C++} است. هنگامی که یک برنامه \lr{C++} اجرا می‌شود، سیستم عامل ابتدا تابع \texttt{main()} را فراخوانی می‌کند. در برنامه‌نویسی رویه‌ای، منطق اصلی برنامه و فراخوانی سایر توابع معمولاً در داخل تابع \texttt{main()} انجام می‌شود.
+
+\subsection{ساختار کلی تعریف تابع}
+
+در زبان برنامه‌نویسی \lr{C++}، ساختار کلی تعریف تابع به شکل زیر است:
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		return_type function_name(parameter_list) {
+			// Function body (code to be executed)
+			return return_value; // If return_type is not void
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsection{اجزای ساختار تابع}
+
+\begin{itemize}
+	\item \textbf{return\_type}: نوع داده‌ای که تابع برمی‌گرداند. اگر تابع هیچ مقداری برنگرداند، از \texttt{void} استفاده می‌شود.
+	\item \textbf{function\_name}: نامی که برای تابع انتخاب می‌کنید. نام تابع باید از قوانین نامگذاری C++ پیروی کند.
+	\item \textbf{parameter\_list}: ورودی‌هایی که تابع می‌تواند دریافت کند. هر پارامتر شامل نوع داده و نام است. اگر تابع هیچ پارامتری نگیرد، پرانتزها خالی می‌مانند.
+	\item \textbf{function body}: کدهایی که وظیفه اصلی تابع را انجام می‌دهند. این کدها داخل آکولاد \{ \} قرار می‌گیرند.
+	\item \textbf{return}: کلمه کلیدی \texttt{return} برای برگرداندن مقدار از تابع استفاده می‌شود. اگر \texttt{return\_type} تابع \texttt{void} باشد، نیازی به استفاده از \texttt{return} نیست.
+\end{itemize}
+
+
+\subsection{نحوه فراخوانی تابع}
+
+برای استفاده از تابع در زبان \lr{C++}، باید آن را فراخوانی کنید. برای این کار، نام تابع را به همراه پرانتز و مقادیر مربوط به پارامترها (در صورت وجود) می‌نویسید. ساختار کلی فراخوانی تابع به شکل زیر است:
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		function_name(parameter_list);
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{توضیحات}
+
+\begin{itemize}
+	\item \textbf{function\_name}: نام تابعی که می‌خواهید آن را فراخوانی کنید. نام تابع باید دقیقاً همان نامی باشد که هنگام تعریف آن استفاده کرده‌اید.
+	\item \textbf{parameter\_list}: لیستی از مقادیری که به عنوان ورودی به تابع داده می‌شوند. این مقادیر باید با ترتیب صحیح و مطابق با نوع داده‌ای که تابع انتظار دارد، قرار گیرند. اگر تابع هیچ پارامتری نگیرد، پرانتزها خالی می‌مانند.
+\end{itemize}
+
+در زیر یک مثال ساده از نحوه فراخوانی یک تابع آورده شده است:
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		using namespace std;
+		
+		int add(int a, int b) {
+			return a + b;
+		}
+		
+		int main() {
+			int result = add(3, 5);
+			cout << "The result is: " << result << endl;
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+در این کد:
+\begin{itemize}
+	\item تابع \texttt{add} دو پارامتر \texttt{a} و \texttt{b} از نوع \texttt{int} می‌گیرد و جمع آن‌ها را باز می‌گرداند.
+	\item در داخل تابع \texttt{main}، تابع \texttt{add} با مقادیر 3 و 5 فراخوانی می‌شود.
+	\item نتیجه‌ی فراخوانی تابع به متغیر \texttt{result} اختصاص داده می‌شود و سپس این نتیجه چاپ می‌شود.
+\end{itemize}
+
+\subsection{فراخوانی تابع بدون پارامتر}
+
+اگر تابع هیچ پارامتری نداشته باشد، برای فراخوانی آن تنها باید نام تابع را به همراه پرانتزهای خالی بنویسید:
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		using namespace std;
+		
+		void greet() {
+			cout << "Hello, World!" << endl;
+		}
+		
+		int main() {
+			greet();
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+در این کد، تابع \texttt{greet} بدون پارامتر فراخوانی می‌شود و پیام \lr{"Hello, World!"} چاپ می‌شود.
+
+\section{اعلان تابع یا پروتوتایپ}
+
+در زبان C++، اگر بخواهید تابعی را بعد از تابع \texttt{main()} یا هر تابع دیگری تعریف کنید، باید پیش از آن یک اعلان یا پروتوتایپ از تابع داشته باشید. پروتوتایپ تابع به کامپایلر اطلاع می‌دهد که تابعی با مشخصات خاصی (نوع بازگشتی، نام تابع و نوع پارامترها) وجود دارد.
+
+\subsection{فرمت پروتوتایپ تابع}
+پروتوتایپ تابع معمولاً شامل سه بخش اصلی است:
+\begin{enumerate}
+	\item \textbf{نوع بازگشتی تابع}: نوع داده‌ای که تابع برمی‌گرداند.
+	\item \textbf{نام تابع}: نامی که برای فراخوانی تابع از آن استفاده می‌کنید.
+	\item \textbf{لیست پارامترها}: نوع و تعداد پارامترهایی که تابع می‌پذیرد.
+\end{enumerate}
+
+\subsection{مثال}
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		using namespace std;
+		
+		// Function prototype
+		int add(int, int);
+		
+		int main() {
+			int result = add(5, 3);
+			cout << "Result: " << result << endl;
+			return 0;
+		}
+		
+		int add(int a, int b) {
+			return a + b;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\section{اشاره‌گر به توابع}
+
+
+در زبان C++، اشاره‌گر به تابع یک نوع متغیر است که آدرس یک تابع را در خود ذخیره می‌کند. این ویژگی به شما امکان می‌دهد که توابع را به‌صورت داینامیک به متغیرهای خاصی اختصاص دهید و از آن‌ها استفاده کنید. این ویژگی به‌ویژه در مواقعی که نیاز به ارسال توابع به‌عنوان آرگومان دارید یا می‌خواهید رفتار برنامه را در زمان اجرا تغییر دهید، مفید است.
+
+برای تعریف یک اشاره‌گر به تابع، باید نوع بازگشتی و امضای تابع (نوع پارامترها) را مشخص کنید. ساختار کلی تعریف اشاره‌گر به تابع به‌صورت زیر است:
+
+\[
+\texttt{return\_type} \, (\texttt{pointer\_name})(\texttt{parameter\_list});
+\]
+
+که در آن:
+\begin{itemize}
+	\item \(\texttt{return\_type}\): نوع داده‌ای است که تابع پس از انجام عملیات خود به فراخوانی‌کننده باز می‌گرداند.
+	\item \(\texttt{pointer\_name}\): نام اشاره‌گر است که به تابع اشاره می‌کند.
+	\item \(\texttt{parameter\_list}\): لیستی از نوع داده‌های ورودی است که تابع می‌تواند دریافت کند. اگر تابع ورودی نداشته باشد، این لیست خالی خواهد بود.
+\end{itemize}
+
+این ساختار به‌طور دقیق نحوه تعریف و استفاده از اشاره‌گرهای تابع را در C++ نشان می‌دهد. پس از تعریف اشاره‌گر به تابع، می‌توانید از آن برای فراخوانی تابع مورد نظر استفاده کنید. برای این منظور، باید آدرس تابع مورد نظر را به اشاره‌گر نسبت دهید و سپس از طریق اشاره‌گر تابع را فراخوانی کنید.
+
+یکی از ویژگی‌های برجسته استفاده از اشاره‌گرهای تابع، امکان تغییر رفتار برنامه در زمان اجرا است. به این معنی که شما می‌توانید به‌صورت داینامیک توابع مختلف را به متغیرهای خاصی اختصاص دهید و از آن‌ها در شرایط مختلف استفاده کنید. این ویژگی به‌ویژه در برنامه‌های پیچیده و کاربردی که نیاز به انعطاف‌پذیری دارند، بسیار مفید است.
+
+در نهایت، استفاده از اشاره‌گرهای تابع در \lr{C++} نیاز به دقت دارد، زیرا اشتباه در نوع بازگشتی یا لیست پارامترها می‌تواند منجر به خطاهای زمان اجرا شود. بنابراین، هنگام تعریف و استفاده از اشاره‌گرهای تابع، باید اطمینان حاصل کنید که نوع داده‌ها به‌درستی تطبیق یافته‌اند.
+
+
+\subsection{مثال استفاده از اشاره‌گرهای تابع برای عملیات‌های پایه‌ای}
+
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		using namespace std;
+		
+		// Functions with similar signatures
+		int add(int a, int b) {
+			return a + b;
+		}
+		
+		int multiply(int a, int b) {
+			return a * b;
+		}
+		
+		// Function that accepts a function pointer
+		int operate(int x, int y, int (*operation)(int, int)) {
+			return operation(x, y);
+		}
+		
+		int main() {
+			// Passing function pointer to the add function
+			cout << "Add: " << operate(5, 3, add) << endl;
+			
+			// Passing function pointer to the multiply function
+			cout << "Mult: " << operate(5, 3, multiply) << endl;
+			
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsection{مثال تعریف و استفاده از آرایه‌ای از اشاره‌گرهای تابع}
+
+
+\begin{LTR} % Left-to-right environment for code
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		using namespace std;
+		
+		// Different functions
+		int add(int a, int b) { return a + b; }
+		int subtract(int a, int b) { return a - b; }
+		int multiply(int a, int b) { return a * b; }
+		
+		int main() {
+			// Defining an array of function pointers
+			int (*operations[3])(int, int) = {add, subtract, multiply};
+			
+			// Using function pointers
+			cout << "Add: " << operations[0](5, 3) << endl;
+			cout << "Sub: " << operations[1](5, 3) << endl;
+			cout << "Mult: " << operations[2](5, 3) << endl;
+			
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\subsection{کاربردهای رایج اشاره‌گرهای تابع}
+
+\begin{itemize}
+	\item \textbf{\LTRfootnote{Behavior}ارسال رفتار}: 
+	در الگوریتم‌هایی مانند مرتب‌سازی، می‌توان از اشاره‌گرهای تابع برای ارسال تابع مقایسه استفاده کرد. این روش به شما این امکان را می‌دهد که نوع مقایسه را در زمان اجرا تغییر دهید.
+	
+	\item \textbf{پیاده‌سازی \lr{Callback}}: 
+	در برنامه‌های رویدادمحور\LTRfootnote{Event-driven} یا برنامه‌های شبکه‌ای، از اشاره‌گرهای تابع برای پیاده‌سازی روش‌های \textit{callback} استفاده می‌شود. این روش به برنامه‌نویسان این امکان را می‌دهد که کدهایی را که در زمان‌های خاص یا پس از رخدادهای خاص باید اجرا شوند، به‌طور پویا تعیین کنند.
+	
+	\item \textbf{افزایش انعطاف‌پذیری کد}: 
+	استفاده از اشاره‌گرهای توابع به شما این امکان را می‌دهد که توابع مختلف را به‌طور پویا در زمان اجرا انتخاب و اجرا کنید. این ویژگی موجب می‌شود که کد شما انعطاف‌پذیرتر و قابل گسترش‌تر باشد.
+\end{itemize}
+
+
+\section{اشاره‌گر به توابع با استفاده از std::function}
+
+\texttt{std::function} یک کلاس تمپلیت در \lr{C++} است که در هدر فایل \texttt{<functional>} تعریف شده است. این کلاس یک نوع عمومی برای نگهداری و فراخوانی هر نوع تابع، لامبدا، اشاره‌گر به تابع، یا هر شئ قابل فراخوانی (\textit{Callable Object}) است.
+
+\subsection{ویژگی‌های کلیدی \texttt{std::function}}
+\begin{itemize}
+	\item \textbf{قابلیت ذخیره انواع مختلف \lr{Callable}:}
+	\begin{itemize}
+		\item توابع معمولی
+		\item لامبداها
+		\item اشاره‌گر به توابع
+	\end{itemize}
+	\item \textbf{ایمنی بیشتر نسبت به اشاره‌گرهای خام به تابع} 
+	\item \textbf{سربار بیشتر نسبت‌ به اشاره‌گرهای تابعی} 
+	
+\end{itemize}
+
+
+\subsection{تعریف \texttt{std::function}}
+
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		std::function<ReturnType(ArgumentTypes...)>
+	\end{lstlisting}
+\end{LTR}
+
+در این تعریف:
+\begin{itemize}
+	\item \texttt{ReturnType}: نوع بازگشتی تابع است.
+	\item \texttt{ArgumentTypes...}: لیستی از انواع آرگومان‌هایی است که تابع دریافت می‌کند.
+\end{itemize}
+
+\subsection{ذخیره یک تابع عددی}
+
+در این مثال، یک تابع ساده به نام \texttt{add} تعریف می‌کنیم و سپس آن را در یک \texttt{std::function} ذخیره می‌کنیم تا بتوانیم آن را به راحتی فراخوانی کنیم.
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <functional>
+		using namespace std;
+		
+		// Define a simple function to add two numbers
+		int add(int a, int b) {
+			return a + b;
+		}
+		
+		int main() {
+			// Store the 'add' function in a std::function
+			function<int(int, int)> func = add;
+			
+			// Call the function through function
+			cout << "Result: " << func(5, 3) << endl;
+			
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+در این کد:
+\begin{itemize}
+	\item تابع \texttt{add} دو عدد صحیح را به هم اضافه می‌کند.
+	\item یک \texttt{std::function} به نام \texttt{func} ایجاد می‌شود که می‌تواند هر تابعی با امضای مشابه \texttt{int(int, int)} را ذخیره کند.
+	\item سپس تابع \texttt{add} در \texttt{func} ذخیره شده و می‌توان آن را به راحتی فراخوانی کرد.
+\end{itemize}
+
+
+\section{زیربرنامه و توابع عمومی}
+توابع جنریک (\textit{Generic Functions}) در زبان C++ ابزاری برای نوشتن کدهایی هستند که بتوانند با انواع داده‌های مختلف بدون نیاز به تکرار کد کار کنند. این قابلیت با استفاده از \textbf{قالب‌ها\LTRfootnote{Templates}} فراهم می‌شود. قالب‌ها یکی از ویژگی‌های کلیدی و مهم زبان C++ هستند که به برنامه‌نویسان اجازه می‌دهند کدهای انعطاف‌پذیر و قابل استفاده مجدد ایجاد کنند.
+
+\subsection{چرا از توابع جنریک استفاده می‌کنیم؟}
+\begin{itemize}
+	\item \textbf{قابلیت استفاده مجدد:} با تعریف یک قالب، نیازی به نوشتن چندین نسخه از یک تابع برای انواع مختلف داده‌ها نیست.
+	\item \textbf{انعطاف‌پذیری:} قالب‌ها می‌توانند برای هر نوع داده‌ای استفاده شوند که با عملیات تعریف‌شده در قالب سازگار باشد.
+	\item \textbf{کاهش خطا:} با استفاده از قالب‌ها، نیاز به کپی کردن و تغییر دستی کد کاهش یافته و احتمال خطا کم می‌شود.
+	\item \textbf{صرفه‌جویی در زمان توسعه:} نیازی به نوشتن توابع جداگانه برای هر نوع داده وجود ندارد.
+\end{itemize}
+
+\subsection{ساختار کلی یک تابع جنریک}
+یک تابع جنریک در \lr{C++} با استفاده از کلمه کلیدی \texttt{template} تعریف می‌شود. این کلمه کلیدی به همراه یک یا چند \textbf{پارامتر نوع} مشخص می‌کند که تابع می‌تواند برای انواع مختلف داده‌ها استفاده شود.
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		template <typename T>
+		T function_name(T parameter) {
+			// Function Body
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\begin{itemize}
+	\item \texttt{template}: کلمه کلیدی برای تعریف یک قالب.
+	\item \texttt{typename} یا \texttt{class}: کلمه کلیدی برای تعریف یک پارامتر نوع. (این دو کلمه قابل جایگزینی هستند و از نظر عملکرد تفاوتی ندارند.)
+	\item \texttt{T}: پارامتر نوع که نشان‌دهنده نوع داده‌ای است که هنگام فراخوانی تابع تعیین می‌شود.
+\end{itemize}
+
+\subsection{جزئیات و نکات مهم}
+\begin{itemize}
+	\item \textbf{تعیین نوع هنگام فراخوانی:} نوع داده در زمان کامپایل مشخص می‌شود. این امر به بهینه‌سازی کد کمک می‌کند.
+	\item \textbf{چندین پارامتر نوع:} می‌توان بیش از یک پارامتر نوع تعریف کرد:
+	\begin{LTR}
+		\begin{lstlisting}[language=C++, breaklines=true]
+			template <typename T, typename U>
+			void function_name(T param1, U param2) {
+				// Function Body
+			}
+		\end{lstlisting}
+	\end{LTR}
+	
+	\item \textbf{قرار دادن پارامتر پیش‌فرض:}
+	\begin{LTR}
+		\begin{lstlisting}[language=C++, breaklines=true]
+			template <typename T, typename U = int>
+			void function_name(T param1, U param2) 
+			// Function Body
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\item \textbf{محدودیت نوع:} به طور پیش‌فرض، قالب‌ها هیچ محدودیتی برای نوع داده ندارند، اما با استفاده از ویژگی‌هایی مانند \textbf{مفهوم‌ها\LTRfootnote{Concepts}} در C++20، می‌توان محدودیت‌هایی را تعریف کرد.
+\item \textbf{تخصص‌دهی قالب\LTRfootnote{Template Specialization}:} در موارد خاص، می‌توان نسخه‌های خاصی از یک قالب را برای نوع خاصی از داده‌ها تعریف کرد.
+\end{itemize}
+
+\subsection{مزایا و معایب}
+\textbf{مزایا:}
+\begin{itemize}
+\item افزایش انعطاف‌پذیری و قابلیت استفاده مجدد کد.
+\item کاهش نیاز به تعریف توابع مشابه برای انواع مختلف داده‌ها.
+\item عملکرد بالا، زیرا کد قالب‌ها در زمان کامپایل گسترش می‌یابد.
+\end{itemize}
+
+\textbf{معایب:}
+\begin{itemize}
+\item ممکن است کدهای تولیدشده از قالب‌ها در زمان کامپایل منجر به افزایش اندازه برنامه شوند (به دلیل گسترش کد برای هر نوع داده).
+\item اشکال‌زدایی کدهای مبتنی بر قالب ممکن است پیچیده‌تر باشد.
+\end{itemize}
+
+
+\subsection{مثال جمع دو متغیر}
+
+\begin{LTR}
+\begin{lstlisting}[language=C++, breaklines=true]
+	// Definition of Template
+	template <typename T>
+	T add(T a, T b) {
+		return a + b;
+	}
+	
+	int main() {
+		// Using the generic function with different types
+		cout << add(5, 10) << endl;         // Output: 15
+		cout << add(5.5, 10.5) << endl;     // Output: 16
+		cout << add("Mat", "Inf") << endl;  // Output: MatInf
+		return 0;
+	}
+\end{lstlisting}
+\end{LTR}
+
+\subsection{مثال استفاده از توابع جنریک با چند پارامتر نوع}
+
+\begin{LTR}
+\begin{lstlisting}[language=C++, breaklines=true]
+	// Definition of Template with multiple type parameters
+	template <typename T, typename U>
+	void display(T a, U b) {
+		cout << "First: " << a << ", Second: " << b << endl;
+	}
+	
+	int main() {
+		// Using the generic function with different types
+		display(5, 3.14);  	   // First: 5, Second: 3.14
+		display("Hello", 10);  // First: Hello, Second: 10
+		return 0;
+	}
+\end{lstlisting}
+\end{LTR}
+
+
+\section{تعریف زیربرنامه‌های تودرتو}
+
+در زبان \lr{C++}، همان‌طور که اشاره کردید، تعریف یک تابع داخل تابع دیگر به صورت مستقیم پشتیبانی نمی‌شود. به این معنا که نمی‌توانید تابعی را با بدنه‌ی کامل در داخل یک تابع دیگر تعریف کنید. با این حال، با معرفی توابع لامبدا\LTRfootnote{Lambda Functions} در استاندارد \lr{C++11}، راهکاری قدرتمند و انعطاف‌پذیر برای تعریف توابع ناشناس و استفاده از آن‌ها درون توابع دیگر ارائه شده است.
+
+\begin{LTR}
+\begin{lstlisting}[language=C++, breaklines=true]
+	#include <iostream>
+	#include <vector>
+	#include <algorithm>
+	using namespace std;
+	
+	// Function to process and print numbers
+	void processNumbers() {
+		// Initialize a vector of integers
+		vector<int> numbers = {1, 2, 3, 4, 5};
+		
+		// Define a lambda function to print each element
+		auto print = [](int n) {
+			cout << n << " ";
+		};
+		
+		// Use  for_each to apply the lambda to each element in the vector
+		for_each(numbers.begin(), numbers.end(), print);
+		cout << endl; // Print a newline at the end
+	}
+	
+	int main() {
+		// Call the processNumbers function
+		processNumbers();
+		return 0;
+	}
+\end{lstlisting}
+\end{LTR}
+
+
+\section{بارگزاری توابع}
+
+بارگزاری توابع یکی از ویژگی‌های مهم زبان C++ است که به شما اجازه می‌دهد چندین تابع با نام یکسان تعریف کنید، به شرط آنکه امضای \LTRfootnote{signature} آن‌ها متفاوت باشد. امضای یک تابع شامل نام تابع و لیست پارامترهای آن (تعداد، نوع، و ترتیب پارامترها) است. این قابلیت به برنامه‌نویس امکان می‌دهد تا توابعی با عملکردهای مشابه اما ورودی‌های متفاوت را به صورت ساده و منظم پیاده‌سازی کند.
+
+\subsection{قوانین بارگزاری توابع}
+\begin{itemize}
+\item \textbf{امضای متفاوت:} توابع باید امضای متفاوتی داشته باشند. امضای متفاوت به این معناست که حداقل یکی از موارد زیر تغییر کرده باشد:
+\begin{itemize}
+	\item تعداد پارامترها
+	\item نوع پارامترها
+	\item ترتیب پارامترها
+\end{itemize}
+\item \textbf{تفاوت در نوع بازگشتی کافی نیست:} اگر تنها تفاوت بین توابع در نوع بازگشتی باشد، کامپایلر نمی‌تواند بین آن‌ها تمایز قائل شود و خطا می‌دهد.
+\item \textbf{پارامترهای پیش‌فرض:} اگر از پارامترهای پیش‌فرض استفاده می‌کنید، باید دقت کنید که آن‌ها باعث ابهام در انتخاب نسخه‌ی مناسب تابع نشوند.
+\end{itemize}
+
+\subsection{مزایای بارگزاری توابع}
+\begin{itemize}
+\item \textbf{سادگی در نام‌گذاری:} به جای استفاده از نام‌های مختلف برای توابع مشابه، می‌توانید از یک نام یکسان استفاده کنید.
+\item \textbf{خوانایی کد:} برنامه‌ها خواناتر و قابل‌درک‌تر می‌شوند.
+\item \textbf{انعطاف‌پذیری:} توابع می‌توانند برای ورودی‌های مختلف با یک نام مشابه عمل کنند.
+\end{itemize}
+
+\subsection{مثال‌هایی از بارگزاری توابع}
+\subsubsection{تفاوت در تعداد پارامترها}
+
+\begin{LTR}
+\begin{lstlisting}[language=C++, breaklines=true]
+	// Function to print a single integer
+	void print(int a) {
+		cout << "Integer: " << a << endl;
+	}
+	
+	// Function to print two integers
+	void print(int a, int b) {
+		cout << "Two Integers: " << a << ", " << b << endl;
+	}
+	
+	int main() {
+		print(5);        
+		print(10, 20); 
+		return 0;
+	}
+\end{lstlisting}
+\end{LTR}
+
+\subsubsection{تفاوت در نوع پارامترها}
+
+\begin{LTR}
+\begin{lstlisting}[language=C++, breaklines=true]
+	// Function to print an integer
+	void print(int a) {
+		cout << "Integer: " << a << endl;
+	}
+	
+	// Function to print a double
+	void print(double a) {
+		cout << "Double: " << a << endl;
+	}
+	
+	int main() {
+		print(5);         
+		print(5.5);      
+		return 0;
+	}
+\end{lstlisting}
+\end{LTR}
+
+\subsubsection{تفاوت در ترتیب پارامترها}
+
+\begin{LTR}
+\begin{lstlisting}[language=C++, breaklines=true]
+	// Function to display an integer followed by a double
+	void display(int a, double b) {
+		cout << "Integer: " << a << ", Double: " << b << endl;
+	}
+	
+	// Function to display a double followed by an integer
+	void display(double a, int b) {
+		cout << "Double: " << a << ", Integer: " << b << endl;
+	}
+	
+	int main() {
+		display(10, 3.14);
+		display(3.14, 10);
+		return 0;
+	}
+\end{lstlisting}
+\end{LTR}
+\chapter{برنامه نویسی شی گرا}
+\section{مقدمه}
+برنامه‌نویسی شی‌گرا \LTRfootnote{Object-Oriented Programming} یکی از پارادایم‌های مهم در دنیای برنامه‌نویسی است که بر اساس مفاهیمی مانند اشیاء \LTRfootnote{Objects} و کلاس‌ها \LTRfootnote{Classes} طراحی شده است. این پارادایم در پاسخ به نیازهای پیچیده‌تر نرم‌افزارها ایجاد شد تا بتوان سیستم‌هایی انعطاف‌پذیر، مقیاس‌پذیر و قابل نگهداری ساخت.
+
+زبان \lr{C++} یکی از قدرتمندترین زبان‌های برنامه‌نویسی است که از پارادایم‌های مختلف، از جمله شی‌گرایی، پشتیبانی می‌کند. این زبان در دهه 1980 توسط بیارنه استراس‌تروپ ایجاد شد و به سرعت به یکی از پرکاربردترین زبان‌ها برای توسعه نرم‌افزارهای سیستم، بازی‌های رایانه‌ای، برنامه‌های صنعتی و پروژه‌های علمی تبدیل شد.
+\subsection{اهمیت برنامه‌نویسی شی‌گرا}
+شی‌گرایی به توسعه‌دهندگان این امکان را می‌دهد که مشکلات را به قطعات کوچک‌تر و منطقی‌تر تقسیم کنند. با استفاده از کلاس‌ها و اشیاء، می‌توان داده‌ها و رفتارها را در قالب یک واحد مستقل ترکیب کرد. این ویژگی باعث می‌شود کد خواناتر، قابل‌توسعه‌تر و کمتر مستعد خطا باشد.
+
+
+\subsection{چرا \lr{C++} برای شی‌گرایی؟}
+زبان \lr{C++} با ارائه امکاناتی نظیر وراثت\LTRfootnote{Inheritance}، چندریختی\LTRfootnote{Polymorphism}، پنهان‌سازی داده‌ها\LTRfootnote{Encapsulation} و انتزاع\LTRfootnote{Abstraction}، ابزارهای قدرتمندی برای پیاده‌سازی مفاهیم شی‌گرایی در اختیار توسعه‌دهندگان قرار می‌دهد. این ویژگی‌ها، همراه با کارایی بالا و کنترل دقیق بر منابع سیستم، باعث شده است که \lr{C++} برای توسعه نرم‌افزارهای پیچیده و کارآمد انتخابی ایده‌آل باشد.
+
+در این گزارش، به بررسی اصول، ویژگی‌ها و مزایای برنامه‌نویسی شی‌گرا در زبان \lr{C++} خواهیم پرداخت و با ارائه مثال‌هایی عملی، کاربرد این مفاهیم را توضیح خواهیم داد.
+\section{مفاهیم اصلی شی گرایی}
+برنامه‌نویسی شی‌گرا بر اساس چند مفهوم اصلی شکل گرفته است که در زبان \lr{C++} به صورت کامل پشتیبانی می‌شوند. این مفاهیم به شما کمک می‌کنند که داده‌ها و رفتارهای مرتبط را در یک ساختار واحد (کلاس) ترکیب کنید و سیستم‌هایی ماژولار و مقیاس‌پذیر طراحی کنید.
+\subsection{کلاس}
+کلاس یک قالب یا طرح کلی برای ایجاد اشیاء است. این قالب شامل ویژگی‌ها\LTRfootnote{Attributes} و رفتارها\LTRfootnote{Behaviors} است. به عبارت دیگر، کلاس نوعی داده سفارشی است که شما تعریف می‌کنید.
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+class Car {
+	public:
+	string brand;
+	int year;
+	
+	void startEngine() {
+		cout << "Engine started!" << endl;
+	}
+};
+
+\end{lstlisting}
+\RTL
+\subsection{شی}
+یک نمونه\LTRfootnote{Instance} از کلاس است. اشیاء به کمک کلاس‌ها ساخته می‌شوند و داده‌ها و توابع تعریف‌شده در کلاس را به ارث می‌برند.
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+int main() {
+	Car myCar; // new Car instance
+	myCar.brand = "Toyota";
+	myCar.year = 2021;
+	myCar.startEngine();
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+\subsection{ویژگی‌ها}
+متغیرهایی که در کلاس تعریف می‌شوند و نشان‌دهنده وضعیت یا خصوصیات شیء هستند. در مثال بالا، \lr{brand} و \lr{year} ویژگی‌های \LTRfootnote{Attributes} کلاس \lr{Car} هستند.
+\subsection{رفتار‌ها}
+توابع عضو\LTRfootnote{Member Functions} کلاس که عملیات یا رفتارهای اشیاء را تعریف می‌کنند. تابع \lr{startEngine} در مثال بالا یکی از رفتارهای\LTRfootnote{Behaviors} کلاس \lr{Car} است.
+\subsection{مفهوم دسترسی}
+\lr{C++} سه سطح دسترسی اصلی برای اعضای کلاس‌ها فراهم می‌کند:
+\begin{itemize}
+	\item \lr{Public} : اعضای کلاس از خارج از کلاس نیز قابل دسترسی هستند.
+	\item \lr{Private} : اعضای کلاس فقط از درون همان کلاس قابل دسترسی هستند.
+	\item \lr{Protected} :  اعضای کلاس فقط از درون همان کلاس و کلاس‌های مشتق‌شده (در وراثت) قابل دسترسی هستند.
+\end{itemize}
+
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+	class Person {
+		private:
+		string name; 
+		public:
+		void setName(string n) { 
+			name = n;
+		}
+		string getName() {
+			return name;
+		}
+	};
+	
+\end{lstlisting}
+\RTL
+
+\subsection{ ساختار یک شی‌گرایی ساده}
+یک کلاس به طور کلی شامل:
+\begin{itemize}
+	\item اعلان ویژگی‌ها برای تعریف خصوصیات.
+	\item توابع سازنده و مخرب برای ایجاد و مدیریت اشیاء.
+	\item توابع عضو برای تعریف رفتارها.
+\end{itemize}
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+class Rectangle {
+	private:
+	int width, height;
+	
+	public:
+	// constructor
+	Rectangle(int w, int h) {
+		width = w;
+		height = h;
+	}
+	
+	int area() {
+		return width * height;
+	}
+};
+
+int main() {
+	Rectangle rect(5, 10); 
+	cout << "Area: " << rect.area() << endl; 
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+
+\section{اصول شی گرایی در \lr{C++}}
+شی‌گرایی در \lr{C++} بر اساس چهار اصل کلیدی بنا شده است: وراثت، پنهان‌سازی داده‌ها، چندریختی و انتزاع. این اصول به توسعه‌دهندگان کمک می‌کنند کدهای ماژولار، انعطاف‌پذیر و قابل توسعه طراحی کنند.
+\subsection{وراثت}
+وراثت به شما این امکان را می‌دهد که یک کلاس جدید (کلاس فرزند یا مشتق‌شده) از یک کلاس موجود (کلاس والد یا پایه) ایجاد کنید و ویژگی‌ها و رفتارهای آن را به ارث ببرید. این اصل موجب استفاده مجدد از کد و گسترش قابلیت‌ها می‌شود.
+انواع وراثت در \lr{C++}:
+\begin{itemize}
+	\item \textbf{عمومی:} ویژگی‌ها و توابع عمومی و محافظت‌شده کلاس والد به همان شکل در کلاس فرزند قابل دسترسی هستند.
+	\item \textbf{خصوصی:} ویژگی‌های کلاس والد به صورت خصوصی در کلاس فرزند ارث‌بری می‌شوند.
+	\item \textbf{محافظت‌شده:} فقط کلاس فرزند و کلاس‌های مشتق‌شده از آن می‌توانند به اعضای محافظت‌شده دسترسی داشته باشند.
+\end{itemize}
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+class Animal {
+	public:
+	void eat() {
+		cout << "This animal eats food." << endl;
+	}
+};
+
+class Dog : public Animal {
+	public:
+	void bark() {
+		cout << "The dog barks." << endl;
+	}
+};
+
+int main() {
+	Dog myDog;
+	myDog.eat();  
+	myDog.bark(); 
+	return 0;
+}
+\end{lstlisting}
+\RTL
+ \subsection{پنهان‌سازی داده‌ها}
+ پنهان‌سازی داده‌ها به معنای محدود کردن دسترسی مستقیم به برخی اعضای کلاس است و با استفاده از دسترس‌سازها\LTRfootnote{Access Specifiers} (مانند \lr{private}، \lr{protected} و \lr{public}) انجام می‌شود. این اصل به امنیت داده‌ها و جلوگیری از تغییرات ناخواسته کمک می‌کند.
+
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+class Account {
+	private:
+	double balance;
+	
+	public:
+	void setBalance(double amount) {
+		if (amount > 0) {
+			balance = amount;
+		} else {
+			cout << "Invalid amount!" << endl;
+		}
+	}
+	
+	double getBalance() {
+		return balance;
+	}
+};
+
+int main() {
+	Account myAccount;
+	myAccount.setBalance(1000); 
+	cout << "Balance: " << myAccount.getBalance() << endl;
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+
+\subsection{چندریختی}
+چندریختی به معنای توانایی استفاده از یک رابط مشترک برای اشیاء مختلف است. در\lr{ C++}، چندریختی به دو صورت ارائه می‌شود:
+\begin{itemize}
+	\item \textbf{چندریختی ایستا\LTRfootnote{Static Polymorphism}:} در زمان کامپایل اتفاق می‌افتد و شامل سربارگذاری توابع \LTRfootnote{Function Overloading} و سربارگذاری عملگرها \LTRfootnote{Operator Overloading} است.
+	\item \textbf{چندریختی پویا\LTRfootnote{Dynamic Polymorphism}:} در زمان اجرا با استفاده از توابع مجازی\LTRfootnote{Virtual Functions} پیاده‌سازی می‌شود.
+\end{itemize}
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+\\Dynamic Polymorphism example
+class Shape {
+	public:
+	virtual void draw() { // virtual function
+		cout << "Drawing a shape." << endl;
+	}
+};
+
+class Circle : public Shape {
+	public:
+	void draw() override {
+		cout << "Drawing a circle." << endl;
+	}
+};
+
+int main() {
+	Shape* shape = new Circle();
+	shape->draw(); // output: Drawing a circle.
+	delete shape;
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+\subsection{ انتزاع}
+انتزاع به معنای نمایش جزئیات ضروری و پنهان‌سازی جزئیات غیرضروری است. این اصل با استفاده از کلاس‌های انتزاعی (کلاس‌هایی که حداقل یک تابع مجازی خالص دارند) و رابط‌ها\LTRfootnote{Interfaces} پیاده‌سازی می‌شود.
+انتزاع در \lr{C++} به کمک کلاس‌های انتزاعی و توابع مجازی خالص\LTRfootnote{Pure Virtual Functions}  پیاده‌سازی می‌شود.
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+class Animal {
+	public:
+	virtual void sound() = 0; // Pure Virtual Function
+};
+
+class Cat : public Animal {
+	public:
+	void sound() override {
+		cout << "Meow!" << endl;
+	}
+};
+
+int main() {
+	Animal* myCat = new Cat();
+	myCat->sound(); // output: Meow!
+	delete myCat;
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+\section{ویژگی‌های پیشرفته شی گرایی در \lr{C++}}
+زبان \lr{C++} با ارائه ویژگی‌های پیشرفته در شی‌گرایی، به توسعه‌دهندگان این امکان را می‌دهد تا سیستم‌های پیچیده‌تر و انعطاف‌پذیرتری طراحی کنند. این ویژگی‌ها شامل موارد زیر می‌شوند:
+\subsection{سربارگذاری عملگرها}
+\lr{C++} به شما اجازه می‌دهد عملگرهای استاندارد (مانند +, -, *, ==) را برای استفاده در کلاس‌های خود بازتعریف کنید. این ویژگی موجب افزایش خوانایی و سازگاری کد می‌شود.
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+#include <iostream>
+using namespace std;
+
+class Complex {
+	public:
+	int real, imag;
+	
+	Complex(int r, int i) : real(r), imag(i) {}
+	
+	
+	Complex operator+(const Complex& c) {
+		return Complex(real + c.real, imag + c.imag);
+	}
+	
+	void display() {
+		cout << real << " + " << imag << "i" << endl;
+	}
+};
+
+int main() {
+	Complex c1(3, 4), c2(1, 2);
+	Complex c3 = c1 + c2; 
+	c3.display(); 
+	return 0;
+}	
+\end{lstlisting}
+\RTL
+
+\subsection{قالب‌ها}
+قالب‌ها\LTRfootnote{Templates} در \lr{C++} به شما اجازه می‌دهند کلاس‌ها یا توابعی تعریف کنید که بتوانند با انواع مختلف داده‌ها کار کنند. این ویژگی برای ساخت کدهای عمومی\LTRfootnote{Generic Code} بسیار مفید است.
+
+مثال تابع قالب:
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+template <typename T>
+T add(T a, T b) {
+	return a + b;
+}
+
+int main() {
+	cout << add<int>(5, 3) << endl;    // output: 8
+	cout << add<double>(5.5, 3.3) << endl; // output: 8.8
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+
+مثال کلاس قالب:
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+template <typename T>
+class Box {
+	public:
+	T value;
+	
+	Box(T v) : value(v) {}
+	
+	void display() {
+		cout << "Value: " << value << endl;
+	}
+};
+
+int main() {
+	Box<int> intBox(5);
+	Box<string> strBox("Hello");
+	
+	intBox.display(); // output: Value: 5
+	strBox.display(); // output: Value: Hello
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+
+\subsection{وراثت چندگانه}
+در \lr{C++}، یک کلاس می‌تواند از چند کلاس والد به صورت همزمان ارث‌بری کند. این ویژگی انعطاف‌پذیری بالایی ایجاد می‌کند، اما باید با احتیاط استفاده شود تا از ابهام در وراثت\LTRfootnote{Ambiguity} جلوگیری شود.
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+class A {
+	public:
+	void show() {
+		cout << "Class A" << endl;
+	}
+};
+
+class B {
+	public:
+	void show() {
+		cout << "Class B" << endl;
+	}
+};
+
+class C : public A, public B {
+	public:
+	void show() {
+		A::show(); // use show in class A
+		B::show(); // use show in class B
+	}
+};
+
+int main() {
+	C obj;
+	obj.show();
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+
+\subsection{فضای نام}
+فضای نام\LTRfootnote{Namespaces} در\lr{C++} به سازماندهی کد کمک می‌کند و از بروز تداخل نام\LTRfootnote{Name Collision} جلوگیری می‌کند.
+\LTR
+\begin{lstlisting}[language=C++, breaklines=true]
+#include <iostream>
+using namespace std;
+
+namespace Math {
+	int add(int a, int b) {
+		return a + b;
+	}
+}
+int main() {
+	cout << Math::add(3, 5) << endl; //using Math namespace
+	return 0;
+}
+
+\end{lstlisting}
+\RTL
+
+\section{مقایسه شی گرایی در \lr{C++} با دیگر زبان‌ها}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{4cm}|p{3cm}|p{7cm}|}
+		\hline
+		\textbf{ویژگی} & \textbf{C++} & \textbf{Java} \\
+		\hline
+		وراثت چندگانه &
+		پشتیبانی می‌شود &
+		پشتیبانی نمی‌شود (فقط از طریق اینترفیس) \\
+		\hline
+		مدیریت حافظه &
+		دستی (با \texttt{new}, \texttt{delete}) &
+		خودکار (جمع‌آوری زباله) \\
+		\hline
+		توابع مجازی پیش‌فرض &
+		به صورت پیش‌فرض غیرمجازی &
+		تمام توابع کلاس پایه مجازی هستند \\
+		\hline
+		ساختارها و کلاس‌ها &
+		پشتیبانی از هر دو &
+		فقط کلاس‌ها \\
+		\hline
+		سرعت اجرا &
+		سریع‌تر به دلیل نزدیکی به سخت‌افزار &
+		کندتر به دلیل استفاده از ماشین مجازی \\
+		\hline
+	\end{tabular}
+	\caption{مقایسه ویژگی‌های شی‌گرایی در زبان‌های C++ و Java}
+	\label{tab:cpp_vs_java}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{4cm}|p{3cm}|p{7cm}|}
+		\hline
+		\textbf{ویژگی} & \textbf{C++} & \textbf{Python} \\
+		\hline
+		وراثت چندگانه &
+		پشتیبانی می‌شود &
+		پشتیبانی می‌شود \\
+		\hline
+		مدیریت حافظه &
+		دستی (با \texttt{new}, \texttt{delete}) &
+		خودکار (جمع‌آوری زباله) \\
+		\hline
+		پیاده‌سازی شی‌گرایی &
+		پیچیده‌تر و صریح‌تر &
+		ساده‌تر و دینامیک \\
+		\hline
+		نوع‌دهی (Typing) &
+		استاتیک (Static) &
+		دینامیک (Dynamic) \\
+		\hline
+		سرعت اجرا &
+		سریع‌تر به دلیل کامپایل مستقیم &
+		کندتر به دلیل تفسیر شدن \\
+		\hline
+	\end{tabular}
+	\caption{مقایسه ویژگی‌های شی‌گرایی در زبان‌های C++ و Python}
+	\label{tab:cpp_vs_python}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{4cm}|p{3cm}|p{7cm}|}
+		\hline
+		\textbf{ویژگی} & \textbf{C++} & \textbf{C\#} \\
+		\hline
+		وراثت چندگانه &
+		پشتیبانی می‌شود &
+		پشتیبانی نمی‌شود (فقط از طریق اینترفیس) \\
+		\hline
+		پلتفرم هدف &
+		مستقل از پلتفرم &
+		مبتنی بر .NET Framework \\
+		\hline
+		مدیریت حافظه &
+		دستی (با \texttt{new}, \texttt{delete}) &
+		خودکار (جمع‌آوری زباله) \\
+		\hline
+		ویژگی‌های مدرن &
+		پشتیبانی محدود از ویژگی‌های خاص مانند LINQ &
+		ویژگی‌های مدرن بیشتر \\
+		\hline
+		سرعت اجرا &
+		سریع‌تر به دلیل نزدیکی به سخت‌افزار &
+		کندتر به دلیل ماشین مجازی \\
+		\hline
+	\end{tabular}
+	\caption{مقایسه ویژگی‌های شی‌گرایی در زبان‌های C++ و C\#}
+	\label{tab:cpp_vs_csharp}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{4cm}|p{3cm}|p{7cm}|}
+		\hline
+		\textbf{ویژگی} & \textbf{C++} & \textbf{Rust} \\
+		\hline
+		ایمنی حافظه &
+		احتمال خطاهای دسترسی به حافظه &
+		مدیریت ایمن حافظه بدون جمع‌آوری زباله \\
+		\hline
+		سرعت اجرا &
+		بسیار سریع &
+		سریع و بهینه \\
+		\hline
+		پیچیدگی کدنویسی &
+		پیچیده‌تر &
+		پیچیده ولی ایمن‌تر \\
+		\hline
+		وراثت کلاس‌ها &
+		پشتیبانی کامل &
+		عدم پشتیبانی مستقیم از وراثت کلاس‌ها \\
+		\hline
+	\end{tabular}
+	\caption{مقایسه ویژگی‌های شی‌گرایی در زبان‌های C++ و Rust}
+	\label{tab:cpp_vs_rust}
+\end{table}
+
+\chapter{برنامه نویسی همروند}
+
+\section{چندریسمانی}
+
+چندریسمانی\LTRfootnote{Multithreading} در زبان \lr{C++} به معنای اجرای همزمان دو یا چند بخش از یک برنامه است. این قابلیت امکان استفاده بهینه از منابع پردازشی سیستم، به ویژه CPU، را فراهم می‌کند. هر بخش از برنامه که به صورت مستقل و موازی اجرا می‌شود، به عنوان یک ریسمان\LTRfootnote{Thread} شناخته می‌شود. ریسمان‌ها در حقیقت فرایندهای سبک‌وزنی هستند که در داخل یک فرایند عمل می‌کنند و به اشتراک‌گذاری منابع میان آن‌ها به شکلی ساده‌تر انجام می‌گیرد.
+
+\section{پشتیبانی از چندریسمانی در \lr{C++}}
+
+پشتیبانی رسمی از چندریسمانی در نسخه \texttt{C++11} معرفی شد. پیش از این نسخه، توسعه‌دهندگان برای پیاده‌سازی چندریسمانی در برنامه‌های خود مجبور به استفاده از کتابخانه \texttt{POSIX Threads} یا همان \texttt{<pthread>} بودند. اگرچه این کتابخانه قابلیت‌های لازم برای کار با ریسمان‌ها را فراهم می‌کرد، اما نبود یک استاندارد مشخص و ارائه‌شده توسط زبان، چالش‌های متعددی را به همراه داشت. این مشکلات شامل کاهش سازگاری و دشواری در حمل‌پذیری برنامه‌ها میان سیستم‌های مختلف می‌شد.
+
+با معرفی \texttt{std::thread} در نسخه \texttt{C++11}، این مشکلات به میزان قابل توجهی برطرف شدند. این ویژگی جدید به توسعه‌دهندگان امکان استفاده از ابزارهای قدرتمند و در عین حال استاندارد برای مدیریت ریسمان‌ها را می‌دهد. کلاس‌ها و توابع مرتبط با ریسمان‌ها در هدر \texttt{<thread>} تعریف شده‌اند و امکانات لازم برای ایجاد، مدیریت و همگام‌سازی ریسمان‌ها را فراهم می‌کنند.
+
+\section{ساخت یک ریسمان در \texttt{std::thread}}
+
+برای شروع یک ریسمان جدید در C++، می‌توان از کلاس \texttt{std::thread} استفاده کرد. این کلاس یک ریسمان منفرد را نشان می‌دهد و در هدر \texttt{<thread>} تعریف شده است. ساخت یک ریسمان جدید به سادگی با ایجاد یک شیء از نوع \texttt{std::thread} انجام می‌شود. سینتکس عمومی به شکل زیر است:
+
+\begin{LTR}
+	\begin{lstlisting}
+		std::thread thread_object(callable);
+	\end{lstlisting}
+\end{LTR}
+
+در اینجا، \texttt{thread\_object} شیءای از کلاس \texttt{std::thread} است و \texttt{callable} کدی است که ریسمان باید اجرا کند.
+
+\subsection{\lr{Callable} چیست؟}
+
+\texttt{Callable} به کدی گفته می‌شود که می‌تواند توسط ریسمان اجرا شود. این کد باید به صورت مستقل از دیگر بخش‌های برنامه قابل اجرا باشد. \texttt{Callable} می‌تواند شامل یکی از موارد زیر باشد:
+
+\begin{itemize}
+	\item \textbf{تابع مستقل}: یک تابع ساده که در محدوده سراسری تعریف شده است.
+	\item \textbf{متد عضو یک کلاس}: یک متد عضو از یک کلاس که می‌تواند به صورت ایستا یا غیرایستا باشد.
+	\item \textbf{یک فانکشن آبجکت}: شیءای که از عملگر \texttt{operator()} پشتیبانی می‌کند و می‌تواند مانند یک تابع فراخوانی شود.
+	\item \textbf{یک لامبدا فانکشن}: تابعی بی‌نام که درجا تعریف می‌شود و می‌تواند برای ریسمان‌سازی مورد استفاده قرار گیرد.
+	\item \textbf{یک اشاره‌گر به تابع}: اشاره‌گری که به یک تابع معتبر اشاره می‌کند.
+\end{itemize}
+
+\section{نکات مهم در مورد \texttt{std::thread}}
+
+هنگامی که یک شیء \texttt{std::thread} ایجاد می‌شود، ریسمان جدید بلافاصله شروع به اجرا می‌کند و \texttt{callable} را اجرا می‌کند. توسعه‌دهندگان باید توجه داشته باشند که مدیریت صحیح طول عمر ریسمان‌ها و همگام‌سازی آن‌ها بسیار اهمیت دارد. استفاده نادرست می‌تواند منجر به رفتارهای پیش‌بینی‌نشده یا حتی خرابی برنامه شود.
+
+\section*{مثال اول: چند ریسمان برای چاپ پیام‌های مختلف}
+
+در این مثال، سه ریسمان به صورت همزمان اجرا می‌شوند و پیام‌های مختلفی را چاپ می‌کنند.
+
+\begin{LTR}
+	\begin{lstlisting}
+		#include <iostream>
+		#include <thread>
+		#include <atomic>
+		using namespace std;
+		
+		// Function to print a message multiple times
+		void printMessage(const std::string& message, int count) {
+			for (int i = 1; i <= count; ++i) {
+				cout << message << " - " << i << endl;
+			}
+		}
+		
+		int main() {
+			// Create three threads
+			thread t1(printMessage, "Thread 1", 5);
+			thread t2(printMessage, "Thread 2", 5);
+			thread t3(printMessage, "Thread 3", 5);
+			
+			// Wait for all threads to finish
+			t1.join();
+			t2.join();
+			t3.join();
+			
+			cout << "All threads finished." << endl;
+			
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{توضیح:}
+\begin{itemize}
+	\item سه ریسمان (\texttt{t1, t2, t3}) ایجاد می‌شوند که به صورت همزمان اجرا می‌شوند.
+	\item هر ریسمان وظیفه دارد یک پیام مشخص را چاپ کند.
+	\item از متد \texttt{join} برای اطمینان از پایان کار همه ریسمان‌ها استفاده شده است.
+\end{itemize}
+
+\section{مثال دوم: شرایط بحرانی}
+
+در این مثال، دو ریسمان به یک متغیر مشترک دسترسی دارند و به دلیل دسترسی همزمان، نتیجه نامعتبر می‌شود.
+
+\begin{LTR}
+	\begin{lstlisting}
+		#include <iostream>
+		#include <thread>
+		#include <atomic>
+		using namespace std;
+		
+		// Shared variable
+		int sharedCounter = 0;
+		
+		// Function to increment the counter
+		void incrementCounter(int count) {
+			for (int i = 0; i < count; ++i) {
+				++sharedCounter; // Simultaneous access
+			}
+		}
+		
+		int main() {
+			const int iterations = 100000;
+			
+			// Create two threads
+			std::thread t1(incrementCounter, iterations);
+			std::thread t2(incrementCounter, iterations);
+			
+			// Wait for threads to finish
+			t1.join();
+			t2.join();
+			
+			// Print the final value
+			cout << "Final Counter Value: " << sharedCounter << endl;
+			
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{توضیح:}
+\begin{itemize}
+	\item دو ریسمان به صورت همزمان مقدار متغیر \texttt{sharedCounter} را افزایش می‌دهند.
+	\item به دلیل دسترسی همزمان و عملیات غیراتمی افزایش (\texttt{++})، نتیجه نهایی ممکن است کمتر از مقدار مورد انتظار باشد.
+	\item این مشکل ناشی از شرایط بحرانی یا \lr{Race Condition} است.
+\end{itemize}
+
+\section{انحصار متقابل}
+
+انحصار متقابل یا \textbf{Mutex} که مخفف \textbf{Mutual Exclusion} است، یک ابزار همگام‌سازی در زبان \lr{C++} است. این ابزار برای محافظت از داده‌های مشترک در برابر دسترسی همزمان چندین نخ استفاده می‌شود. داده‌های مشترک ممکن است شامل متغیرها، ساختارهای داده یا هر نوع منبع دیگری باشند که نیاز به کنترل همزمانی دارند.
+
+کلاس \texttt{std::mutex} در \lr{C++} برای پیاده‌سازی این مفهوم به کار می‌رود و در هدر فایل \texttt{<mutex>} تعریف شده است.
+
+\section{نیاز به انحصار متقابل}
+
+در برنامه‌های چند نخی\LTRfootnote{Multithreading}، زمانی که چندین نخ به صورت همزمان داده‌های مشترک را تغییر می‌دهند، ممکن است شرایط مسابقه\LTRfootnote{Race Condition} رخ دهد. این شرایط معمولاً منجر به موارد زیر می‌شود:
+\begin{itemize}
+	\item خروجی غیرقابل پیش‌بینی
+	\item رفتارهای غیرمنتظره در اجرای برنامه
+	\item خرابی احتمالی برنامه
+\end{itemize}
+
+برای جلوگیری از این مشکلات، از انحصار متقابل استفاده می‌شود. انحصار متقابل به صورت زیر عمل می‌کند:
+\begin{itemize}
+	\item نخ جاری منبع مشترک را با استفاده از \textbf{قفل کردن\LTRfootnote{Lock}} در اختیار می‌گیرد.
+	\item در این مدت، دسترسی سایر نخ‌ها به منبع مشترک مسدود می‌شود.
+	\item وقتی که نخ جاری کار خود را با منبع به پایان رساند، قفل را آزاد\LTRfootnote{Unlock} می‌کند.
+	\item سپس سایر نخ‌ها می‌توانند به منبع دسترسی پیدا کنند.
+\end{itemize}
+
+\section{کاربردهای انحصار متقابل}
+\begin{itemize}
+	\item مدیریت دسترسی به متغیرهای مشترک
+	\item جلوگیری از شرایط بحرانی (\textit{Race Conditions})
+	\item همگام‌سازی نخ‌ها برای اجرای صحیح
+\end{itemize}
+
+\subsection{نحوه استفاده از انحصار متقابل در C++}
+
+استفاده از \textbf{انحصار متقابل} شامل سه مرحله اصلی است که در ادامه توضیح داده می‌شود.
+
+\subsubsection{ایجاد یک شیء از کلاس \texttt{std::mutex}}
+
+ابتدا باید یک شیء از نوع \texttt{std::mutex} تعریف کنید. این شیء برای مدیریت قفل‌ها استفاده خواهد شد.
+
+\begin{LTR}
+	\begin{lstlisting}
+		// Create a mutex object
+		std::mutex mutex_object_name;
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{قفل کردن نخ}
+
+تابع \texttt{lock()} از کلاس \texttt{std::mutex} برای قفل کردن نخ استفاده می‌شود. این عمل تضمین می‌کند که تنها نخ جاری می‌تواند به منبع مشترک دسترسی داشته باشد، و سایر نخ‌ها تا زمان آزاد شدن قفل مسدود خواهند ماند.
+
+\begin{LTR}
+	\begin{lstlisting}
+		// Lock the mutex
+		mutex_object_name.lock();
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{آزاد کردن قفل نخ}
+
+پس از انجام عملیات روی منبع مشترک، باید قفل را آزاد کنید. این کار با استفاده از تابع \texttt{unlock()} انجام می‌شود و باعث می‌شود که سایر نخ‌های منتظر بتوانند به منبع مشترک دسترسی پیدا کنند.
+
+\begin{LTR}
+	\begin{lstlisting}
+		// Unlock the mutex
+		mutex_object_name.unlock();
+	\end{lstlisting}
+\end{LTR}
+
+\subsection{نکته مهم}
+
+برای اطمینان از مدیریت صحیح قفل‌ها، توصیه می‌شود از کلاس \texttt{std::lock\_guard} یا \texttt{std::unique\_lock} استفاده کنید. این ابزارها به صورت خودکار قفل را آزاد می‌کنند، حتی اگر خطایی در کد رخ دهد.
+
+
+\subsection{کد اصلاح‌شده با استفاده از انحصار متقابل}
+
+در این بخش، نسخه اصلاح‌شده کد برای جلوگیری از شرایط مسابقه ارائه شده است. با استفاده از \textbf{انحصار متقابل}، می‌توان رفتار پیش‌بینی‌پذیری در برنامه ایجاد کرد.
+
+\begin{LTR}
+	\begin{lstlisting}
+		// Example with Mutex to prevent Race Condition
+		#include <iostream>
+		#include <thread>
+		#include <mutex>
+		using namespace std;
+		
+		// Shared variable
+		int sharedCounter = 0;
+		
+		// Mutex object for synchronization
+		mutex mtx;
+		
+		// Function to increment the shared variable
+		void incrementCounter(int count) {
+			for (int i = 0; i < count; ++i) {
+				mtx.lock(); // Lock to prevent simultaneous access
+				++sharedCounter; // Accessing the shared variable
+				mtx.unlock(); // Unlock after the operation
+			}
+		}
+		
+		int main() {
+			const int iterations = 100000;
+			
+			// Creating two threads
+			thread t1(incrementCounter, iterations);
+			thread t2(incrementCounter, iterations);
+			
+			// Waiting for threads to finish
+			t1.join();
+			t2.join();
+			
+			// Printing the final value
+			cout << "Final Counter Value: " << sharedCounter << endl;
+			
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{توضیحات تغییرات}
+
+\begin{itemize}
+	\item \textbf{ایجاد یک شیء انحصار متقابل:} یک شیء از نوع \texttt{std::mutex} به نام \texttt{mtx} تعریف شده است تا برای همگام‌سازی استفاده شود.
+	\item \textbf{قفل کردن با \texttt{lock()}:} قبل از دسترسی به متغیر مشترک، \texttt{mtx.lock()} فراخوانی شده است تا فقط یک نخ بتواند به متغیر \texttt{sharedCounter} دسترسی داشته باشد.
+	\item \textbf{آزاد کردن قفل با \texttt{unlock()}:} پس از پایان عملیات، قفل با \texttt{mtx.unlock()} آزاد شده است تا سایر نخ‌ها بتوانند ادامه دهند.
+\end{itemize}
+
+\subsubsection{نتیجه}
+
+با استفاده از انحصار متقابل، مقدار نهایی \texttt{sharedCounter} پس از اجرای برنامه دقیقاً برابر با مجموع تعداد تکرارهای دو نخ خواهد بود (در اینجا \textbf{200000}). این کار از شرایط مسابقه جلوگیری کرده و رفتار پیش‌بینی‌پذیری را تضمین می‌کند.
+
+
+\section{شرط‌متغیر در زبان C++}
+
+در زبان \lr{C++}، \textbf{شرط‌متغیر}\LTRfootnote{Condition Variable} یک ابزار همگام‌سازی است که برای اطلاع‌رسانی به سایر رشته‌ها در محیط چندرشته‌ای استفاده می‌شود تا بدانند که یک منبع مشترک آزاد است و می‌توانند به آن دسترسی داشته باشند. این ابزار در کلاس \texttt{std::condition\_variable} تعریف شده و در فایل سرایند \texttt{<condition\_variable>} قرار دارد.
+
+\subsection{نیاز به شرط‌متغیر}
+
+شرط‌متغیر زمانی مورد نیاز است که یک رشته باید منتظر بماند تا اجرای رشته دیگری به پایان برسد تا بتواند کار خود را ادامه دهد. موارد استفاده متداول عبارتند از:
+
+\begin{itemize}
+	\item \textbf{رابطه تولیدکننده-مصرف‌کننده\LTRfootnote{Producer-Consumer}:} هنگامی که یک رشته تولیدکننده باید منتظر بماند تا رشته مصرف‌کننده منابع را مصرف کند.
+	\item \textbf{رابطه فرستنده-گیرنده\LTRfootnote{Sender-Receiver}:} زمانی که فرستنده باید منتظر باشد تا گیرنده پیام را پردازش کند.
+\end{itemize}
+
+\subsection{عملکرد شرط‌متغیر}
+
+در این سناریوها، شرط‌متغیر باعث می‌شود که یک رشته منتظر بماند تا توسط رشته دیگری مطلع شود. شرط‌متغیر معمولاً همراه با قفل‌های \textbf{انحصار متقابل} استفاده می‌شود تا دسترسی به منابع مشترک هنگام کار یک رشته مسدود شود.
+
+\subsection{مقایسه شرط‌متغیر با مکانیزم پیام‌رسانی}
+
+شرط‌متغیر شباهت‌هایی به مکانیزم پیام‌رسانی\LTRfootnote{Messaging Mechanism} دارد. در هر دو روش، یک رشته می‌تواند منتظر بماند تا یک رویداد خاص یا پیام از رشته دیگر دریافت کند و سپس عملیات خود را ادامه دهد. اما تفاوت اصلی این است که:
+
+\begin{itemize}
+	\item در شرط‌متغیر، خبری از انتقال پیام خاص نیست.
+	\item اطلاع‌رسانی تنها از طریق وضعیت شرط صورت می‌گیرد.
+\end{itemize}
+
+
+\subsection{نحو تعریف شرط‌متغیر در C++}
+
+برای تعریف یک \textbf{شرط‌متغیر}، از سینتکس زیر استفاده می‌شود:
+
+\begin{LTR}
+	\begin{lstlisting}
+		std::condition_variable variable_name;
+	\end{lstlisting}
+\end{LTR}
+
+پس از تعریف، می‌توان از متدهای مرتبط برای انجام عملیات مختلف استفاده کرد.
+
+\subsection{متدهای شرط‌متغیر}
+
+کلاس \texttt{std::condition\_variable} دارای متدهایی است که عملکردهای اصلی را فراهم می‌کنند. در جدول زیر، برخی از این متدها همراه با توضیحات آن‌ها آمده است:
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|l|p{8cm}|}
+		\hline
+		\textbf{شماره} & \textbf{تابع} & \textbf{توضیح} \\
+		\hline
+		1 & \texttt{wait()} & این تابع باعث می‌شود رشته جاری منتظر بماند تا شرط‌متغیر اطلاع داده شود. \\
+		\hline
+		2 & \texttt{wait\_for()} & این تابع باعث می‌شود رشته جاری برای مدت زمان مشخصی منتظر بماند. اگر شرط‌متغیر زودتر اطلاع داده شود، رشته بیدار می‌شود. زمان به صورت نسبی مشخص می‌شود. \\
+		\hline
+		3 & \texttt{wait\_until()} & مشابه \texttt{wait\_for()} است اما زمان به صورت مطلق تعریف می‌شود. \\
+		\hline
+		4 & \texttt{notify\_one()} & این تابع به یکی از رشته‌های منتظر اطلاع می‌دهد که منبع مشترک آزاد است. انتخاب رشته به صورت تصادفی است. \\
+		\hline
+		5 & \texttt{notify\_all()} & این تابع به تمام رشته‌های منتظر اطلاع می‌دهد. \\
+		\hline
+	\end{tabular}
+	\caption{متدهای مرتبط با \texttt{std::condition\_variable}}
+\end{table}
+
+
+\subsection{مثال کاربردی از شرط‌متغیر}
+
+فرض کنید دو رشته داریم: یکی تولیدکننده و دیگری مصرف‌کننده. تولیدکننده باید داده‌ای تولید کند و سپس به مصرف‌کننده اطلاع دهد تا آن داده را مصرف کند. در این حالت از شرط‌متغیر استفاده می‌کنیم تا این هماهنگی انجام شود.
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		// Header files
+		#include <iostream>
+		#include <thread>
+		#include <mutex>
+		#include <condition_variable>
+		using namespace std;
+		
+		// Shared variables and synchronization tools
+		mutex mtx;
+		condition_variable cv;
+		bool ready = false;
+		
+		// Producer function
+		void producer() {
+			// Simulate data production
+			this_thread::sleep_for(std::chrono::seconds(1));
+			unique_lock<std::mutex> lock(mtx);
+			ready = true;
+			cout << "Data produced.\n";
+			cv.notify_one(); // Notify the consumer
+		}
+		
+		// Consumer function
+		void consumer() {
+			unique_lock<std::mutex> lock(mtx);
+			// Wait for producer's notification
+			cv.wait(lock, [] { return ready; });
+			std::cout << "Data consumed.\n";
+		}
+		
+		int main() {
+			thread t1(producer);
+			thread t2(consumer);
+			
+			t1.join();
+			t2.join();
+			
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{توضیحات مثال}
+\begin{itemize}
+	\item \textbf{تولیدکننده:} رشته تولیدکننده داده‌ای تولید می‌کند و شرط‌متغیر را اطلاع‌رسانی می‌کند.
+	\item \textbf{مصرف‌کننده:} رشته مصرف‌کننده منتظر می‌ماند تا تولیدکننده داده را آماده کند.
+	\item \textbf{هماهنگی:} پس از آماده شدن داده، مصرف‌کننده عملیات خود را انجام می‌دهد.
+\end{itemize}
+
+این مکانیزم تضمین می‌کند که هیچ‌یک از رشته‌ها پیش از آماده بودن شرایط، اقدام به کار نمی‌کنند.
+
+\subsubsection{نتیجه‌گیری}
+به طور کلی، شرط‌متغیر به عنوان ابزاری برای هماهنگی و اطلاع‌رسانی بین رشته‌ها در محیط‌های چندرشته‌ای عمل می‌کند. می‌توان آن را مشابه مکانیزم پیام‌رسانی دانست، به‌ویژه زمانی که هدف اطلاع‌رسانی درباره وضعیت یک منبع یا رویداد خاص باشد.
+
+\chapter{برنامه نویسی جریان داده}
+
+برنامه‌نویسی جریان داده\LTRfootnote{Data Flow Programming} یک مدل برنامه‌نویسی است که در آن داده‌ها به صورت جریان‌هایی از اطلاعات حرکت می‌کنند و پردازش‌ها به صورت گراف‌های جریان داده مدل‌سازی می‌شوند. این مدل در بسیاری از زمینه‌ها، به ویژه در پردازش موازی و سیستم‌های پیچیده، کاربرد دارد.
+
+در برنامه‌نویسی جریان داده، تابع‌ها و عملیات‌ها به طور پیوسته به داده‌ها اعمال می‌شوند و داده‌ها می‌توانند در هر لحظه تغییر کنند و بین واحدهای پردازشی مختلف منتقل شوند. برخلاف برنامه‌نویسی رویه‌ای که بیشتر مبتنی بر کنترل جریان است (حلقه‌ها، دستورات شرطی و غیره)، در برنامه‌نویسی جریان داده، تمرکز بیشتر بر روی جریان داده‌ها و ارتباطات بین اجزای سیستم است.
+
+\section{ویژگی‌های کلیدی برنامه‌نویسی جریان داده}
+\begin{itemize}
+	\item \textbf{مفهوم جریان اطلاعات}: در این مدل، داده‌ها به صورت جریان‌های پیوسته از یک بخش به بخش دیگر پردازش می‌شوند. داده‌ها ممکن است تغییر کنند، تغییرات جدیدی دریافت کنند یا از سیستم خارج شوند.
+	\item \textbf{مستقل از زمان و رویدادها}: در برنامه‌نویسی جریان داده، اغلب نیازی به نگرانی در مورد زمان‌بندی دقیق عملیات‌ها نیست. به جای آن، عملیات‌ها به داده‌هایی که از قبل موجود هستند اعمال می‌شوند.
+	\item \textbf{پردازش موازی}: چون هر واحد پردازشی به‌طور مستقل از دیگر واحدها داده‌ها را پردازش می‌کند، این مدل برای محیط‌های موازی مناسب است.
+	\item \textbf{واحدهای پردازشی مستقل}: واحدهای پردازشی (مانند توابع یا گره‌ها) می‌توانند به طور مستقل و همزمان کار کنند.
+\end{itemize}
+
+\section{پیاده‌سازی برنامه‌نویسی جریان داده در \lr{C++}}
+در \lr{C++} می‌توان برنامه‌نویسی جریان داده را با استفاده از کتابخانه‌ها یا فریم‌ورک‌هایی مانند \textbf{ReactiveX (RxCpp)} برای C++ یا \textbf{Async++} پیاده‌سازی کرد.
+
+
+\section{ReactiveX (RxCpp)}
+RxCpp یک کتابخانه C++ است که برای برنامه‌نویسی جریان داده‌ها و رویدادها طراحی شده است. این کتابخانه به شما امکان می‌دهد که کدهای خود را بر اساس جریان‌های داده و عملیات‌های تابعی (مانند \texttt{map}, \texttt{filter}, \texttt{reduce}) بنویسید. این روش‌ها برای ساخت سیستم‌های واکنش‌گرا \LTRfootnote{reactive systems} و پردازش موازی مفید هستند.
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <rxcpp/rx.hpp>
+		using namespace std;
+		using namespace rxcpp;
+		
+		int main() {
+			observable<int> numbers = observable<>::range(1, 10);
+			
+			// Applying map function
+			// Filtering values divisible by 3
+			// Printing the values
+			numbers
+			.map([](int v) { return v * 2; })  
+			.filter([](int v) { return v % 3 == 0; })  
+			.subscribe([](int v) { cout << v << " "; });  
+		}
+	\end{lstlisting}
+\end{LTR}
+
+در این مثال، از جریان داده (\texttt{observable}) برای اعمال توابع \texttt{map} و \texttt{filter} استفاده شده است.
+
+\section{Async++}
+کتابخانه Async++ برای استفاده از برنامه‌نویسی غیرهمزمان و جریان داده در \lr{C++} طراحی شده است. این کتابخانه به شما امکان می‌دهد که داده‌ها را در جریان‌های مختلف و به‌صورت موازی پردازش کنید.
+
+\section{مقایسه برنامه‌نویسی جریان داده با برنامه‌نویسی رویه‌ای و تابعی}
+\begin{itemize}
+	\item \textbf{برنامه‌نویسی رویه‌ای}: در برنامه‌نویسی رویه‌ای، تمرکز بر کنترل جریان برنامه است (مثل استفاده از حلقه‌ها، دستورات شرطی، و غیره). داده‌ها معمولاً از طریق متغیرهای سراسری یا آرگومان‌ها بین توابع منتقل می‌شوند و در این مدل داده‌ها معمولاً به‌طور مستقیم مدیریت می‌شوند.
+	\item \textbf{برنامه‌نویسی تابعی}: در این پارادایم، توابع به‌طور مستقل از وضعیت داخلی سیستم تعریف می‌شوند و خروجی هر تابع فقط به ورودی‌های آن بستگی دارد. همچنین توابع می‌توانند به‌طور مستقیم به توابع دیگر ارسال شوند و بر اساس داده‌ها عملیات‌هایی مانند \texttt{map}، \texttt{filter} و \texttt{reduce} انجام دهند.
+	\item \textbf{برنامه‌نویسی جریان داده}: برخلاف برنامه‌نویسی تابعی و رویه‌ای، در برنامه‌نویسی جریان داده، تمرکز بیشتر بر روی نحوه انتقال و پردازش داده‌ها است. این مدل معمولاً برای سیستم‌های پیچیده، موازی و مقیاس‌پذیر مناسب است، زیرا به راحتی می‌توان آن را برای پردازش‌های موازی و توزیع‌شده پیاده‌سازی کرد.
+\end{itemize}
+
+\section{نتیجه‌گیری}
+\begin{itemize}
+	\item \textbf{برنامه‌نویسی جریان داده} یکی از مهم‌ترین مدل‌های پردازش در سیستم‌های پیچیده و موازی است که در آن داده‌ها به‌طور پیوسته و به‌صورت جریان‌های مستقل از یک واحد پردازشی به واحد دیگر منتقل می‌شوند.
+	\item در C++ برای پیاده‌سازی این پارادایم می‌توان از کتابخانه‌هایی مانند RxCpp یا Async++ استفاده کرد. این کتابخانه‌ها قابلیت‌های مشابه برنامه‌نویسی تابعی را فراهم می‌کنند، و همچنین می‌توانند به پردازش‌های موازی و سیستم‌های واکنش‌گرا کمک کنند.
+	\item این مدل در مقایسه با برنامه‌نویسی رویه‌ای و تابعی، بیشتر به کاربردهای سیستم‌های توزیع‌شده و موازی مربوط می‌شود.
+\end{itemize}
+\chapter{برنامه نویسی منطقی}
+\section{مقدمه}
+برنامه‌نویسی منطقی\LTRfootnote{Logic programming} یک پارادایم برنامه‌نویسی است که تأکید بر استفاده از منطق صوری برای نمایش و حل مسائل دارد. در این پارادایم، برنامه‌نویس مجموعه‌ای از قوانین و حقایق منطقی را تعریف می‌کند و اجرای برنامه به یک موتور استنتاج وابسته است که براساس این قوانین، نتیجه‌گیری کرده یا پرسش‌ها را حل می‌کند. برنامه‌نویسی منطقی بر روی اینکه چه چیزی باید انجام شود تمرکز دارد، نه چگونگی انجام آن، که این امر باعث می‌شود یک رویکرد اعلانی به برنامه‌نویسی باشد.
+
+این پارادایم به طور گسترده در حوزه‌هایی مانند هوش مصنوعی، نمایش دانش، پردازش زبان طبیعی و سیستم‌های خبره استفاده می‌شود. شناخته‌شده‌ترین زبان برای برنامه‌نویسی منطقی، پرولاگ\LTRfootnote{Prolog} است، اما عناصر برنامه‌نویسی منطقی می‌توانند در زبان‌های عمومی‌تری مانند \lr{++C} نیز پیاده‌سازی شوند.
+
+\section{برنامه نویسی منطقی در C++}
+\lr{C++} عمدتاً به عنوان یک زبان برنامه‌نویسی رویه‌ای و شیءگرا شناخته می‌شود، اما قابلیت‌های آن به توسعه‌دهندگان این امکان را می‌دهد که پارادایم‌هایی مانند برنامه‌نویسی منطقی را پیاده‌سازی کنند. با اینکه از پشتیبانی بومی برای ساختارهای منطقی (همانند زبان‌هایی مثل پرولاگ) برخوردار نیست، \lr{C++} ابزارهایی برای مدل‌سازی مفاهیم برنامه‌نویسی منطقی از طریق کتابخانه‌ها، قالب‌ها و پیاده‌سازی‌های سفارشی فراهم می‌آورد. دلایل استفاده از \lr{C++} برای برنامه‌نویسی منطقی عبارتند از:
+
+\begin{itemize}
+	
+\item \textbf{عملکرد:} C++ عملکرد بالایی ارائه می‌دهد که آن را برای مسائل منطقی محاسباتی پیچیده مناسب می‌سازد.
+
+\item \textbf{انعطاف‌پذیری:} توسعه‌دهندگان می‌توانند تکنیک‌های برنامه‌نویسی منطقی را با سبک‌های رویه‌ای، تابعی یا شیءگرا ترکیب کنند.
+
+\item \textbf{یکپارچگی:} این امکان را می‌دهد که به راحتی با برنامه‌های C++ موجود یکپارچه شود و اجزای مبتنی بر منطق کنار سایر ماژول‌های برنامه کار کنند.
+\item \textbf{قابلیت حمل:} استفاده گسترده از C++ تضمین می‌کند که راه‌حل‌های مبتنی بر منطق می‌توانند در پلتفرم‌های مختلف پیاده‌سازی شوند.
+\end{itemize}
+
+\section{مزایا و معایت برنامه نویسی منطقی در \lr{C++}}
+\textbf{مزایا}
+\begin{itemize}
+\item \textbf{سفارشی‌سازی:} توسعه‌دهندگان می‌توانند سیستم‌های برنامه‌نویسی منطقی را با استفاده از ویژگی‌های قابل بیان C++ به نیازهای خاص خود تنظیم کنند.
+
+\item \textbf{کنترل بر اجرای برنامه:} برخلاف پرولاگ، C++ کنترل بیشتری بر مدیریت حافظه و بهینه‌سازی‌های عملکردی می‌دهد.
+
+\item \textbf{قابلیت گسترش:} راه‌حل‌های برنامه‌نویسی منطقی می‌توانند از کتابخانه‌های استاندارد وسیع و ابزارهای شخص ثالث C++ بهره ببرند.
+\end{itemize}
+
+\textbf{معایب}
+\begin{itemize}
+	\item \textbf{پیچیدگی:} پیاده‌سازی مفاهیم برنامه‌نویسی منطقی مانند بازگشت و یکسان‌سازی می‌تواند پیچیده باشد و نیاز به تلاش زیادی دارد.
+	
+	\item \textbf{عدم پشتیبانی بومی:} نبود ساختارهای برنامه‌نویسی منطقی داخلی، توسعه را نسبت به زبان‌هایی مانند پرولاگ دشوارتر می‌کند.
+	
+	
+	\item \textbf{منحنی یادگیری \lr{steep}:} ترکیب پارادایم‌ها در C++ ممکن است برای توسعه‌دهندگانی که با برنامه‌نویسی منطقی آشنا نیستند گیج‌کننده باشد.
+\end{itemize}
+
+
+\section{پیاده سازی برنامه نویسی منطقی در \lr{C++}}
+در برنامه‌نویسی منطقی، نمایش مؤثر حقایق، قوانین و پرسش‌ها بسیار مهم است. در C++، این معمولاً شامل استفاده از ساختارهای داده‌ای مناسب است که قادر به نگهداری و پردازش عبارات منطقی باشند. متداول‌ترین ساختارها عبارتند از:
+\begin{itemize}
+	\item \textbf{گراف‌ها و درخت‌ها:} مسائل منطقی اغلب می‌توانند به صورت گراف‌ها یا درخت‌ها مدل‌سازی شوند، جایی که گره‌ها نمایانگر حقایق یا قوانین و یال‌ها نمایانگر روابط هستند. به عنوان مثال، یک پایگاه دانش می‌تواند به صورت یک گراف مدل‌سازی شود که در آن گره‌ها نمایانگر حقایق و یال‌ها نمایانگر روابط منطقی بین آن‌ها هستند. درخت‌ها در الگوریتم‌های بازگشتی برای کاوش مسیرهای منطقی مختلف استفاده می‌شوند.
+	
+	\item \textbf{لیست‌ها و آرایه‌ها:} لیست‌ها یا آرایه‌ها می‌توانند برای ذخیره‌سازی حقایق و قوانین استفاده شوند، به‌ویژه زمانی که برنامه نیاز به تکرار بر روی آن‌ها دارد. به عنوان مثال، یک لیست از حقایق می‌تواند با پرسش‌های ورودی تطبیق داده شود تا از سازگاری منطقی آن‌ها اطمینان حاصل شود یا به یک سوال پاسخ داده شود.
+	
+	\item \textbf{جدول‌های هش:} از \lr{unorderedMap} یا \lr{map} در \lr{C++} می‌توان برای جستجوهای مؤثر قوانین استفاده کرد، جایی که یک جفت کلید-مقدار حقایق یا قوانین منطقی را نگهداری می‌کند. جدول‌های هش امکان بازیابی سریع را فراهم می‌کنند و در مواقعی که با یک پایگاه دانش بزرگ کار می‌شود ضروری هستند.
+	
+\end{itemize}
+
+\section{تکنیک‌ها برای کدگذاری قوانین و حقایق منطقی}
+
+\textbf{سیستم‌های مبتنی بر قوانین\LTRfootnote{Rule-Based Systems}:}  در سیستم‌های مبتنی بر قوانین، هر قانون معمولاً به صورت زیر است:
+
+\LTR
+\lr{IF <condition> THEN <consequence>}
+\RTL
+
+ در \lr{C++}، این می‌تواند با استفاده از اشاره‌گرهای تابع یا اشیاء تابع (لامبداها) برای نمایندگی شرایط و اقدامات پیاده‌سازی شود. هر قانون می‌تواند در یک کلاس یا ساختار با یک متد ارزیابی که بررسی می‌کند آیا شرط صحیح است یا خیر، کپسوله شود. مثال:
+ \begin{LTR}
+ 	\begin{lstlisting}[language=C++, breaklines=true]
+ 	class Rule {
+ 		public:
+ 		std::function<bool()> condition;  // The condition of the rule
+ 		std::function<void()> action;     // The action to take when the rule is applied
+ 		
+ 		void apply() {
+ 			if (condition()) {
+ 				action();
+ 			}
+ 		}
+ 	};
+ 	
+ 	\end{lstlisting}
+ \end{LTR}
+ 
+ \textbf{نمایش حقایق\LTRfootnote{Fact Representation}:} 
+
+حقایق می‌توانند به صورت متغیرهای ساده، ساختارها یا اشیاء پیچیده‌تر در \lr{C++} کدگذاری شوند. به عنوان مثال، یک پایگاه داده حقایق ممکن است حقایق را در یک \lr{unorderedMap} ذخیره کند، جایی که کلید شناسه حقیقت است و مقدار آن نمایانگر مقدار صحت یا داده‌های مرتبط با آن است.
+مثال:
+ \begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+	std::unordered_map<std::string, bool> facts;
+	facts["apple_is_red"] = true;
+	facts["banana_is_yellow"] = true;
+	\end{lstlisting}
+\end{LTR}
+
+\section{مثالی از سیستم ‌های مبتنی بر قانون}
+ \begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+	#include <iostream>
+	#include <vector>
+	#include <functional>
+	
+	// Define the Rule class
+	class Rule {
+		public:
+		std::function<bool()> condition;
+		std::function<void()> action;
+		
+		Rule(std::function<bool()> cond, std::function<void()> act)
+		: condition(cond), action(act) {}
+		
+		void apply() {
+			if (condition()) {
+				action();
+			}
+		}
+	};
+	
+	// Sample facts
+	bool isSunny = true;
+	bool isRaining = false;
+	
+	int main() {
+		// Create rules
+		Rule rule1([]() { return isSunny; }, []() { std::cout << "Go outside and play!\n"; });
+		Rule rule2([]() { return isRaining; }, []() { std::cout << "Take an umbrella!\n"; });
+		
+		// Apply rules
+		rule1.apply();
+		rule2.apply();
+		
+		return 0;
+	}
+	\end{lstlisting}
+\end{LTR}
+
+
+	
+	\section{معرفی \lr{LC++}}
+	\lr{LC++} یک کتابخانه‌ی \lr{C++} است که به برنامه‌نویسان این امکان را می‌دهد تا پارادایم برنامه‌نویسی منطقی را مستقیماً در برنامه‌های \lr{C++} خود ادغام کنند. این ادغام، سبکی اعلامی مشابه \lr{Prolog} فراهم می‌کند که بیان روابط منطقی و کوئری‌های پیچیده را در زبان \lr{C++} ساده‌تر می‌سازد.
+	
+	\section{ویژگی‌های اصلی \lr{LC++}}
+	\begin{itemize}
+		\item \textbf{برنامه‌نویسی منطقی جاسازی‌شده}:  
+		\lr{LC++} این امکان را فراهم می‌کند تا ساختارهای برنامه‌نویسی منطقی در کدهای استاندارد \lr{C++} استفاده شوند، و ترکیبی یکپارچه از سبک‌های برنامه‌نویسی دستوری و اعلامی ایجاد شود.
+		
+		\item \textbf{سینتکس طبیعی}:  
+		این کتابخانه یک سینتکس قابل فهم و آشنا برای برنامه‌نویسان \lr{C++} ارائه می‌دهد که تعریف قوانین و کوئری‌های منطقی را بدون نیاز به تغییرات گسترده در کدهای موجود ممکن می‌سازد.
+		
+		\item \textbf{بررسی نوع استاتیک}:  
+		\lr{LC++} از سیستم بررسی نوع استاتیک \lr{C++} بهره می‌برد تا ایمنی نوع (\lr{Type Safety}) در ساختارهای برنامه‌نویسی منطقی را تضمین کرده و خطاها را در زمان کامپایل شناسایی کند.
+		
+		\item \textbf{تحلیل معنایی کامل}:  
+		این کتابخانه تحلیل معنایی جامع توسط کامپایلر \lr{C++} انجام می‌دهد تا اطمینان حاصل کند که عبارات منطقی با معانی تعریف‌شده سازگار هستند.
+	\end{itemize}
+	
+	\section{نمونه کد در \lr{LC++}}
+	نمونه‌ای از تعریف و کوئری روابط منطقی در \lr{LC++}:
+	
+\begin{LTR}
+\begin{lstlisting}[language=C++, breaklines=true]
+#include <iostream>
+#include "lc++.h"  // Hypothetical LC++ header
+using namespace std;
+using namespace lc;
+			
+int main() {
+	// Define logical variables
+	Var X, Y;
+				
+	// Define facts
+	fact(parent("John", "Alice"));
+	fact(parent("Alice", "Bob"));
+				
+	// Define a rule: grandparent(X, Y) :- parent(X, Z) & parent(Z, Y)
+	rule(grandparent(X, Y), parent(X, Z) && parent(Z, Y));
+				
+	// Query: Who are Bob's grandparents?
+	auto results = query(grandparent(X, "Bob"));
+	for (const auto& result : results) {
+		cout << result[X] << " is a grandparent of Bob." << endl;
+	}
+				
+	return 0;
+}
+	\end{lstlisting}
+\end{LTR}
+	
+	\subsection{توضیح کد}
+	\begin{itemize}
+		\item \textbf{متغیرهای منطقی}:  
+		
+		\lr{Var X, Y;} متغیرهای منطقی \lr{X} و \lr{Y} را تعریف می‌کند که برای تعریف حقایق و قوانین استفاده می‌شوند.
+		
+		\item \textbf{حقایق}:  
+		
+		\lr{fact(parent("John", "Alice"));} و \lr{fact(parent("Alice", "Bob"));} بیان می‌کنند که جان پدر آلیس است و آلیس مادر باب است.
+		
+		\item \textbf{تعریف قانون}:
+		  
+		\lr{rule(grandparent(X, Y), parent(X, Z) and parent(Z, Y));} تعریف می‌کند که \lr{X} پدربزرگ یا مادربزرگ \lr{Y} است اگر \lr{X} والد \lr{Z} باشد و \lr{Z} نیز والد \lr{Y} باشد.
+		
+		\item \textbf{کوئری}:  
+		
+		\lr{query(grandparent(X, "Bob"));} تمام \lr{X}هایی را که پدربزرگ یا مادربزرگ باب هستند جستجو می‌کند و نتایج را در کنسول چاپ می‌کند.
+	\end{itemize}
+	
+	این نمونه نشان می‌دهد که چگونه \lr{LC++} می‌تواند برنامه‌نویسی منطقی را به \lr{C++} اضافه کند و به برنامه‌نویسان کمک کند تا روابط منطقی را به سادگی تعریف و کوئری کنند.
+	
+
+
+\chapter{پیاده‌سازی الگوریتم‌های انتخابی}
+\begin{enumerate}
+	\item \textbf{الگوریتم مرتب‌سازی\LTRfootnote{Sorting Algorithm}:} استفاده از الگوریتم \texttt{QuickSort}.
+	\item \textbf{الگوریتم جستجو\LTRfootnote{Search Algorithm}:} استفاده از \texttt{Binary Search}.
+	\item \textbf{الگوریتم محاسبه مجموع\LTRfootnote{Sum Algorithm}:} استفاده از یک حلقه ساده برای محاسبه مجموع عناصر یک آرایه.
+\end{enumerate}
+
+
+\section{الگوریتم \texttt{QuickSort}}
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		
+		void quickSort(std::vector<int>& arr, int low, int high) {
+			if (low < high) {
+				int pivot = arr[high];
+				int i = (low - 1);
+				for (int j = low; j <= high - 1; j++) {
+					if (arr[j] < pivot) {
+						i++;
+						std::swap(arr[i], arr[j]);
+					}
+				}
+				std::swap(arr[i + 1], arr[high]);
+				int pi = i + 1;
+				
+				quickSort(arr, low, pi - 1);
+				quickSort(arr, pi + 1, high);
+			}
+		}
+		
+		int main() {
+			std::vector<int> arr = {10, 7, 8, 9, 1, 5};
+			int n = arr.size();
+			quickSort(arr, 0, n - 1);
+			
+			std::cout << "Sorted array: ";
+			for (int num : arr) {
+				std::cout << num << " ";
+			}
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\section{الگوریتم \texttt{Binary Search}}
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		
+		int binarySearch(const std::vector<int>& arr, int x) {
+			int low = 0, high = arr.size() - 1;
+			while (low <= high) {
+				int mid = low + (high - low) / 2;
+				if (arr[mid] == x) return mid;
+				if (arr[mid] < x) low = mid + 1;
+				else high = mid - 1;
+			}
+			return -1;
+		}
+		
+		int main() {
+			std::vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+			int x = 7;
+			int result = binarySearch(arr, x);
+			if (result != -1) std::cout << "Element found at index " << result;
+			else std::cout << "Element not found";
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\section{الگوریتم محاسبه مجموع}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		
+		int calculateSum(const std::vector<int>& arr) {
+			int sum = 0;
+			for (int num : arr) {
+				sum += num;
+			}
+			return sum;
+		}
+		
+		int main() {
+			std::vector<int> arr = {1, 2, 3, 4, 5};
+			std::cout << "Sum of elements: " << calculateSum(arr);
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\subsection{پیاده‌سازی در Python}
+
+\subsubsection{الگوریتم \texttt{QuickSort}}
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+		def quicksort(arr):
+		if len(arr) <= 1:
+		return arr
+		pivot = arr[-1]
+		left = [x for x in arr[:-1] if x < pivot]
+		right = [x for x in arr[:-1] if x >= pivot]
+		return quicksort(left) + [pivot] + quicksort(right)
+		
+		arr = [10, 7, 8, 9, 1, 5]
+		print("Sorted array:", quicksort(arr))
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{الگوریتم \texttt{Binary Search}}
+
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+		def binary_search(arr, x):
+		low, high = 0, len(arr) - 1
+		while low <= high:
+		mid = (low + high) // 2
+		if arr[mid] == x:
+		return mid
+		elif arr[mid] < x:
+		low = mid + 1
+		else:
+		high = mid - 1
+		return -1
+		
+		arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+		x = 7
+		result = binary_search(arr, x)
+		print("Element found at index" if result != -1 else "Element not found")
+	\end{lstlisting}
+\end{LTR}
+
+\subsubsection{الگوریتم محاسبه مجموع}
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+		arr = [1, 2, 3, 4, 5]
+		print("Sum of elements:", sum(arr))
+	\end{lstlisting}
+\end{LTR}
+
+\section{مقایسه زمان اجرا و اندازه کد}
+
+\subsection*{زمان اجرا}
+در زبان C++، زمان اجرای الگوریتم‌ها به دلیل نزدیک‌تر بودن به سخت‌افزار و بهینه‌سازی‌های انجام شده توسط کامپایلر معمولاً سریع‌تر از Python است. به‌ویژه برای الگوریتم‌هایی مانند \texttt{QuickSort} که به شدت به زمان اجرا حساس هستند، \lr{C++} عملکرد بهتری خواهد داشت.
+
+\subsection*{اندازه کد}
+کد \lr{C++} معمولاً بزرگتر از \lr{Python} است، زیرا در \lr{C++} برای انجام هر عملیات باید از ساختارهای داده و توابع پیچیده‌تری استفاده شود. اما Python کدهای بسیار فشرده‌تری تولید می‌کند به دلیل سطح بالاتر بودن زبان و دسترسی به کتابخانه‌های پیش‌ساخته که عملیات‌های پیچیده را ساده می‌کنند.
+
+\section{نتیجه گیری برای سه الگوریتم اول}
+\begin{itemize}
+	\item \textbf{C++} سریع‌ترین زمان اجرا را نسبت به \lr{Python} خواهد داشت، به‌ویژه برای الگوریتم‌هایی که به شدت به کارایی وابسته‌اند مانند \texttt{QuickSort}.
+	\item \textbf{Python} ساده‌ترین کد را تولید می‌کند و به سرعت توسعه‌پذیر است، اما از نظر کارایی پایین‌تر از \lr{C++} است.
+	\item از نظر اندازه کد، \textbf{Python} کدهای کوتاه‌تری نسبت به C++ دارد.
+\end{itemize}
+\section{الگوریتم ضرب دو ماتریس}
+
+\textbf{مشخصات:}
+\begin{itemize}
+	\item ورودی: دو ماتریس تصادفی به اندازه 400 * 400
+	\item خروجی: ماتریس حاصل از ضرب دو ماتریس
+	\item بررسی: میانگین زمان اجرا در ده بار اجرا
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در C++}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <cstdlib>
+		#include <ctime>
+		
+		#define SIZE 400
+		
+		using namespace std;
+		
+		typedef vector<vector<int>> Matrix;
+		
+		Matrix matrix_mult() {
+			Matrix A = Matrix(SIZE, vector<int>(SIZE, rand() % 11));
+			Matrix B = Matrix(SIZE, vector<int>(SIZE, rand() % 11));
+			
+			Matrix C(SIZE, vector<int>(SIZE, 0));
+			for (int i = 0; i < SIZE; i++) {
+				for (int j = 0; j < SIZE; j++) {
+					for (int k = 0; k < SIZE; k++) {
+						C[i][j] += A[i][k] * B[k][j];
+					}
+				}
+			}
+			return C;
+		}
+		
+		double measure_time() {
+			double tt = 0.0;
+			for (int i = 0; i < 10; i++) {
+				clock_t start = clock();
+				Matrix C = matrix_mult();
+				clock_t end = clock();
+				tt += (double)(end - start) / CLOCKS_PER_SEC;
+			}
+			
+			return tt / 10.0;
+		}
+		
+		int main() {
+			srand(time(0));
+			double avg_time = measure_time();
+			cout << "Avg exe time: " << avg_time << " seconds";
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{470} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{44}
+\end{itemize}
+
+\subsection{پیاده‌سازی در زبان سطح پایین‌تر (C)}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C, breaklines=true]
+		#include <stdio.h>
+		#include <stdlib.h>
+		#include <time.h>
+		
+		#define SIZE 400
+		
+		void generate_matrix(int matrix[SIZE][SIZE]) {
+			for (int i = 0; i < SIZE; i++) {
+				for (int j = 0; j < SIZE; j++) {
+					matrix[i][j] = rand() % 11;
+				}
+			}
+		}
+		
+		void matrix_mult() {
+			int A[SIZE][SIZE], B[SIZE][SIZE], C[SIZE][SIZE];
+			generate_matrix(A);
+			generate_matrix(B);
+			
+			for (int i = 0; i < SIZE; i++) {
+				for (int j = 0; j < SIZE; j++) {
+					C[i][j] = 0;
+					for (int k = 0; k < SIZE; k++) {
+						C[i][j] += A[i][k] * B[k][j];
+					}
+				}
+			}
+		}
+		
+		double measure_time() {
+			double tt = 0.0;
+			for (int i = 0; i < 10; i++) {
+				clock_t start = clock();
+				matrix_mult();
+				clock_t end = clock();
+				tt += (double)(end - start) / CLOCKS_PER_SEC;
+			}
+			
+			return tt / 10.0;
+		}
+		
+		int main() {
+			srand(time(NULL));
+			double avg_time = measure_time();
+			printf("Avg exe time: %.4f seconds\n", avg_time);
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{195} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{47}
+\end{itemize}
+
+
+
+\subsection{پیاده‌سازی در زبان سطح بالاتر (Python)}
+
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+		import time
+		from random import randint as ri
+		
+		def matrix_mult():
+		size = 400
+		A = [[ri(0, 10) for _ in range(size)] for _ in range(size)]
+		B = [[ri(0, 10) for _ in range(size)] for _ in range(size)]
+		
+		C = [[0] * size for _ in range(size)]
+		for i in range(size):
+		for j in range(size):
+		for k in range(size):
+		C[i][j] += A[i][k] * B[k][j]
+		return C
+		
+		def measure_time():
+		tt = 0
+		for _ in range(10):
+		start_time = time.time()
+		_ = matrix_mult()
+		end_time = time.time()
+		tt += (end_time - start_time)
+		
+		avg_time = tt / 10
+		print(f"Avg exe time: {avg_time:.4f} seconds")
+		
+		measure_time()
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{4032} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{27}
+\end{itemize}
+
+
+\section{الگوریتم محاسبه طول بزرگترین زیردنباله مشترک}
+
+\textbf{مشخصات:}
+\begin{itemize}
+	\item ورودی: دو رشته به‌طول ۱۲۰۰
+	\item خروجی: طول بزرگ‌ترین زیردنباله مشترک
+	\item بررسی: میانگین زمان اجرا در ده بار اجرا
+	\item الگوریتم: برنامه‌نویسی پویا
+\end{itemize}
+
+
+
+\subsection{پیاده‌سازی در C++}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <string>
+		#include <cstdlib>
+		#include <ctime>
+		using namespace std;
+		
+		string generate_random_string(int length) {
+			string s;
+			for (int i = 0; i < length; ++i) {
+				s += 'a' + rand() % 26;
+			}
+			return s;
+		}
+		
+		int lcs_dp() {
+			int len = 1200;
+			string s = generate_random_string(len);
+			string t = generate_random_string(len);
+			
+			int m = s.size(), n = t.size();
+			vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+			
+			for (int i = 1; i <= m; ++i) {
+				for (int j = 1; j <= n; ++j) {
+					if (s[i - 1] == t[j - 1]) {
+						dp[i][j] = dp[i - 1][j - 1] + 1;
+					} else {
+						dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+					}
+				}
+			}
+			
+			return dp[m][n];
+		}
+		
+		void measure_time() {
+			double tt = 0;
+			
+			for (int i = 0; i < 10; ++i) {
+				clock_t start_time = clock();
+				lcs_dp();
+				tt += (double)(clock() - start_time) / CLOCKS_PER_SEC;
+			}
+			
+			cout << "Avg exe time: " << (tt / 10) << " seconds";
+		}
+		
+		int main() {
+			srand(time(0));
+			measure_time();
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{18} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{53}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح پایین‌تر (C)}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C, breaklines=true]
+		#include <stdio.h>
+		#include <stdlib.h>
+		#include <time.h>
+		
+		void generate_random_string(char *str, int length) {
+			for (int i = 0; i < length; ++i) {
+				str[i] = 'a' + rand() % 26;
+			}
+			str[length] = '\0';
+		}
+		
+		int lcs_dp() {
+			int length = 1200;
+			char s[length + 1], t[length + 1];
+			generate_random_string(s, length);
+			generate_random_string(t, length);
+			
+			int m = length, n = length;
+			
+			int dp[m + 1][n + 1];
+			
+			for (int i = 0; i <= m; ++i) {
+				for (int j = 0; j <= n; ++j) {
+					if (i == 0 || j == 0) {
+						dp[i][j] = 0;
+					} else if (s[i - 1] == t[j - 1]) {
+						dp[i][j] = dp[i - 1][j - 1] + 1;
+					} else {
+						if (dp[i - 1][j] > dp[i][j - 1]) 
+						dp[i][j] = dp[i - 1][j];
+						else 
+						dp[i][j] = dp[i][j - 1];
+					}
+				}
+			}
+			
+			return dp[m][n];
+		}
+		
+		void measure_time() {
+			double tt = 0;
+			
+			for (int i = 0; i < 10; ++i) {
+				clock_t start_time = clock();
+				lcs_dp();
+				tt += (double)(clock() - start_time) / CLOCKS_PER_SEC;
+			}
+			
+			printf("Avg exe time: %.6f seconds\n", tt / 10);
+		}
+		
+		int main() {
+			srand(time(0));
+			measure_time();
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{7} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{53}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح بالاتر (Python)}
+
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+		from random import choices as rc
+		import string
+		import time
+		
+		def lcs_dp():
+		length = 1200
+		s = ''.join(rc(string.ascii_lowercase, k=length))
+		t = ''.join(rc(string.ascii_lowercase, k=length))
+		
+		m, n = len(s), len(t)
+		dp = [[0] * (n + 1) for _ in range(m + 1)]
+		
+		for i in range(1, m + 1):
+		for j in range(1, n + 1):
+		if s[i - 1] == t[j - 1]:
+		dp[i][j] = dp[i - 1][j - 1] + 1
+		else:
+		dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+		
+		return dp[m][n]
+		
+		def measure_time():
+		tt = 0
+		
+		for _ in range(10):
+		start_time = time.time()
+		lcs_dp()
+		tt += (time.time() - start_time)
+		
+		avg_time = tt / 10
+		print(f"Avg exe time: {avg_time:.6f} seconds")
+		
+		measure_time()
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{298} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{33}
+\end{itemize}
+
+
+\section{الگوریتم مرتب‌‌سازی ادغامی}
+
+\textbf{مشخصات:}
+\begin{itemize}
+	\item ورودی: آرایه‌ای به طول ۱۰۰۰۰۰۰
+	\item خروجی: آرایه مرتب شده
+	\item بررسی: میانگین زمان اجرا در ده بار اجرا
+	\item الگوریتم: تقسیم و حل (بازگشتی)
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در C++}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+		#include <iostream>
+		#include <vector>
+		#include <cstdlib>
+		#include <ctime>
+		using namespace std;
+		
+		// Generate a random vector of integers
+		vector<int> generate_random_vector(int length, int max_value) {
+			vector<int> vec(length);
+			for (int i = 0; i < length; ++i) {
+				vec[i] = rand() % max_value;
+			}
+			return vec;
+		}
+		
+		// Merge function for Merge Sort
+		void merge(vector<int>& arr, int left, int mid, int right) {
+			int n1 = mid - left + 1;
+			int n2 = right - mid;
+			
+			vector<int> leftArr(n1);
+			vector<int> rightArr(n2);
+			
+			for (int i = 0; i < n1; ++i)
+			leftArr[i] = arr[left + i];
+			for (int i = 0; i < n2; ++i)
+			rightArr[i] = arr[mid + 1 + i];
+			
+			int i = 0, j = 0, k = left;
+			while (i < n1 && j < n2) {
+				if (leftArr[i] <= rightArr[j]) {
+					arr[k++] = leftArr[i++];
+				} else {
+					arr[k++] = rightArr[j++];
+				}
+			}
+			
+			while (i < n1) {
+				arr[k++] = leftArr[i++];
+			}
+			
+			while (j < n2) {
+				arr[k++] = rightArr[j++];
+			}
+		}
+		
+		// Merge Sort function
+		void merge_sort(vector<int>& arr, int left, int right) {
+			if (left < right) {
+				int mid = left + (right - left) / 2;
+				merge_sort(arr, left, mid);
+				merge_sort(arr, mid + 1, right);
+				merge(arr, left, mid, right);
+			}
+		}
+		
+		// Measure execution time of Merge Sort
+		void measure_time() {
+			int len = 1000000;
+			int max_value = 10000;
+			double tt = 0;
+			
+			for (int i = 0; i < 10; ++i) {
+				vector<int> vec = generate_random_vector(len, max_value);
+				clock_t start_time = clock();
+				merge_sort(vec, 0, vec.size() - 1);
+				tt += (double)(clock() - start_time) / CLOCKS_PER_SEC;
+			}
+			
+			cout << "Avg exe time: " << (tt / 10) << " seconds" << endl;
+		}
+		
+		int main() {
+			srand(time(0));
+			measure_time();
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{401} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{77}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح پایین‌تر (C)}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C, breaklines=true]
+		#include <stdio.h>
+		#include <stdlib.h>
+		#include <time.h>
+		
+		// Function to generate a random array of integers
+		void generate_random_array(int *arr, int length, int max_value) {
+			for (int i = 0; i < length; i++) {
+				arr[i] = rand() % max_value;
+			}
+		}
+		
+		// Merge function for Merge Sort
+		void merge(int *arr, int left, int mid, int right) {
+			int n1 = mid - left + 1;
+			int n2 = right - mid;
+			
+			int *leftArr = (int *)malloc(n1 * sizeof(int));
+			int *rightArr = (int *)malloc(n2 * sizeof(int));
+			
+			for (int i = 0; i < n1; i++)
+			leftArr[i] = arr[left + i];
+			for (int i = 0; i < n2; i++)
+			rightArr[i] = arr[mid + 1 + i];
+			
+			int i = 0, j = 0, k = left;
+			while (i < n1 && j < n2) {
+				if (leftArr[i] <= rightArr[j]) {
+					arr[k] = leftArr[i];
+					i++;
+				} else {
+					arr[k] = rightArr[j];
+					j++;
+				}
+				k++;
+			}
+			
+			while (i < n1) {
+				arr[k] = leftArr[i];
+				i++;
+				k++;
+			}
+			
+			while (j < n2) {
+				arr[k] = rightArr[j];
+				j++;
+				k++;
+			}
+			
+			free(leftArr);
+			free(rightArr);
+		}
+		
+		// Merge Sort function
+		void merge_sort(int *arr, int left, int right) {
+			if (left < right) {
+				int mid = left + (right - left) / 2;
+				merge_sort(arr, left, mid);
+				merge_sort(arr, mid + 1, right);
+				merge(arr, left, mid, right);
+			}
+		}
+		
+		// Function to measure execution time of Merge Sort
+		void measure_time() {
+			int len = 1000000;
+			int max_value = 10000;
+			double tt = 0;
+			
+			for (int i = 0; i < 10; i++) {
+				int *arr = (int *)malloc(len * sizeof(int));
+				generate_random_array(arr, len, max_value);
+				
+				clock_t start_time = clock();
+				merge_sort(arr, 0, len - 1);
+				tt += (double)(clock() - start_time) / CLOCKS_PER_SEC;
+				
+				free(arr);
+			}
+			
+			printf("Avg exe time: %f seconds\n", tt / 10);
+		}
+		
+		int main() {
+			srand(time(0));
+			measure_time();
+			return 0;
+		}
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{163} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{87}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح بالاتر (Python)}
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+		from random import randint as ri
+		import time
+		
+		# Merge function for Merge Sort
+		def merge(arr, left, mid, right):
+		n1 = mid - left + 1
+		n2 = right - mid
+		
+		left_arr = arr[left:left + n1]
+		right_arr = arr[mid + 1:mid + 1 + n2]
+		
+		i = j = 0
+		k = left
+		
+		while i < n1 and j < n2:
+		if left_arr[i] <= right_arr[j]:
+		arr[k] = left_arr[i]
+		i += 1
+		else:
+		arr[k] = right_arr[j]
+		j += 1
+		k += 1
+		
+		while i < n1:
+		arr[k] = left_arr[i]
+		i += 1
+		k += 1
+		
+		while j < n2:
+		arr[k] = right_arr[j]
+		j += 1
+		k += 1
+		
+		# Merge Sort function
+		def merge_sort(arr, left, right):
+		if left < right:
+		mid = left + (right - left) // 2
+		merge_sort(arr, left, mid)
+		merge_sort(arr, mid + 1, right)
+		merge(arr, left, mid, right)
+		
+		# Measure execution time of Merge Sort
+		def measure_time():
+		length = 1000000
+		max_value = 10000
+		tt = 0
+		
+		for _ in range(10):
+		arr = [ri(0, max_value) for _ in range(length)]
+		start_time = time.time()
+		merge_sort(arr, 0, len(arr) - 1)
+		tt += time.time() - start_time
+		
+		print(f"Avg exe time: {tt / 10:.6f} seconds")
+		
+		random.seed(time.time())
+		measure_time()
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{2125} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{57}
+\end{itemize}
+
+\section{الگوریتم محاسبه فاکتوریل (بازگشتی)}
+
+
+\subsection{پیاده‌سازی در C++}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+#include <iostream>
+using namespace std;
+
+int factorial(int n) {
+	if (n <= 1) return 1;
+	return n * factorial(n - 1);
+}
+
+int main() {
+	int number;
+	cout << "Enter a number: ";
+	cin >> number;
+	cout << "Factorial of " << number << " is " << factorial(number) << endl;
+	return 0;
+}
+
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه: (برای \lr{n = 10})} 
+\begin{itemize}
+	\item میانگین زمان اجرا: \lr{۰.۰۲} میلی ثانیه
+	\item تعداد خطوط کد: \textnormal{12}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح پایین‌تر (C)}
+
+\begin{LTR}
+\begin{lstlisting}[language=C, breaklines=true]
+#include <stdio.h>
+
+int factorial(int n) {
+	if (n <= 1) return 1;
+	return n * factorial(n - 1);
+}
+
+int main() {
+	int number;
+	printf("Enter a number: ");
+	scanf("%d", &number);
+	printf("Factorial of %d is %d\n", number, factorial(number));
+	return 0;
+}
+
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۰.۰۳}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{13}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح بالاتر (Python)}
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+	def factorial(n):
+	if n <= 1:
+	return 1
+	return n * factorial(n - 1)
+	
+	number = int(input("Enter a number: "))
+	print(f"Factorial of {number} is {factorial(number)}")
+	
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه:}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۰.۰۸}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{7}
+\end{itemize}
+
+\section{الگوریتم یافتن بزرگترین عدد در یک آرایه}
+
+
+\subsection{پیاده‌سازی در C++}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+#include <iostream>
+using namespace std;
+
+int findMax(int arr[], int size) {
+	int max = arr[0];
+	for (int i = 1; i < size; i++) {
+		if (arr[i] > max) {
+			max = arr[i];
+		}
+	}
+	return max;
+}
+
+int main() {
+	int arr[] = {1, 5, 3, 9, 2};
+	int size = sizeof(arr) / sizeof(arr[0]);
+	cout << "Maximum element is " << findMax(arr, size) << endl;
+	return 0;
+}		
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه (برای آرایه ۱۰۰۰ عنصری):}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۰.۰۳}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{13}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح پایین‌تر (C)}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C, breaklines=true]
+#include <stdio.h>
+
+int findMax(int arr[], int size) {
+	int max = arr[0];
+	for (int i = 1; i < size; i++) {
+		if (arr[i] > max) {
+			max = arr[i];
+		}
+	}
+	return max;
+}
+
+int main() {
+	int arr[] = {1, 5, 3, 9, 2};
+	int size = sizeof(arr) / sizeof(arr[0]);
+	printf("Maximum element is %d\n", findMax(arr, size));
+	return 0;
+}
+
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه (برای آرایه ۱۰۰۰ عنصری):}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۰.۰۴}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{13}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح بالاتر (Python)}
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+def find_max(arr):
+max_val = arr[0]
+for num in arr:
+if num > max_val:
+max_val = num
+return max_val
+
+arr = [1, 5, 3, 9, 2]
+print("Maximum element is", find_max(arr))
+
+		
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه (برای آرایه ۱۰۰۰ عنصری):}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۰.۱۲}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{7}
+\end{itemize}
+
+
+\section{الگوریتم محاسبه دنباله فیبوناچی (بازگشتی)}
+
+
+\subsection{پیاده‌سازی در C++}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C++, breaklines=true]
+#include <iostream>
+using namespace std;
+
+int fibonacci(int n) {
+	if (n <= 1) return n;
+	return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main() {
+	int n;
+	cout << "Enter the number of terms: ";
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cout << fibonacci(i) << " ";
+	}
+	cout << endl;
+	return 0;
+}
+
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه (برای \lr{n = 20}):}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۲.۵}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{15}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح پایین‌تر (C)}
+
+\begin{LTR}
+	\begin{lstlisting}[language=C, breaklines=true]
+#include <stdio.h>
+
+int fibonacci(int n) {
+	if (n <= 1) return n;
+	return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main() {
+	int n;
+	printf("Enter the number of terms: ");
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) {
+		printf("%d ", fibonacci(i));
+	}
+	printf("\n");
+	return 0;
+}
+
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه (برای \lr{n = 20}):}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۲.۷}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{16}
+\end{itemize}
+
+
+\subsection{پیاده‌سازی در زبان سطح بالاتر (Python)}
+\begin{LTR}
+	\begin{lstlisting}[language=Python, breaklines=true]
+def fibonacci(n):
+if n <= 1:
+return n
+return fibonacci(n - 1) + fibonacci(n - 2)
+
+n = int(input("Enter the number of terms: "))
+for i in range(n):
+print(fibonacci(i), end=" ")
+print()
+
+		
+	\end{lstlisting}
+\end{LTR}
+
+\textbf{نتیجه (برای \lr{n = 20}):}
+\begin{itemize}
+	\item میانگین زمان اجرا: \textnormal{\lr{۵}} میلی‌ثانیه
+	\item تعداد خطوط کد: \textnormal{7}
+\end{itemize}
+
+\begin{thebibliography}{99}
+	\bibitem{cppref} \href{https://en.cppreference.com/}{\lr{C++ Reference}}
+	\bibitem{chatgpt} \href{https://chatgpt.com}{\lr{ChatGPT}}
+	\bibitem{geeks} \href{https://geeksforgeeks.org}{\lr{GeeksforGeeks}}
+	\bibitem{stackoverflow} \href{https://stackoverflow.com/}{\lr{Stack Overflow}}
+	\bibitem{cppdocs} \href{https://devdocs.io/cpp/}{\lr{C++ Documentation}}
+	\bibitem{cppguide} \href{https://www.learncpp.com/}{\lr{Learn C++}}
+	\bibitem{LC++} \href{https://yanniss.github.io/lc++/}{\lr{LC++ in C++}}
+\end{thebibliography}
 
 \end{document}
 	
